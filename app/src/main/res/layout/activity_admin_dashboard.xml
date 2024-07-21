@@ -36,15 +36,5 @@
 
     </com.google.android.material.bottomappbar.BottomAppBar>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/adminFloatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
-        android:src="@drawable/add_icon"
-        app:layout_anchor="@+id/adminBottomAppBar"
-        app:layout_anchorGravity="top|center"
-        app:maxImageSize="40sp" />
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

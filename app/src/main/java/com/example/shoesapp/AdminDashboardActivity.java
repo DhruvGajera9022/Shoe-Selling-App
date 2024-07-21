@@ -1,5 +1,6 @@
 package com.example.shoesapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -33,20 +34,9 @@ public class AdminDashboardActivity extends AppCompatActivity {
                 replaceFragment(new AdminOrderFragment());
             } else if (itemId == R.id.admin_profile){
                 replaceFragment(new AdminHomeFragment());
-            } else if (itemId == R.id.admin_about) {
-                replaceFragment(new AdminOrderFragment());
             }
             return true;
         });
-
-        binding.adminFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
-                bottomSheetFragment.show(AdminDashboardActivity.this.getSupportFragmentManager(), bottomSheetFragment.getTag());
-            }
-        });
-
     }
 
     @Override

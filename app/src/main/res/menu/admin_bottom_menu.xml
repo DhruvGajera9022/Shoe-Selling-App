@@ -12,17 +12,8 @@
         android:icon="@drawable/cart_icon"/>
 
     <item
-        android:id="@+id/fab"
-        android:title=""/>
-
-    <item
         android:id="@+id/admin_profile"
         android:title="@string/profile"
         android:icon="@drawable/person_icon"/>
-
-    <item
-        android:id="@+id/admin_about"
-        android:title="@string/profile"
-        android:icon="@drawable/info_icon"/>
 
 </menu>
