@@ -1,13 +1,13 @@
-package com.example.shoesapp;
+package com.example.shoesapp.models;
 
-public class AddProductData {
+public class AddProductDataModal {
 
     String name, image, price, description, date, time, key;
 
-    public AddProductData() {
+    public AddProductDataModal() {
     }
 
-    public AddProductData(String name, String image, String price, String description, String date, String time, String key) {
+    public AddProductDataModal(String name, String image, String price, String description, String date, String time, String key) {
         this.name = name;
         this.image = image;
         this.price = price;

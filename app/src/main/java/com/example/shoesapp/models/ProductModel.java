@@ -1,4 +1,4 @@
-package com.example.shoesapp;
+package com.example.shoesapp.models;
 
 public class ProductModel {
 

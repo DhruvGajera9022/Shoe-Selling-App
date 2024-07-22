@@ -7,7 +7,12 @@
         android:icon="@drawable/home_icon"/>
 
     <item
-        android:id="@+id/admin_order"
+        android:id="@+id/admin_category"
+        android:title="@string/my_category"
+        android:icon="@drawable/category_icon"/>
+
+    <item
+        android:id="@+id/admin_orders"
         android:title="@string/my_order"
         android:icon="@drawable/cart_icon"/>
 

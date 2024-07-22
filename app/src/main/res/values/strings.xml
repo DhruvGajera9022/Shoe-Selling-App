@@ -5,7 +5,8 @@
     <string name="close_nav">Close Navigation Drawer</string>
 
     <string name="home">Home</string>
-    <string name="my_order">My Order</string>
+    <string name="my_category">Categories</string>
+    <string name="my_order">Orders</string>
     <string name="profile">Profile</string>
 
     <string name="settings">Settings</string>
@@ -14,5 +15,7 @@
     <string name="logout">Logout</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="cart">Cart</string>
+    <string name="order">Order</string>
 
 </resources>

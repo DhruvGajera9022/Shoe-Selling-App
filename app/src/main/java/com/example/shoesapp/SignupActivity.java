@@ -19,10 +19,15 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignupActivity extends AppCompatActivity {
     ActivitySignupBinding binding;
     FirebaseAuth mAuth;
+    FirebaseFirestore firestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +36,7 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         mAuth = FirebaseAuth.getInstance();
+        firestore = FirebaseFirestore.getInstance();
 
         binding.signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +79,28 @@ public class SignupActivity extends AppCompatActivity {
                             Toast.makeText(SignupActivity.this, "Signup Failed...", Toast.LENGTH_SHORT).show();
                         }
                     });
+
+            String uid = firestore.collection("Users").document().getId();
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("name", binding.signupUsernameEdt.getText().toString());
+            map.put("email", binding.signupEmailEdt.getText().toString());
+            map.put("uid", uid);
+
+            firestore.collection("Users")
+                    .document(uid)
+                    .set(map)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+
+                            binding.signupUsernameEdt.setText("");
+                            binding.signupEmailEdt.setText("");
+                            binding.signupPasswordEdt.setText("");
+                            binding.signupConfirmPassowrdEdt.setText("");
+                        }
+                    });
+
         }
     }
 }

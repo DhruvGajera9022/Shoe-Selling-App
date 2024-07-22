@@ -1,4 +1,4 @@
-package com.example.shoesapp;
+package com.example.shoesapp.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -25,6 +25,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import com.example.shoesapp.adapters.ProductAdapter;
+import com.example.shoesapp.R;
+import com.example.shoesapp.models.ProductModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -131,9 +134,9 @@ public class AdminHomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                String[] category = {"Male","Female","Kids"};
+                String[] category = {"Male", "Female", "Kids"};
                 ArrayAdapter<String> arrayAdapter;
-                arrayAdapter = new ArrayAdapter<String>(dialogPlus.getHolderView().getContext(),android.R.layout.simple_spinner_dropdown_item,category);
+                arrayAdapter = new ArrayAdapter<String>(dialogPlus.getHolderView().getContext(), android.R.layout.simple_spinner_dropdown_item, category);
                 spin.setAdapter(arrayAdapter);
 
                 dialogPlus.show();
@@ -144,7 +147,7 @@ public class AdminHomeFragment extends Fragment {
                         Intent intent = new Intent();
                         intent.setType("image/*");
                         intent.setAction(Intent.ACTION_GET_CONTENT);
-                        startActivityForResult(intent,100);
+                        startActivityForResult(intent, 100);
                     }
                 });
 
@@ -158,48 +161,48 @@ public class AdminHomeFragment extends Fragment {
                     public void onNothingSelected(AdapterView<?> parent) {
 
                     }
-                });
+                    });
 
-                if (save == null) {
-                    Log.e("AdminHomeFragment", "Save button is null");
-                } else {
-                    save.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
+                    if (save == null) {
+                        Log.e("AdminHomeFragment", "Save button is null");
+                    } else {
+                        save.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
 
-                            ProgressDialog progressDialog = new ProgressDialog(getContext());
-                            progressDialog.setMessage("Uploading...");
-                            progressDialog.show();
+                                ProgressDialog progressDialog = new ProgressDialog(getContext());
+                                progressDialog.setMessage("Uploading...");
+                                progressDialog.show();
 
-                            SimpleDateFormat format = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.UK);
-                            Date now = new Date();
-                            String filename;
-                            filename = format.format(now);
+                                SimpleDateFormat format = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.UK);
+                                Date now = new Date();
+                                String filename;
+                                filename = format.format(now);
 
-                            storageReference = FirebaseStorage.getInstance().getReference(filename);
-                            imageName = storageReference;
+                                storageReference = FirebaseStorage.getInstance().getReference(filename);
+                                imageName = storageReference;
 
-                            storageReference.putFile(imguri)
-                                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                        @Override
-                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                            imageName.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                                @Override
-                                                public void onSuccess(Uri uri) {
-                                                    String fiuri = uri.toString();
-                                                    String mname = name.getText().toString();
-                                                    String mprice = price.getText().toString();
-                                                    String mdesc = desc.getText().toString();
-                                                    String mcategory = sel_com;
-                                                    String uid = db.collection("Products").document().getId();
+                                storageReference.putFile(imguri)
+                                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                            @Override
+                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                imageName.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                    @Override
+                                                    public void onSuccess(Uri uri) {
+                                                        String fiuri = uri.toString();
+                                                        String mname = name.getText().toString();
+                                                        String mprice = price.getText().toString();
+                                                        String mdesc = desc.getText().toString();
+                                                        String mcategory = sel_com;
+                                                        String uid = db.collection("Products").document().getId();
 
-                                                    Map<String,Object> map = new HashMap<>();
-                                                    map.put("name",mname);
-                                                    map.put("price",mprice);
-                                                    map.put("description",mdesc);
-                                                    map.put("category",mcategory);
-                                                    map.put("imgurl",fiuri);
-                                                    map.put("pid",uid);
+                                                        Map<String, Object> map = new HashMap<>();
+                                                        map.put("name", mname);
+                                                        map.put("price", mprice);
+                                                        map.put("description", mdesc);
+                                                        map.put("category", mcategory);
+                                                        map.put("imgurl", fiuri);
+                                                        map.put("pid", uid);
 
                                                     db.collection("Products")
                                                             .document(uid)
@@ -228,24 +231,26 @@ public class AdminHomeFragment extends Fragment {
                 }
 
 
-
                 if (cancel == null) {
-                    Log.e("AdminHomeFragment", "Save button is null");
+                    Log.e("AdminHomeFragment", "Cancel button is null");
                 } else {
+                    // Set an OnClickListener on the cancel button
                     cancel.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            name.setText("");
-                            price.setText("");
-                            desc.setText("");
-                            img.setImageResource(R.drawable.image_icon);
+//                            // Clear text fields
+//                            name.setText("");
+//                            price.setText("");
+//                            desc.setText("");
+//                            // Reset image to default icon
+//                            img.setImageResource(R.drawable.image_icon);
+                            // Dismiss the dialog
                             dialogPlus.dismiss();
                         }
                     });
                 }
-
             }
-        });
+            });
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.AdminCategoriesFragment"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/my_category"
+            android:textSize="25sp"
+            android:textColor="@color/black"/>
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipMale"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:text="Male"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                app:chipStrokeWidth="1dp"
+                app:chipStrokeColor="@color/black"
+                app:chipBackgroundColor="@drawable/chip_selection"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipFemale"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:text="Female"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                app:chipStrokeWidth="1dp"
+                app:chipStrokeColor="@color/black"
+                app:chipBackgroundColor="@drawable/chip_selection"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipKids"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:text="Kids"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                app:chipStrokeWidth="1dp"
+                app:chipStrokeColor="@color/black"
+                app:chipBackgroundColor="@drawable/chip_selection"/>
+
+        </com.google.android.material.chip.ChipGroup>
+
+    </LinearLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/categoryRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+
+</LinearLayout>

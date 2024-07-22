@@ -1,8 +1,6 @@
 package com.example.shoesapp;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -11,6 +9,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModel;
 
 import com.example.shoesapp.databinding.ActivityAdminDashboardBinding;
+import com.example.shoesapp.fragments.AdminCategoriesFragment;
+import com.example.shoesapp.fragments.AdminHomeFragment;
+import com.example.shoesapp.fragments.AdminOrdersFragment;
+import com.example.shoesapp.fragments.AdminProfileFragment;
 
 public class AdminDashboardActivity extends AppCompatActivity {
     ActivityAdminDashboardBinding binding;
@@ -30,10 +32,12 @@ public class AdminDashboardActivity extends AppCompatActivity {
 
             if (itemId == R.id.admin_home){
                 replaceFragment(new AdminHomeFragment());
-            } else if (itemId == R.id.admin_order){
-                replaceFragment(new AdminOrderFragment());
+            } else if (itemId == R.id.admin_category){
+                replaceFragment(new AdminCategoriesFragment());
+            } else if (itemId == R.id.admin_orders) {
+                replaceFragment(new AdminOrdersFragment());
             } else if (itemId == R.id.admin_profile){
-                replaceFragment(new AdminHomeFragment());
+                replaceFragment(new AdminProfileFragment());
             }
             return true;
         });

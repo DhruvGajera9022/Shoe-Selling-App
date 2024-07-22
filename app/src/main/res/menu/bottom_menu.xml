@@ -7,9 +7,19 @@
         android:icon="@drawable/home_icon"/>
 
     <item
-        android:id="@+id/order"
-        android:title="@string/my_order"
+        android:id="@+id/category"
+        android:title="@string/my_category"
+        android:icon="@drawable/category_icon"/>
+
+    <item
+        android:id="@+id/cart"
+        android:title="@string/cart"
         android:icon="@drawable/cart_icon"/>
+
+    <item
+        android:id="@+id/order"
+        android:title="@string/order"
+        android:icon="@drawable/order"/>
 
     <item
         android:id="@+id/profile"

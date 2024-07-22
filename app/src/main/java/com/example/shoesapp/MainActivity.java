@@ -1,20 +1,20 @@
 package com.example.shoesapp;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.MenuItem;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.shoesapp.databinding.ActivityLoginBinding;
 import com.example.shoesapp.databinding.ActivityMainBinding;
-
-import java.util.Objects;
+import com.example.shoesapp.fragments.CartFragment;
+import com.example.shoesapp.fragments.CategoryFragment;
+import com.example.shoesapp.fragments.HomeFragment;
+import com.example.shoesapp.fragments.OrderFragment;
+import com.example.shoesapp.fragments.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
@@ -33,7 +33,11 @@ public class MainActivity extends AppCompatActivity {
 
             if (itemId == R.id.home){
                 replaceFragment(new HomeFragment());
-            } else if (itemId == R.id.order){
+            } else if (itemId == R.id.category){
+                replaceFragment(new CategoryFragment());
+            } else if (itemId == R.id.cart) {
+                replaceFragment(new CartFragment());
+            } else if (itemId == R.id.order) {
                 replaceFragment(new OrderFragment());
             } else if (itemId == R.id.profile){
                 replaceFragment(new ProfileFragment());
@@ -49,6 +53,4 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
     }
-
-
 }

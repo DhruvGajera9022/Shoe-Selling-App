@@ -1,4 +1,4 @@
-package com.example.shoesapp;
+package com.example.shoesapp.adapters;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -13,17 +13,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.shoesapp.AdminProductDetailsActivity;
+import com.example.shoesapp.R;
+import com.example.shoesapp.models.ProductModel;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHolder>{
 
@@ -56,13 +55,43 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         holder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppCompatActivity activity = (AppCompatActivity)v.getContext();
-                activity.getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.wrapper, new ProductDetailsFragment())
-//                        .replace(R.id.wrapper, new ProductDetailsFragment(model.getImgurl(), model.getName(), model.getPrice(), model.getDescription()))
-                        .addToBackStack(null)
-                        .commit();
+                Intent intent = new Intent(context, AdminProductDetailsActivity.class);
+                intent.putExtra("key", datalist.get(position).getPid());
+                context.startActivity(intent);
+            }
+        });
+
+        holder.img.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                        AlertDialog.Builder deletedialog = new AlertDialog.Builder(context);
+                        deletedialog.setCancelable(false)
+                                .setMessage("Are you sure to delete this ?")
+                                .setTitle("Delete")
+                                .setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        db = FirebaseFirestore.getInstance();
+                                        db.collection("Products")
+                                                .document(datalist.get(position).getPid())
+                                                .delete()
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void unused) {
+
+                                                        dialog.dismiss();
+                                                    }
+                                                });
+                                    }
+                                })
+                                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                        deletedialog.show();
+                return false;
             }
         });
 

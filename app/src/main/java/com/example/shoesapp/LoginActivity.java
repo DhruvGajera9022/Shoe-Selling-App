@@ -70,7 +70,8 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(AuthResult authResult) {
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);     
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            finish();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
