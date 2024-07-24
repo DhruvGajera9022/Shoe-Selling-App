@@ -8,7 +8,8 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@color/sky">
 
     <ScrollView
         android:layout_width="match_parent"

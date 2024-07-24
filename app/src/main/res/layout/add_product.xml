@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddProductActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/sky">
 
     <TextView
         android:layout_width="match_parent"
@@ -89,27 +90,20 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/productSaveButton"
-            android:layout_width="180dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
             android:text="Save"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="20dp"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/productCancleButton"
-            android:layout_width="180dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:text="Cancle"
-            android:layout_gravity="center"/>
-
-    </LinearLayout>
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="20dp"/>
 
 </LinearLayout>

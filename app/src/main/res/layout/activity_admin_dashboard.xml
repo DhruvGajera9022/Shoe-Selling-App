@@ -9,7 +9,7 @@
     tools:context=".AdminDashboardActivity"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@color/white">
+    android:background="@color/sky">
 
     <FrameLayout
         android:id="@+id/adminFrameLayout"

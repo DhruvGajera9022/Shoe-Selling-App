@@ -10,52 +10,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/my_category"
             android:textSize="25sp"
             android:textColor="@color/black"/>
 
-        <com.google.android.material.chip.ChipGroup
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/filterImageButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:singleSelection="true">
+            android:padding="10dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/filter_list_icon"
+            android:layout_marginLeft="200dp"/>
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipMale"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:text="Male"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                app:chipStrokeWidth="1dp"
-                app:chipStrokeColor="@color/black"
-                app:chipBackgroundColor="@drawable/chip_selection"/>
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipFemale"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:text="Female"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                app:chipStrokeWidth="1dp"
-                app:chipStrokeColor="@color/black"
-                app:chipBackgroundColor="@drawable/chip_selection"/>
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipKids"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:text="Kids"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                app:chipStrokeWidth="1dp"
-                app:chipStrokeColor="@color/black"
-                app:chipBackgroundColor="@drawable/chip_selection"/>
-
-        </com.google.android.material.chip.ChipGroup>
 
     </LinearLayout>
 

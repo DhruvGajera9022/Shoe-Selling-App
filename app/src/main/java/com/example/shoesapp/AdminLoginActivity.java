@@ -25,6 +25,13 @@ public class AdminLoginActivity extends AppCompatActivity {
             }
         });
 
+        binding.mainActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AdminLoginActivity.this, MainActivity.class));
+            }
+        });
+
     }
 
 

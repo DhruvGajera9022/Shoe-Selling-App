@@ -8,7 +8,8 @@
     android:layout_height="match_parent"
     tools:context=".AdminLoginActivity"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@color/sky">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -87,6 +88,12 @@
                     app:icon="@drawable/login"
                     app:iconGravity="textStart"
                     app:iconTint="@color/black"/>
+
+                <TextView
+                    android:id="@+id/mainActivity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Without Login"/>
 
             </LinearLayout>
 

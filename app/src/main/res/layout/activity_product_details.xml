@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ProductDetailsActivity"
-    android:background="#FFFFFF"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/sky">
 
     <ImageView
         android:id="@+id/productImage"
@@ -60,6 +60,7 @@
         android:layout_marginTop="200dp">
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/productAddToCartButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="Add to Cart"
@@ -69,6 +70,7 @@
             android:backgroundTint="#0F85E2"/>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/productBuyNowButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="Buy Now"
