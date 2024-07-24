@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sort By"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:padding="4dp"/>
+
+    <TextView
+        android:id="@+id/maleCategoryFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Male"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:padding="7dp"/>
+
+    <TextView
+        android:id="@+id/femaleCategoryFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Female"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:padding="7dp"/>
+
+    <TextView
+        android:id="@+id/kidsCategoryFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Kids"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:padding="7dp"/>
+
+
+</LinearLayout>
