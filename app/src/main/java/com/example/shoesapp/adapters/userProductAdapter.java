@@ -62,39 +62,7 @@ public class userProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyVi
             }
         });
 
-        holder.img.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                AlertDialog.Builder deletedialog = new AlertDialog.Builder(context);
-                deletedialog.setCancelable(false)
-                        .setMessage("Are you sure to delete this ?")
-                        .setTitle("Delete")
-                        .setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                db = FirebaseFirestore.getInstance();
-                                db.collection("Products")
-                                        .document(datalist.get(position).getPid())
-                                        .delete()
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void unused) {
 
-                                                dialog.dismiss();
-                                            }
-                                        });
-                            }
-                        })
-                        .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                deletedialog.show();
-                return false;
-            }
-        });
 
     }
 

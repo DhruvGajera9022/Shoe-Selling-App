@@ -1,46 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="10dp"
-    android:background="@color/white">
+    android:background="#E4D5D5"
+    android:layout_gravity="bottom">
 
-    <TextView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sort By"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:padding="4dp"/>
+        app:cardCornerRadius="10dp"
+        android:background="#E4D5D5">
 
-    <TextView
-        android:id="@+id/maleCategoryFilter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Male"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        android:padding="7dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#E4D5D5">
 
-    <TextView
-        android:id="@+id/femaleCategoryFilter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Female"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        android:padding="7dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sort By"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:padding="4dp"/>
 
-    <TextView
-        android:id="@+id/kidsCategoryFilter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Kids"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        android:padding="7dp"/>
+            <TextView
+                android:id="@+id/maleCategoryFilter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Male"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:padding="7dp"/>
+
+            <TextView
+                android:id="@+id/femaleCategoryFilter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Female"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:padding="7dp"/>
+
+            <TextView
+                android:id="@+id/kidsCategoryFilter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Kids"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:padding="7dp"/>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
 
 </LinearLayout>

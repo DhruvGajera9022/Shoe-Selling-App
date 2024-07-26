@@ -12,12 +12,16 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.shoesapp.R;
 import com.example.shoesapp.adapters.AdminProductCategoryAdapter;
 import com.example.shoesapp.models.ProductModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.chip.Chip;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -30,9 +34,10 @@ public class CategoryFragment extends Fragment {
     SwipeRefreshLayout refreshLayout;
     FirebaseFirestore db;
     boolean flag = false;
-    ArrayList<ProductModel> datalist = new ArrayList<>();
+    ArrayList<ProductModel> dataList = new ArrayList<>();
     AdminProductCategoryAdapter adapter;
-    Chip chMale, chFemale, chKids;
+    ImageButton imageButtonFilter;
+    BottomSheetDialog dialog;
 
     public CategoryFragment() {
     }
@@ -53,9 +58,7 @@ public class CategoryFragment extends Fragment {
         category_rv = view.findViewById(R.id.categoryRecyclerView);
         refreshLayout = view.findViewById(R.id.refreshCategory);
         db = FirebaseFirestore.getInstance();
-        chMale = view.findViewById(R.id.chipMale);
-        chFemale = view.findViewById(R.id.chipFemale);
-        chKids = view.findViewById(R.id.chipKids);
+        imageButtonFilter = view.findViewById(R.id.filterImageButton);
 
         category_rv.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -67,11 +70,23 @@ public class CategoryFragment extends Fragment {
             }
         });
 
+        dialog = new BottomSheetDialog(getContext());
+        createDialog();
+
+        imageButtonFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.show();
+            }
+        });
+
+        dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+
         return view;
     }
 
     private void getdata() {
-        datalist.clear();
+        dataList.clear();
         db.collection("Products")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -80,17 +95,75 @@ public class CategoryFragment extends Fragment {
                         if (task.isSuccessful())
                         {
                             List<ProductModel> data = task.getResult().toObjects(ProductModel.class);
-                            datalist.addAll(data);
+                            dataList.addAll(data);
 
                             GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
                             category_rv.setLayoutManager(layoutManager);
-                            adapter = new AdminProductCategoryAdapter(getContext(),datalist);
+                            adapter = new AdminProductCategoryAdapter(getContext(),dataList);
                             category_rv.setHasFixedSize(true);
                             category_rv.setAdapter(adapter);
 
                         }
                     }
                 });
+    }
+
+    private void getDataCategory(String category) {
+        dataList.clear();
+        db.collection("Products")
+                .whereEqualTo("category", category)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful())
+                        {
+                            List<ProductModel> data = task.getResult().toObjects(ProductModel.class);
+                            dataList.addAll(data);
+
+                            GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+                            category_rv.setLayoutManager(layoutManager);
+                            adapter = new AdminProductCategoryAdapter(getContext(),dataList);
+
+                            category_rv.setHasFixedSize(true);
+                            category_rv.setAdapter(adapter);
+
+                            dialog.dismiss();
+
+                        }
+                    }
+                });
+    }
+
+    public void createDialog(){
+        View view = getLayoutInflater().inflate(R.layout.category_filter_list, null, false);
+
+        TextView maleCategoryFilter = view.findViewById(R.id.maleCategoryFilter);
+        TextView femaleCategoryFilter = view.findViewById(R.id.femaleCategoryFilter);
+        TextView kidsCategoryFilter = view.findViewById(R.id.kidsCategoryFilter);
+
+        maleCategoryFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDataCategory("Male");
+            }
+        });
+
+        femaleCategoryFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDataCategory("Female");
+            }
+        });
+
+        kidsCategoryFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDataCategory("Kids");
+            }
+        });
+
+        dialog.setContentView(view);
     }
 
 }

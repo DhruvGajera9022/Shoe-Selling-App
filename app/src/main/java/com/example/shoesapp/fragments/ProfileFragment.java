@@ -3,6 +3,7 @@ package com.example.shoesapp.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -13,7 +14,9 @@ import android.widget.TextView;
 
 import com.example.shoesapp.LoginActivity;
 import com.example.shoesapp.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -21,6 +24,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class ProfileFragment extends Fragment {
     TextView txtUserName, txtUserEmail;
@@ -47,18 +51,20 @@ public class ProfileFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
 
-        uid = mAuth.getUid();
+        uid = mAuth.getCurrentUser().getUid();
 
-        DocumentReference document = firestore.collection("Users").document(uid);
-        document.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (documentSnapshot.exists()){
-                    txtUserName.setText(documentSnapshot.getString("name"));
-                    txtUserEmail.setText(documentSnapshot.getString("email"));
-                }
-            }
-        });
+        firestore.collection("Users")
+                        .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()){
+                                            txtUserName.setText(task.getResult().getDocuments().get(getId()).getString("name"));
+                                            txtUserEmail.setText(task.getResult().getDocuments().get(getId()).getString("email"));
+                                        }
+                                    }
+                                });
+
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,7 +1,6 @@
 package com.example.shoesapp.fragments;
 
 import android.app.Dialog;
-import android.icu.text.ListFormatter;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,18 +14,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.shoesapp.adapters.AdminProductCategoryAdapter;
-import com.example.shoesapp.adapters.ProductAdapter;
 import com.example.shoesapp.R;
 import com.example.shoesapp.models.ProductModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.chip.Chip;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -37,9 +35,10 @@ public class AdminCategoriesFragment extends Fragment {
     SwipeRefreshLayout refreshLayout;
     FirebaseFirestore db;
     boolean flag = false;
-    ArrayList<ProductModel> datalist = new ArrayList<>();
+    ArrayList<ProductModel> dataList = new ArrayList<>();
     AdminProductCategoryAdapter adapter;
     ImageButton imageButtonFilter;
+    BottomSheetDialog dialog;
 
 
     public AdminCategoriesFragment() {
@@ -51,7 +50,7 @@ public class AdminCategoriesFragment extends Fragment {
         super.onStart();
         if (!flag)
         {
-            getdata();
+            getData();
         }
     }
 
@@ -71,24 +70,29 @@ public class AdminCategoriesFragment extends Fragment {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getdata();
+                getData();
                 refreshLayout.setRefreshing(false);
             }
         });
 
+        dialog = new BottomSheetDialog(getContext());
+        createDialog();
+
         imageButtonFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showCategorySheet();
+                dialog.show();
             }
         });
+
+        dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 
         return view;
 
     }
 
-    private void getdata() {
-        datalist.clear();
+    private void getData() {
+        dataList.clear();
         db.collection("Products")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -97,12 +101,11 @@ public class AdminCategoriesFragment extends Fragment {
                         if (task.isSuccessful())
                         {
                             List<ProductModel> data = task.getResult().toObjects(ProductModel.class);
-                            datalist.addAll(data);
+                            dataList.addAll(data);
 
                             GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
-                            layoutManager.setReverseLayout(true);
                             category_rv.setLayoutManager(layoutManager);
-                            adapter = new AdminProductCategoryAdapter(getContext(),datalist);
+                            adapter = new AdminProductCategoryAdapter(getContext(),dataList);
 
                             category_rv.setHasFixedSize(true);
                             category_rv.setAdapter(adapter);
@@ -112,10 +115,10 @@ public class AdminCategoriesFragment extends Fragment {
                 });
     }
 
-    public void getChipData(String data){
-        datalist.clear();
+    private void getDataCategory(String category) {
+        dataList.clear();
         db.collection("Products")
-                .whereEqualTo("category", data)
+                .whereEqualTo("category", category)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -123,22 +126,51 @@ public class AdminCategoriesFragment extends Fragment {
                         if (task.isSuccessful())
                         {
                             List<ProductModel> data = task.getResult().toObjects(ProductModel.class);
-                            datalist.addAll(data);
+                            dataList.addAll(data);
+
+                            GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+                            category_rv.setLayoutManager(layoutManager);
+                            adapter = new AdminProductCategoryAdapter(getContext(),dataList);
+
+                            category_rv.setHasFixedSize(true);
+                            category_rv.setAdapter(adapter);
+
+                            dialog.dismiss();
+
                         }
-                        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
-                        layoutManager.setReverseLayout(true);
-                        category_rv.setLayoutManager(layoutManager);
-                        adapter = new AdminProductCategoryAdapter(getContext(),datalist);
-                        category_rv.setHasFixedSize(true);
-                        category_rv.setAdapter(adapter);
                     }
                 });
     }
 
-    public void showCategorySheet(){
-        final Dialog dialog = new Dialog(getContext());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.category_filter_list);
+    public void createDialog(){
+        View view = getLayoutInflater().inflate(R.layout.category_filter_list, null, false);
+
+        TextView maleCategoryFilter = view.findViewById(R.id.maleCategoryFilter);
+        TextView femaleCategoryFilter = view.findViewById(R.id.femaleCategoryFilter);
+        TextView kidsCategoryFilter = view.findViewById(R.id.kidsCategoryFilter);
+
+        maleCategoryFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDataCategory("Male");
+            }
+        });
+
+        femaleCategoryFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDataCategory("Female");
+            }
+        });
+
+        kidsCategoryFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDataCategory("Kids");
+            }
+        });
+
+        dialog.setContentView(view);
     }
 
 

@@ -19,6 +19,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -28,6 +30,10 @@ public class SignupActivity extends AppCompatActivity {
     ActivitySignupBinding binding;
     FirebaseAuth mAuth;
     FirebaseFirestore firestore;
+    FirebaseDatabase database;
+    DatabaseReference reference;
+    String name, email;
+    userData userData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,26 +86,20 @@ public class SignupActivity extends AppCompatActivity {
                         }
                     });
 
-            String uid = firestore.collection("Users").document().getId();
+            name = binding.signupUsernameEdt.getText().toString();
+            email = binding.signupEmailEdt.getText().toString();
 
-            Map<String, Object> map = new HashMap<>();
-            map.put("name", binding.signupUsernameEdt.getText().toString());
-            map.put("email", binding.signupEmailEdt.getText().toString());
-            map.put("uid", uid);
+            userData = new userData(name, email);
+            database = FirebaseDatabase.getInstance();
+            reference = database.getReference("Users");
+            reference.child(name).setValue(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    binding.signupUsernameEdt.setText("");
+                    binding.signupEmailEdt.setText("");
+                }
+            });
 
-            firestore.collection("Users")
-                    .document(uid)
-                    .set(map)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-
-                            binding.signupUsernameEdt.setText("");
-                            binding.signupEmailEdt.setText("");
-                            binding.signupPasswordEdt.setText("");
-                            binding.signupConfirmPassowrdEdt.setText("");
-                        }
-                    });
 
         }
     }
