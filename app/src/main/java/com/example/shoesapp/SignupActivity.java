@@ -21,6 +21,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -30,9 +31,7 @@ public class SignupActivity extends AppCompatActivity {
     ActivitySignupBinding binding;
     FirebaseAuth mAuth;
     FirebaseFirestore firestore;
-    FirebaseDatabase database;
-    DatabaseReference reference;
-    String name, email;
+    String name, email, userId;
     userData userData;
 
     @Override
@@ -76,8 +75,25 @@ public class SignupActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
                         public void onSuccess(AuthResult authResult) {
-                            startActivity(new Intent(SignupActivity.this, MainActivity.class));
-                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                            userId = mAuth.getCurrentUser().getUid();
+                            DocumentReference documentReference = firestore.collection("Users").document(userId);
+
+                            name = binding.signupUsernameEdt.getText().toString();
+                            email = binding.signupEmailEdt.getText().toString();
+
+                            Map<String, Object> user = new HashMap<>();
+                            user.put("UserName", name);
+                            user.put("Email", email);
+                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    startActivity(new Intent(SignupActivity.this, MainActivity.class));
+                                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                }
+                            });
+
+
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -86,19 +102,9 @@ public class SignupActivity extends AppCompatActivity {
                         }
                     });
 
-            name = binding.signupUsernameEdt.getText().toString();
-            email = binding.signupEmailEdt.getText().toString();
 
-            userData = new userData(name, email);
-            database = FirebaseDatabase.getInstance();
-            reference = database.getReference("Users");
-            reference.child(name).setValue(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    binding.signupUsernameEdt.setText("");
-                    binding.signupEmailEdt.setText("");
-                }
-            });
+
+
 
 
         }

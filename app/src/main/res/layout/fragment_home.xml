@@ -1,29 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.HomeFragment"
-    android:background="@color/sky"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".fragments.HomeFragment">
 
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayoutScrollViewBehavior"
+        android:layout_marginBottom="50dp">
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchViewUserHome"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/search_view_background"
-            android:layout_marginHorizontal="10dp"
-            app:queryHint="Search Here"
-            app:iconifiedByDefault="false"
-            android:layout_margin="10dp"/>
+            android:orientation="vertical">
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/refreshUserHome"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp">
+            <LinearLayout
+                android:id="@+id/topPanel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/titleTop"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="24sp"
+                    android:textColor="#000000"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="15dp"
+                    android:text="Choose Your Best Shoes"/>
+
+                <ImageView
+                    android:id="@+id/favourite"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/favourite"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="10dp"/>
+            </LinearLayout>
+
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchViewUserHome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/search_view_background"
+                android:layout_marginHorizontal="10dp"
+                app:queryHint="Search Here"
+                app:iconifiedByDefault="false"
+                android:layout_margin="10dp"/>
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/userHomeRecyclerView"
@@ -31,6 +63,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"/>
 
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

@@ -17,7 +17,7 @@
         android:background="#DAE1E7">
 
         <ImageView
-            android:id="@+id/cartImage"
+            android:id="@+id/orderImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/image_icon"/>
@@ -29,7 +29,7 @@
             android:layout_marginLeft="5dp">
 
             <TextView
-                android:id="@+id/cartProductName"
+                android:id="@+id/orderProductItemName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Product Name"
@@ -38,20 +38,29 @@
                 android:textColor="@color/black"/>
 
             <TextView
-                android:id="@+id/cartProductPrice"
+                android:id="@+id/orderProductItemPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Product Price"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:textColor="#FF0000"/>
+                android:textColor="#F40101"/>
 
             <TextView
-                android:id="@+id/cartProductDescription"
+                android:id="@+id/orderProductItemSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Product Description"
+                android:text="Size"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/orderProductItemDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="07/28/2024"
                 android:textStyle="bold"
                 android:textSize="16sp" />
 

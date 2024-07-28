@@ -8,8 +8,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical"
-    android:gravity="center"
-    android:background="@color/sky">
+    android:gravity="center">
 
     <FrameLayout
         android:layout_width="match_parent"

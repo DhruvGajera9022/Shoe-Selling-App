@@ -59,9 +59,10 @@ public class AdminHomeFragment extends Fragment {
     FloatingActionButton floatingActionButton;
     Uri imguri;
     ImageView temp_img;
-    String sel_com;
+    String selectGender, selectCompany;
     StorageReference storageReference,imageName;
     SearchView searchView;
+    Spinner spinGender, spinCompany;
 
 
     public AdminHomeFragment() {
@@ -96,7 +97,7 @@ public class AdminHomeFragment extends Fragment {
 
         DialogPlus dialogPlus = DialogPlus.newDialog(getContext())
                 .setContentHolder(new ViewHolder(R.layout.add_product))
-                .setExpanded(true,1500)
+                .setExpanded(true, 1850)
                 .setCancelable(false)
                 .create();
         View dailogview = dialogPlus.getHolderView();
@@ -108,7 +109,8 @@ public class AdminHomeFragment extends Fragment {
         EditText desc = dailogview.findViewById(R.id.addNewProductDescription);
         Button save = dailogview.findViewById(R.id.productSaveButton);
         Button cancel = dailogview.findViewById(R.id.productCancelButton);
-        Spinner spin = dailogview.findViewById(R.id.addProductCategory);
+        spinGender = dailogview.findViewById(R.id.addProductCategoryGender);
+        spinCompany = dailogview.findViewById(R.id.addProductCategoryCompany);
 
 
 
@@ -134,10 +136,15 @@ public class AdminHomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                String[] category = {"Male", "Female", "Kids"};
-                ArrayAdapter<String> arrayAdapter;
-                arrayAdapter = new ArrayAdapter<String>(dialogPlus.getHolderView().getContext(), android.R.layout.simple_spinner_dropdown_item, category);
-                spin.setAdapter(arrayAdapter);
+                String[] categoryGender = {"Male", "Female", "Kids"};
+                ArrayAdapter<String> arrayAdapterGender;
+                arrayAdapterGender = new ArrayAdapter<String>(dialogPlus.getHolderView().getContext(), android.R.layout.simple_spinner_dropdown_item, categoryGender);
+                spinGender.setAdapter(arrayAdapterGender);
+
+                String[] categoryCompany = {"Adidas", "Bata", "Crocs", "Nike", "Puma", "Reebok", "Red Tape"};
+                ArrayAdapter<String> arrayAdapterCompany;
+                arrayAdapterCompany = new ArrayAdapter<String>(dialogPlus.getHolderView().getContext(), android.R.layout.simple_spinner_dropdown_item, categoryCompany);
+                spinCompany.setAdapter(arrayAdapterCompany);
 
                 dialogPlus.show();
 
@@ -151,10 +158,10 @@ public class AdminHomeFragment extends Fragment {
                     }
                 });
 
-                spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                spinGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        sel_com = parent.getItemAtPosition(position).toString();
+                        selectGender = parent.getItemAtPosition(position).toString();
                     }
 
                     @Override
@@ -162,6 +169,18 @@ public class AdminHomeFragment extends Fragment {
 
                     }
                     });
+
+                spinCompany.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        selectCompany = parent.getItemAtPosition(position).toString();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
 
                     if (save == null) {
                         Log.e("AdminHomeFragment", "Save button is null");
@@ -189,19 +208,21 @@ public class AdminHomeFragment extends Fragment {
                                                 imageName.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                                     @Override
                                                     public void onSuccess(Uri uri) {
-                                                        String fiuri = uri.toString();
-                                                        String mname = name.getText().toString();
-                                                        String mprice = price.getText().toString();
-                                                        String mdesc = desc.getText().toString();
-                                                        String mcategory = sel_com;
+                                                        String fiUri = uri.toString();
+                                                        String mName = name.getText().toString();
+                                                        String mPrice = price.getText().toString();
+                                                        String mDesc = desc.getText().toString();
+                                                        String mCategoryGender = selectGender;
+                                                        String mCategoryCompany = selectCompany;
                                                         String uid = db.collection("Products").document().getId();
 
                                                         Map<String, Object> map = new HashMap<>();
-                                                        map.put("name", mname);
-                                                        map.put("price", mprice);
-                                                        map.put("description", mdesc);
-                                                        map.put("category", mcategory);
-                                                        map.put("imgurl", fiuri);
+                                                        map.put("name", mName);
+                                                        map.put("price", mPrice);
+                                                        map.put("description", mDesc);
+                                                        map.put("categoryGender", mCategoryGender);
+                                                        map.put("categoryCompany", mCategoryCompany);
+                                                        map.put("imgurl", fiUri);
                                                         map.put("pid", uid);
 
                                                     db.collection("Products")
@@ -238,12 +259,12 @@ public class AdminHomeFragment extends Fragment {
                     cancel.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-//                            // Clear text fields
-//                            name.setText("");
-//                            price.setText("");
-//                            desc.setText("");
-//                            // Reset image to default icon
-//                            img.setImageResource(R.drawable.image_icon);
+                            // Clear text fields
+                            name.setText("");
+                            price.setText("");
+                            desc.setText("");
+                            // Reset image to default icon
+                            img.setImageResource(R.drawable.image_icon);
                             // Dismiss the dialog
                             dialogPlus.dismiss();
                         }
@@ -272,7 +293,6 @@ public class AdminHomeFragment extends Fragment {
         return view;
     }
 
-
     private void search_product(String query) {
 
         if (query.isEmpty())
@@ -289,7 +309,7 @@ public class AdminHomeFragment extends Fragment {
                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                             for (QueryDocumentSnapshot document : queryDocumentSnapshots)
                             {
-                                String name = document.getString("name");
+                                String name = document.getString("categoryCompany");
                                 if (name.contains(query))
                                 {
                                     ProductModel data = document.toObject(ProductModel.class);

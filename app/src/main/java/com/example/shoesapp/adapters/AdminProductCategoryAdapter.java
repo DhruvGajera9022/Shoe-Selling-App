@@ -39,8 +39,8 @@ public class AdminProductCategoryAdapter extends RecyclerView.Adapter<ProductAda
     }
 
     public void onBindViewHolder(@NonNull ProductAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.name.setText(datalist.get(position).getName());
-        holder.price.setText(datalist.get(position).getPrice());
+        holder.name.setText(datalist.get(position).getCategoryCompany());
+//        holder.price.setText(datalist.get(position).getPrice());
         holder.description.setText(datalist.get(position).getDescription());
         Glide.with(holder.img.getContext())
                 .load(datalist.get(position).getImgurl())
@@ -62,7 +62,7 @@ public class AdminProductCategoryAdapter extends RecyclerView.Adapter<ProductAda
             super(itemView);
 
             name = itemView.findViewById(R.id.txtname);
-            price = itemView.findViewById(R.id.txtprice);
+//            price = itemView.findViewById(R.id.txtprice);
             img = itemView.findViewById(R.id.img);
             description = itemView.findViewById(R.id.txtdec);
 

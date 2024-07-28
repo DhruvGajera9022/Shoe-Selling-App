@@ -1,5 +1,6 @@
 package com.example.shoesapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -19,6 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -26,16 +28,20 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
 public class ProductDetailsActivity extends AppCompatActivity {
     ImageView imgi, img;
-    String key, cur_image;
+    String key, productDetailsKey,cur_image, txtSize, txtName, txtPrice;
     FirebaseFirestore db;
     FirebaseAuth mAuth;
     MaterialButton addToCartBtn, buyNowBtn;
-    TextView name, price, desc, txtName, txtPrice, txtDesc;
+    TextView name, price, desc, companyName;
+    EditText edtSize;
+    TabLayout tabSize;
+    ArrayList<ProductModel> datalist;
 
 
     @Override
@@ -48,7 +54,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
         img = findViewById(R.id.productImage);
         name = findViewById(R.id.productName);
         price = findViewById(R.id.productPrice);
+        companyName = findViewById(R.id.productCompanyName);
         desc = findViewById(R.id.productDescription);
+        edtSize = findViewById(R.id.textSize);
+        tabSize = findViewById(R.id.tabLayout);
         addToCartBtn = findViewById(R.id.productAddToCartButton);
         buyNowBtn = findViewById(R.id.productBuyNowButton);
 
@@ -56,6 +65,45 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
+
+        tabSize.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()){
+                    case 0:
+                        edtSize.setText("6");
+                        return;
+                    case 1:
+                        edtSize.setText("7");
+                        return;
+                    case 2:
+                        edtSize.setText("8");
+                        return;
+                    case 3:
+                        edtSize.setText("9");
+                        return;
+                    case 4:
+                        edtSize.setText("10");
+                        return;
+                    case 5:
+                        edtSize.setText("11");
+                        return;
+                    case 6:
+                        edtSize.setText("12");
+                        return;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         db.collection("Products").document(key)
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -65,8 +113,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                         Picasso.get().load(singledata.getImgurl()).into(imgi);
                         cur_image = singledata.getImgurl();
+                        companyName.setText(singledata.getCategoryCompany());
                         name.setText(singledata.getName());
-                        price.setText(singledata.getPrice());
+                        price.append("Rs. " + singledata.getPrice());
                         desc.setText(singledata.getDescription());
                     }
                 });
@@ -80,7 +129,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         buyNowBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ProductDetailsActivity.this, "Buy Now Processing...", Toast.LENGTH_SHORT).show();
+                buyNow();
             }
         });
     }
@@ -89,7 +138,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         String saveCurrentData, saveCurrentTime;
         Calendar calForDate = Calendar.getInstance();
 
-        SimpleDateFormat currentDate = new SimpleDateFormat("MM dd, yyyy");
+        SimpleDateFormat currentDate = new SimpleDateFormat("MM/dd/yyyy");
         saveCurrentData = currentDate.format(calForDate.getTime());
 
         SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
@@ -101,8 +150,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
         cartMap.put("productName", name.getText().toString());
         cartMap.put("productPrice", price.getText().toString());
         cartMap.put("productDescription", desc.getText().toString());
+        cartMap.put("productSize", edtSize.getText().toString());
         cartMap.put("currentData", saveCurrentData);
         cartMap.put("currentTime", saveCurrentTime);
+
 
         db.collection("AddToCart").document(mAuth.getCurrentUser().getUid())
                 .collection("CurrentUser")
@@ -116,6 +167,19 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 });
 
 
+    }
+
+    public void buyNow(){
+        txtName = name.getText().toString();
+        txtPrice = price.getText().toString();
+        txtSize = edtSize.getText().toString();
+        Intent intent = new Intent(ProductDetailsActivity.this, OrderDetailsActivity.class);
+        intent.putExtra("pname", txtName);
+        intent.putExtra("pprice", txtPrice);
+        intent.putExtra("psize", txtSize);
+        intent.putExtra("imgUrl", cur_image);
+        startActivity(intent);
+        finish();
     }
 
 }

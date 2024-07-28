@@ -2,15 +2,35 @@ package com.example.shoesapp.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.shoesapp.R;
+import com.example.shoesapp.adapters.OrderListAdapter;
+import com.example.shoesapp.models.OrderModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrderFragment extends Fragment {
+    FirebaseFirestore firestore;
+    FirebaseAuth mAuth;
+
+    RecyclerView recyclerView;
+    OrderListAdapter adapter;
+    List<OrderModel> list;
 
 
     public OrderFragment() {
@@ -21,6 +41,35 @@ public class OrderFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_order, container, false);
+        View view = inflater.inflate(R.layout.fragment_order, container, false);
+
+        firestore = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+
+        recyclerView = view.findViewById(R.id.orderRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        list = new ArrayList<>();
+        adapter = new OrderListAdapter(getActivity(), list);
+        recyclerView.setAdapter(adapter);
+
+        firestore.collection("Orders").document(mAuth.getCurrentUser().getUid())
+                .collection("CurrentUser")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            for (DocumentSnapshot documentSnapshot : task.getResult().getDocuments()){
+                                OrderModel orderModel = documentSnapshot.toObject(OrderModel.class);
+                                list.add(orderModel);
+                                adapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+                });
+
+
+        return view;
     }
 }

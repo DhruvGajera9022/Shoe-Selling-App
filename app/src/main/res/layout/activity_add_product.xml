@@ -114,7 +114,7 @@
                 android:layout_gravity="center"/>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/productCancelButton"
+                android:id="@+id/productCancelBu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"

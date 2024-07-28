@@ -31,7 +31,6 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
     RecyclerView userHome_rv;
-    SwipeRefreshLayout refreshLayout;
     FirebaseFirestore db;
     boolean flag = false;
     ArrayList<ProductModel> datalist = new ArrayList<>();
@@ -64,19 +63,11 @@ public class HomeFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
 
         userHome_rv = view.findViewById(R.id.userHomeRecyclerView);
-        refreshLayout = view.findViewById(R.id.refreshUserHome);
         searchView = view.findViewById(R.id.searchViewUserHome);
         db = FirebaseFirestore.getInstance();
 
         userHome_rv.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getdata();
-                refreshLayout.setRefreshing(false);
-            }
-        });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -134,7 +125,7 @@ public class HomeFragment extends Fragment {
                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                             for (QueryDocumentSnapshot document : queryDocumentSnapshots)
                             {
-                                String name = document.getString("name");
+                                String name = document.getString("categoryCompany");
                                 if (name.contains(query))
                                 {
                                     ProductModel data = document.toObject(ProductModel.class);

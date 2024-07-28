@@ -115,10 +115,10 @@ public class AdminCategoriesFragment extends Fragment {
                 });
     }
 
-    private void getDataCategory(String category) {
+    private void getDataCategoryGender(String category) {
         dataList.clear();
         db.collection("Products")
-                .whereEqualTo("category", category)
+                .whereEqualTo("categoryGender", category)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -152,21 +152,21 @@ public class AdminCategoriesFragment extends Fragment {
         maleCategoryFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getDataCategory("Male");
+                getDataCategoryGender("Male");
             }
         });
 
         femaleCategoryFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getDataCategory("Female");
+                getDataCategoryGender("Female");
             }
         });
 
         kidsCategoryFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getDataCategory("Kids");
+                getDataCategoryGender("Kids");
             }
         });
 

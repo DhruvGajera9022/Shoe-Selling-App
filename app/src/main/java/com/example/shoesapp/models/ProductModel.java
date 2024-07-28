@@ -6,18 +6,23 @@ public class ProductModel {
     String price;
     String imgurl;
     String description;
+    String categoryGender;
+    String categoryCompany;
 
     String pid;
 
     public ProductModel() {
     }
 
-    public ProductModel(String name, String price, String imgurl, String description, String pid) {
+    public ProductModel(String name, String price, String imgurl, String description, String pid, String categoryGender, String categoryCompany) {
         this.name = name;
         this.price = price;
         this.imgurl = imgurl;
         this.description = description;
         this.pid = pid;
+        this.categoryGender = categoryGender;
+        this.categoryCompany = categoryCompany;
+
     }
 
     public String getName() {
@@ -58,5 +63,21 @@ public class ProductModel {
 
     public void setPid(String pid) {
         this.pid = pid;
+    }
+
+    public String getCategoryGender() {
+        return categoryGender;
+    }
+
+    public void setCategoryGender(String categoryGender) {
+        this.categoryGender = categoryGender;
+    }
+
+    public String getCategoryCompany() {
+        return categoryCompany;
+    }
+
+    public void setCategoryCompany(String categoryCompany) {
+        this.categoryCompany = categoryCompany;
     }
 }

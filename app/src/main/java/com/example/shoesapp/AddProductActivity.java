@@ -130,7 +130,7 @@ public class AddProductActivity extends AppCompatActivity {
             }
         });
 
-        binding.productCancelButton.setOnClickListener(new View.OnClickListener() {
+        binding.productCancelBu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 binding.addNewProductName.setText("");

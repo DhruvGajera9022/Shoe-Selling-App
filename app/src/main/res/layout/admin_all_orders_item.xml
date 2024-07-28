@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
+    android:layout_height="130dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="7dp"
     android:layout_margin="5dp"
@@ -17,19 +17,19 @@
         android:background="#DAE1E7">
 
         <ImageView
-            android:id="@+id/cartImage"
+            android:id="@+id/orderImage"
             android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_height="114dp"
             android:src="@drawable/image_icon"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginLeft="5dp">
 
             <TextView
-                android:id="@+id/cartProductName"
+                android:id="@+id/adminOrderProductItemName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Product Name"
@@ -38,20 +38,35 @@
                 android:textColor="@color/black"/>
 
             <TextView
-                android:id="@+id/cartProductPrice"
+                android:id="@+id/adminOrderProductItemPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Product Price"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:textColor="#FF0000"/>
+                android:textColor="#F40101"/>
 
             <TextView
-                android:id="@+id/cartProductDescription"
+                android:id="@+id/adminOrderProductItemSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Product Description"
+                android:text="Size"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/adminOrderProductItemDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="07/28/2024"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/adminOrderProductItemUserId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ID"
                 android:textStyle="bold"
                 android:textSize="16sp" />
 

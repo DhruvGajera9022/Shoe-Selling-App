@@ -48,7 +48,14 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Spinner
-        android:id="@+id/addProductCategory"
+        android:id="@+id/addProductCategoryGender"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginVertical="10dp"
+        android:layout_marginHorizontal="20dp"/>
+
+    <Spinner
+        android:id="@+id/addProductCategoryCompany"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginVertical="10dp"
@@ -99,10 +106,10 @@
             android:layout_marginHorizontal="20dp"/>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/productCancleButton"
+            android:id="@+id/productCancelButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cancle"
+            android:text="Cancel"
             android:layout_gravity="center"
             android:layout_marginHorizontal="20dp"/>
 
