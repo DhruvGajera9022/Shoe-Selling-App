@@ -103,7 +103,7 @@ public class AdminCategoriesFragment extends Fragment {
                             List<ProductModel> data = task.getResult().toObjects(ProductModel.class);
                             dataList.addAll(data);
 
-                            GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+                            GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
                             category_rv.setLayoutManager(layoutManager);
                             adapter = new AdminProductCategoryAdapter(getContext(),dataList);
 
@@ -128,7 +128,7 @@ public class AdminCategoriesFragment extends Fragment {
                             List<ProductModel> data = task.getResult().toObjects(ProductModel.class);
                             dataList.addAll(data);
 
-                            GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+                            GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
                             category_rv.setLayoutManager(layoutManager);
                             adapter = new AdminProductCategoryAdapter(getContext(),dataList);
 

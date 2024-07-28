@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,9 +47,9 @@ public class userProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyVi
     }
 
     public void onBindViewHolder(@NonNull ProductAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.name.setText(datalist.get(position).getCategoryCompany());
-//        holder.price.setText(datalist.get(position).getPrice());
-        holder.description.setText(datalist.get(position).getDescription());
+        holder.name.setText(datalist.get(position).getName());
+        holder.price.setText("Rs. "+datalist.get(position).getPrice());
+        holder.gender.setText(datalist.get(position).getCategoryGender()+"'s Shoe");
         Glide.with(holder.img.getContext())
                 .load(datalist.get(position).getImgurl())
                 .error(R.drawable.image_icon)
@@ -62,8 +64,6 @@ public class userProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyVi
             }
         });
 
-
-
     }
 
     @Override
@@ -73,18 +73,19 @@ public class userProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyVi
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView name,price,description;
+        TextView name,price,gender;
         ImageView img;
-        Button edit,delete;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             name = itemView.findViewById(R.id.txtname);
-//            price = itemView.findViewById(R.id.txtprice);
+            price = itemView.findViewById(R.id.txtprice);
             img = itemView.findViewById(R.id.img);
-            description = itemView.findViewById(R.id.txtdec);
+            gender = itemView.findViewById(R.id.txtgender);
 
         }
     }
+
+
 
 }

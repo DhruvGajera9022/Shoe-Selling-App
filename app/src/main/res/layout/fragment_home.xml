@@ -36,13 +36,6 @@
                     android:layout_marginStart="15dp"
                     android:text="Choose Your Best Shoes"/>
 
-                <ImageView
-                    android:id="@+id/favourite"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/favourite"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginRight="10dp"/>
             </LinearLayout>
 
 

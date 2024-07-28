@@ -98,7 +98,7 @@ public class HomeFragment extends Fragment {
                             List<ProductModel> data = task.getResult().toObjects(ProductModel.class);
                             datalist.addAll(data);
 
-                            GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+                            GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
                             userHome_rv.setLayoutManager(layoutManager);
                             adapter = new userProductAdapter(getContext(),datalist);
                             userHome_rv.setHasFixedSize(true);
@@ -132,7 +132,7 @@ public class HomeFragment extends Fragment {
                                     datalist.add(data);
                                 }
                             }
-                            GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+                            GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
                             userHome_rv.setLayoutManager(layoutManager);
                             adapter = new userProductAdapter(getContext(),datalist);
                             userHome_rv.setHasFixedSize(true);

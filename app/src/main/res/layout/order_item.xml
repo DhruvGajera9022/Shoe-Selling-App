@@ -17,7 +17,7 @@
         android:background="#DAE1E7">
 
         <ImageView
-            android:id="@+id/orderImage"
+            android:id="@+id/orderProductItemImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/image_icon"/>

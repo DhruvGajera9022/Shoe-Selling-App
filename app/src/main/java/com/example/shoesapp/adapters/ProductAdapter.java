@@ -24,7 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHolder>{
+public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHolder> {
 
     Context context;
     ArrayList<ProductModel> datalist;
@@ -39,14 +39,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.product_design,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.product_design, parent, false);
         return new MyViewHolder(view);
     }
 
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.name.setText(datalist.get(position).getCategoryCompany());
-//        holder.price.setText(datalist.get(position).getPrice());
-        holder.description.setText(datalist.get(position).getDescription());
+        holder.name.setText(datalist.get(position).getName());
+        holder.price.setText("Rs. "+datalist.get(position).getPrice());
+        holder.gender.setText(datalist.get(position).getCategoryGender()+"'s Shoe");
         Glide.with(holder.img.getContext())
                 .load(datalist.get(position).getImgurl())
                 .error(R.drawable.image_icon)
@@ -64,33 +64,33 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         holder.img.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                        AlertDialog.Builder deletedialog = new AlertDialog.Builder(context);
-                        deletedialog.setCancelable(false)
-                                .setMessage("Are you sure to delete this ?")
-                                .setTitle("Delete")
-                                .setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        db = FirebaseFirestore.getInstance();
-                                        db.collection("Products")
-                                                .document(datalist.get(position).getPid())
-                                                .delete()
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void unused) {
+                AlertDialog.Builder deletedialog = new AlertDialog.Builder(context);
+                deletedialog.setCancelable(false)
+                        .setMessage("Are you sure to delete this ?")
+                        .setTitle("Delete")
+                        .setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                db = FirebaseFirestore.getInstance();
+                                db.collection("Products")
+                                        .document(datalist.get(position).getPid())
+                                        .delete()
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
 
-                                                        dialog.dismiss();
-                                                    }
-                                                });
-                                    }
-                                })
-                                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                        deletedialog.show();
+                                                dialog.dismiss();
+                                            }
+                                        });
+                            }
+                        })
+                        .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                deletedialog.show();
                 return false;
             }
         });
@@ -104,94 +104,19 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView name,price,description;
+        TextView name, price, gender;
         ImageView img;
-        Button edit,delete;
+        Button edit, delete;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             name = itemView.findViewById(R.id.txtname);
-//            price = itemView.findViewById(R.id.txtprice);
+            price = itemView.findViewById(R.id.txtprice);
             img = itemView.findViewById(R.id.img);
-            description = itemView.findViewById(R.id.txtdec);
+            gender = itemView.findViewById(R.id.txtgender);
 
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    List<ProductModel> list;
-//    Context context;
-//    DatabaseReference reference;
-//
-//    public ProductAdapter(List<ProductModel> list, Context context) {
-//        this.list = list;
-//        this.context = context;
-//    }
-//
-//    @NonNull
-//    @Override
-//    public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        View view = LayoutInflater.from(context).inflate(R.layout.product_design,parent,false);
-//        return new myViewHolder(view);
-//    }
-//
-//    @Override
-//    public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
-//        ProductModel productModel = list.get(position);
-//        holder.name.setText(productModel.getName());
-//        holder.price.setText(productModel.getPrice());
-//        holder.description.setText(productModel.getDescription());
-//        Picasso.get().load(productModel.getImgurl()).into(holder.imageView);
-//
-//
-//    }
-//
-//    @Override
-//    public int getItemCount() {
-//        return list.size();
-//    }
-//
-//    public class myViewHolder extends RecyclerView.ViewHolder {
-//        TextView name, price, description;
-//        ImageView imageView;
-//
-//        public myViewHolder(@NonNull View itemView) {
-//            super(itemView);
-//
-//            name = itemView.findViewById(R.id.txtname);
-//            price = itemView.findViewById(R.id.txtprice);
-//            description = itemView.findViewById(R.id.txtdec);
-//            imageView = itemView.findViewById(R.id.img);
-//
-//        }
-//    }
 
 }

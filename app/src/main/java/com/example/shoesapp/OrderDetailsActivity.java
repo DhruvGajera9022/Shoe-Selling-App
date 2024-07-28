@@ -29,7 +29,7 @@ import java.util.HashMap;
 public class OrderDetailsActivity extends AppCompatActivity {
     AppCompatButton btnBuy, btnCancel;
     TextView pName, pPrice, pSize, pFor;
-    String strName, strPrice, strSize;
+    String strName, strPrice, strSize, imgUrl;
     FirebaseFirestore db;
     FirebaseAuth mAuth;
     ImageView img, imgi;
@@ -54,7 +54,9 @@ public class OrderDetailsActivity extends AppCompatActivity {
         strName = getIntent().getStringExtra("pname");
         strPrice = getIntent().getStringExtra("pprice");
         strSize = getIntent().getStringExtra("psize");
+        imgUrl = getIntent().getStringExtra("imgUrl");
 
+        Picasso.get().load(imgUrl).into(imgi);
         pName.setText(strName);
         pPrice.setText(strPrice);
         pSize.setText(strSize);
@@ -90,6 +92,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
         cartMap.put("orderProductName", pName.getText().toString());
         cartMap.put("orderProductPrice", pPrice.getText().toString());
         cartMap.put("orderProductSize", pSize.getText().toString());
+        cartMap.put("orderProductImage", imgUrl.toString());
         cartMap.put("currentOrderDate", saveCurrentDate);
         cartMap.put("currentOrderTime", saveCurrentTime);
         cartMap.put("currentUserId", mAuth.getCurrentUser().getUid());

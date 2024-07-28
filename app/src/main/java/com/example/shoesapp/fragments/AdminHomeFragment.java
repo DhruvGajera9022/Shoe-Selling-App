@@ -23,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.example.shoesapp.adapters.ProductAdapter;
@@ -316,7 +317,7 @@ public class AdminHomeFragment extends Fragment {
                                     datalist.add(data);
                                 }
                             }
-                            GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+                            GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
                             home_rv.setLayoutManager(layoutManager);
                             productAdapter = new ProductAdapter(getContext(),datalist);
                             home_rv.setHasFixedSize(true);
@@ -340,10 +341,7 @@ public class AdminHomeFragment extends Fragment {
                             List<ProductModel> data = task.getResult().toObjects(ProductModel.class);
                             datalist.addAll(data);
 
-//                            productAdapter = new ProductAdapter(getContext(),datalist);
-//                            home_rv.setAdapter(productAdapter);
-
-                            GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+                            GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
                             home_rv.setLayoutManager(layoutManager);
                             productAdapter = new ProductAdapter(getContext(),datalist);
                             home_rv.setHasFixedSize(true);

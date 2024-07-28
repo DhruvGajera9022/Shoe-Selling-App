@@ -26,6 +26,7 @@ import com.google.android.material.chip.Chip;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,7 +98,7 @@ public class CategoryFragment extends Fragment {
                             List<ProductModel> data = task.getResult().toObjects(ProductModel.class);
                             dataList.addAll(data);
 
-                            GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+                            GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
                             category_rv.setLayoutManager(layoutManager);
                             adapter = new AdminProductCategoryAdapter(getContext(),dataList);
                             category_rv.setHasFixedSize(true);
@@ -121,7 +122,7 @@ public class CategoryFragment extends Fragment {
                             List<ProductModel> data = task.getResult().toObjects(ProductModel.class);
                             dataList.addAll(data);
 
-                            GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+                            GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
                             category_rv.setLayoutManager(layoutManager);
                             adapter = new AdminProductCategoryAdapter(getContext(),dataList);
 

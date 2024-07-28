@@ -4,11 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.shoesapp.R;
 import com.example.shoesapp.models.OrderModel;
 
@@ -33,6 +35,10 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
+        Glide.with(holder.img.getContext())
+                .load(list.get(position).getOrderProductImage())
+                .error(R.drawable.image_icon)
+                .into(holder.img);
         holder.name.setText(list.get(position).getOrderProductName());
         holder.price.setText(list.get(position).getOrderProductPrice());
         holder.size.setText(list.get(position).getOrderProductSize());
@@ -47,6 +53,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name, price, size, date;
+        ImageView img;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -55,6 +62,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
             price = itemView.findViewById(R.id.orderProductItemPrice);
             size = itemView.findViewById(R.id.orderProductItemSize);
             date = itemView.findViewById(R.id.orderProductItemDate);
+            img = itemView.findViewById(R.id.orderProductItemImage);
 
         }
     }

@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.HomeFragment"
-    android:id="@+id/wrapper"
-    android:background="@color/sky">
+    android:id="@+id/wrapper">
 
     <RelativeLayout
         android:layout_width="match_parent"
