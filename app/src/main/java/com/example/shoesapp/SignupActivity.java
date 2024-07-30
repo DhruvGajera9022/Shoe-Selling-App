@@ -31,8 +31,7 @@ public class SignupActivity extends AppCompatActivity {
     ActivitySignupBinding binding;
     FirebaseAuth mAuth;
     FirebaseFirestore firestore;
-    String name, email, userId;
-    userData userData;
+    String name, lname, email, userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +49,14 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
+        binding.loginText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
     }
 
     @Override
@@ -60,15 +67,16 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void checkValidSignup() {
-        if (binding.signupUsernameEdt.getText().toString().isEmpty()){
-            binding.signupUsernameEdt.setError("Username is required");
-        }
-        else if(binding.signupEmailEdt.getText().toString().isEmpty()){
+        if (binding.signupFNameEdt.getText().toString().isEmpty()){
+            binding.signupFNameEdt.setError("Username is required");
+        } else if (binding.signupLNameEdt.getText().toString().isEmpty()) {
+            binding.signupLNameEdt.setError("Last Name is required");
+        } else if(binding.signupEmailEdt.getText().toString().isEmpty()){
             binding.signupEmailEdt.setError("Email is required");
         } else if (binding.signupPasswordEdt.getText().toString().isEmpty()){
             binding.signupPasswordEdt.setError("Password is required");
-        }else if (binding.signupConfirmPassowrdEdt.getText().toString().isEmpty()){
-            binding.signupConfirmPassowrdEdt.setError("Confirm Password is required");
+        }else if (binding.signupConfirmPasswordEdt.getText().toString().isEmpty()){
+            binding.signupConfirmPasswordEdt.setError("Confirm Password is required");
         }
         else {
             mAuth.createUserWithEmailAndPassword(binding.signupEmailEdt.getText().toString(), binding.signupPasswordEdt.getText().toString())
@@ -79,12 +87,15 @@ public class SignupActivity extends AppCompatActivity {
                             userId = mAuth.getCurrentUser().getUid();
                             DocumentReference documentReference = firestore.collection("Users").document(userId);
 
-                            name = binding.signupUsernameEdt.getText().toString();
+                            name = binding.signupFNameEdt.getText().toString();
                             email = binding.signupEmailEdt.getText().toString();
+                            lname = binding.signupLNameEdt.getText().toString();
 
                             Map<String, Object> user = new HashMap<>();
-                            user.put("UserName", name);
+                            user.put("FirstName", name);
+                            user.put("LastName", lname);
                             user.put("Email", email);
+                            user.put("UserId", userId);
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {

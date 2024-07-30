@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.shoesapp.R;
 import com.example.shoesapp.adapters.OrderListAdapter;
+import com.example.shoesapp.models.MyCartModel;
 import com.example.shoesapp.models.OrderModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -53,16 +54,18 @@ public class OrderFragment extends Fragment {
         adapter = new OrderListAdapter(getActivity(), list);
         recyclerView.setAdapter(adapter);
 
-        firestore.collection("Orders").document(mAuth.getCurrentUser().getUid())
-                .collection("CurrentUser")
+        String uid = mAuth.getCurrentUser().getUid();
+
+        firestore.collection("Orders")
+                .whereEqualTo("uid", uid)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()){
-                            for (DocumentSnapshot documentSnapshot : task.getResult().getDocuments()){
-                                OrderModel orderModel = documentSnapshot.toObject(OrderModel.class);
-                                list.add(orderModel);
+                            if (task.isSuccessful()) {
+                                List<OrderModel> orderModelList = task.getResult().toObjects(OrderModel.class);
+                                list.addAll(orderModelList);
                                 adapter.notifyDataSetChanged();
                             }
                         }

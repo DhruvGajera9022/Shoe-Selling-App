@@ -34,11 +34,11 @@ import java.util.HashMap;
 
 public class ProductDetailsActivity extends AppCompatActivity {
     ImageView imgi, img;
-    String key, productDetailsKey,cur_image, txtSize, txtName, txtPrice;
+    String key, productDetailsKey,cur_image, txtSize, txtName, txtPrice, currentUser;
     FirebaseFirestore db;
     FirebaseAuth mAuth;
     MaterialButton addToCartBtn, buyNowBtn;
-    TextView name, price, desc, companyName;
+    TextView name, price, desc, gender;
     EditText edtSize;
     TabLayout tabSize;
     ArrayList<ProductModel> datalist;
@@ -54,8 +54,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
         img = findViewById(R.id.productImage);
         name = findViewById(R.id.productName);
         price = findViewById(R.id.productPrice);
-        companyName = findViewById(R.id.productCompanyName);
         desc = findViewById(R.id.productDescription);
+        gender = findViewById(R.id.productFor);
         edtSize = findViewById(R.id.textSize);
         tabSize = findViewById(R.id.tabLayout);
         addToCartBtn = findViewById(R.id.productAddToCartButton);
@@ -113,9 +113,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                         Picasso.get().load(singledata.getImgurl()).into(imgi);
                         cur_image = singledata.getImgurl();
-                        companyName.setText(singledata.getCategoryCompany());
                         name.setText(singledata.getName());
                         price.append("Rs. " + singledata.getPrice());
+                        gender.setText(singledata.getCategoryGender()+"'s Shoe");
                         desc.setText(singledata.getDescription());
                     }
                 });
@@ -144,6 +144,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
         SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
         saveCurrentTime = currentTime.format(calForDate.getTime());
 
+        currentUser = mAuth.getCurrentUser().getUid();
+
         HashMap<String, Object> cartMap = new HashMap<>();
 
         cartMap.put("productImage", cur_image);
@@ -153,15 +155,18 @@ public class ProductDetailsActivity extends AppCompatActivity {
         cartMap.put("productSize", edtSize.getText().toString());
         cartMap.put("currentData", saveCurrentData);
         cartMap.put("currentTime", saveCurrentTime);
+        cartMap.put("uid", currentUser);
 
+        String oid = db.collection("AddToCart").document().getId();
+        cartMap.put("oid",oid);
 
-        db.collection("AddToCart").document(mAuth.getCurrentUser().getUid())
-                .collection("CurrentUser")
-                .add(cartMap)
-                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+        db.collection("AddToCart")
+                .document(oid)
+                .set(cartMap)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                        Toast.makeText(ProductDetailsActivity.this, "Added To A Cart", Toast.LENGTH_SHORT).show();
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(ProductDetailsActivity.this, "Added To Cart", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 });

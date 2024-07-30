@@ -47,6 +47,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         holder.name.setText(datalist.get(position).getName());
         holder.price.setText("Rs. "+datalist.get(position).getPrice());
         holder.gender.setText(datalist.get(position).getCategoryGender()+"'s Shoe");
+        holder.rating.setText(datalist.get(position).getRating());
         Glide.with(holder.img.getContext())
                 .load(datalist.get(position).getImgurl())
                 .error(R.drawable.image_icon)
@@ -104,7 +105,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView name, price, gender;
+        TextView name, price, gender, rating;
         ImageView img;
         Button edit, delete;
 
@@ -115,6 +116,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
             price = itemView.findViewById(R.id.txtprice);
             img = itemView.findViewById(R.id.img);
             gender = itemView.findViewById(R.id.txtgender);
+            rating = itemView.findViewById(R.id.txtrating);
 
         }
     }

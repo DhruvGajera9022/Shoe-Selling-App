@@ -1,28 +1,21 @@
 package com.example.shoesapp.adapters;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.shoesapp.AdminProductDetailsActivity;
 import com.example.shoesapp.ProductDetailsActivity;
 import com.example.shoesapp.R;
 import com.example.shoesapp.models.ProductModel;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -49,6 +42,7 @@ public class userProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyVi
     public void onBindViewHolder(@NonNull ProductAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.name.setText(datalist.get(position).getName());
         holder.price.setText("Rs. "+datalist.get(position).getPrice());
+        holder.rating.setText(datalist.get(position).getRating());
         holder.gender.setText(datalist.get(position).getCategoryGender()+"'s Shoe");
         Glide.with(holder.img.getContext())
                 .load(datalist.get(position).getImgurl())
@@ -73,7 +67,7 @@ public class userProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyVi
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView name,price,gender;
+        TextView name,price,gender, rating;
         ImageView img;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -82,6 +76,7 @@ public class userProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyVi
             price = itemView.findViewById(R.id.txtprice);
             img = itemView.findViewById(R.id.img);
             gender = itemView.findViewById(R.id.txtgender);
+            rating = itemView.findViewById(R.id.txtrating);
 
         }
     }

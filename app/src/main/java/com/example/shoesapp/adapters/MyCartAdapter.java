@@ -1,18 +1,26 @@
 package com.example.shoesapp.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.shoesapp.R;
 import com.example.shoesapp.models.MyCartModel;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -20,6 +28,8 @@ import java.util.List;
 public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.ViewHolder> {
     Context context;
     List<MyCartModel> cartModelList;
+    FirebaseFirestore db;
+    FirebaseAuth mAuth;
 
     public MyCartAdapter(Context context, List<MyCartModel> cartModelList) {
         this.context = context;
@@ -33,7 +43,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         Glide.with(holder.productImage.getContext())
                 .load(cartModelList.get(position).getProductImage())
@@ -41,7 +51,8 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.ViewHolder
                 .into(holder.productImage);
         holder.name.setText(cartModelList.get(position).getProductName());
         holder.price.setText(cartModelList.get(position).getProductPrice());
-        holder.description.setText(cartModelList.get(position).getProductDescription());
+        holder.size.append(cartModelList.get(position).getProductSize());
+
 
     }
 
@@ -51,8 +62,9 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView name, price, description, totalPrice;
+        TextView name, price, size, totalPrice;
         ImageView productImage;
+        ImageButton btnDelete, btnEdit;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -60,7 +72,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.ViewHolder
             productImage = itemView.findViewById(R.id.cartImage);
             name = itemView.findViewById(R.id.cartProductName);
             price = itemView.findViewById(R.id.cartProductPrice);
-            description = itemView.findViewById(R.id.cartProductDescription);
+            size = itemView.findViewById(R.id.cartProductSize);
 
 
 

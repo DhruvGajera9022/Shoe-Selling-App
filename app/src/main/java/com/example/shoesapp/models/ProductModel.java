@@ -8,13 +8,14 @@ public class ProductModel {
     String description;
     String categoryGender;
     String categoryCompany;
+    String rating;
 
     String pid;
 
     public ProductModel() {
     }
 
-    public ProductModel(String name, String price, String imgurl, String description, String pid, String categoryGender, String categoryCompany) {
+    public ProductModel(String name, String price, String imgurl, String description, String pid, String categoryGender, String categoryCompany, String rating) {
         this.name = name;
         this.price = price;
         this.imgurl = imgurl;
@@ -22,6 +23,7 @@ public class ProductModel {
         this.pid = pid;
         this.categoryGender = categoryGender;
         this.categoryCompany = categoryCompany;
+        this.rating = rating;
 
     }
 
@@ -79,5 +81,13 @@ public class ProductModel {
 
     public void setCategoryCompany(String categoryCompany) {
         this.categoryCompany = categoryCompany;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
     }
 }

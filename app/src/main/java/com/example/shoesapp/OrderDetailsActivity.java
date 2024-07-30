@@ -29,7 +29,7 @@ import java.util.HashMap;
 public class OrderDetailsActivity extends AppCompatActivity {
     AppCompatButton btnBuy, btnCancel;
     TextView pName, pPrice, pSize, pFor;
-    String strName, strPrice, strSize, imgUrl;
+    String strName, strPrice, strSize, imgUrl, currentUser;
     FirebaseFirestore db;
     FirebaseAuth mAuth;
     ImageView img, imgi;
@@ -87,6 +87,8 @@ public class OrderDetailsActivity extends AppCompatActivity {
         SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
         saveCurrentTime = currentTime.format(calForDate.getTime());
 
+        currentUser = mAuth.getCurrentUser().getUid();
+
         HashMap<String, Object> cartMap = new HashMap<>();
 
         cartMap.put("orderProductName", pName.getText().toString());
@@ -95,19 +97,22 @@ public class OrderDetailsActivity extends AppCompatActivity {
         cartMap.put("orderProductImage", imgUrl.toString());
         cartMap.put("currentOrderDate", saveCurrentDate);
         cartMap.put("currentOrderTime", saveCurrentTime);
-        cartMap.put("currentUserId", mAuth.getCurrentUser().getUid());
+        cartMap.put("uid", currentUser);
+
+        String oid = db.collection("Orders").document().getId();
+        cartMap.put("oid",oid);
 
 
-        db.collection("Orders").document(mAuth.getCurrentUser().getUid())
-                .collection("CurrentUser")
-                .add(cartMap)
-                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                        startActivity(new Intent(OrderDetailsActivity.this, OrderConfirmActivity.class));
-                        finish();
-                    }
-                });
+        db.collection("Orders")
+                .document(oid)
+                .set(cartMap)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                startActivity(new Intent(OrderDetailsActivity.this, OrderConfirmActivity.class));
+                                finish();
+                            }
+                        });
 
 
     }

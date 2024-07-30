@@ -2,6 +2,7 @@ package com.example.shoesapp.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.shoesapp.ProductDetailsActivity;
 import com.example.shoesapp.R;
 import com.example.shoesapp.models.ProductModel;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -40,11 +42,22 @@ public class AdminProductCategoryAdapter extends RecyclerView.Adapter<ProductAda
 
     public void onBindViewHolder(@NonNull ProductAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.name.setText(datalist.get(position).getName());
-        holder.price.setText(datalist.get(position).getPrice());
+        holder.price.setText("Rs. "+datalist.get(position).getPrice());
+        holder.gender.setText(datalist.get(position).getCategoryGender()+"'s Shoe");
+        holder.rating.setText(datalist.get(position).getRating());
         Glide.with(holder.img.getContext())
                 .load(datalist.get(position).getImgurl())
                 .error(R.drawable.image_icon)
                 .into(holder.img);
+
+        holder.img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ProductDetailsActivity.class);
+                intent.putExtra("key", datalist.get(position).getPid());
+                context.startActivity(intent);
+            }
+        });
 
     }
 
@@ -55,7 +68,7 @@ public class AdminProductCategoryAdapter extends RecyclerView.Adapter<ProductAda
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView name,price,gender;
+        TextView name,price,gender, rating;
         ImageView img;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,6 +77,7 @@ public class AdminProductCategoryAdapter extends RecyclerView.Adapter<ProductAda
             price = itemView.findViewById(R.id.txtprice);
             img = itemView.findViewById(R.id.img);
             gender = itemView.findViewById(R.id.txtgender);
+            rating = itemView.findViewById(R.id.txtrating);
 
         }
     }

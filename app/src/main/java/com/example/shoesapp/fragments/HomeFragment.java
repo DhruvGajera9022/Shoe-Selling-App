@@ -125,7 +125,7 @@ public class HomeFragment extends Fragment {
                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                             for (QueryDocumentSnapshot document : queryDocumentSnapshots)
                             {
-                                String name = document.getString("categoryCompany");
+                                String name = document.getString("name");
                                 if (name.contains(query))
                                 {
                                     ProductModel data = document.toObject(ProductModel.class);
@@ -135,6 +135,7 @@ public class HomeFragment extends Fragment {
                             GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
                             userHome_rv.setLayoutManager(layoutManager);
                             adapter = new userProductAdapter(getContext(),datalist);
+                            adapter.notifyDataSetChanged();
                             userHome_rv.setHasFixedSize(true);
                             userHome_rv.setAdapter(adapter);
 

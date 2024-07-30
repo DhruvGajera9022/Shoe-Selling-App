@@ -14,7 +14,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.shoesapp.models.ProductModel;
-import com.example.shoesapp.fragments.AdminHomeFragment;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -36,7 +35,6 @@ public class AdminProductDetailsActivity extends AppCompatActivity {
     String key, cur_image;
     Uri img_upd_uri;
     StorageReference imageName, updstorageref;
-    AdminHomeFragment adminHomeFragment = new AdminHomeFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

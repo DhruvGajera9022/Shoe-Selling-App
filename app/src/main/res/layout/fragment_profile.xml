@@ -3,65 +3,242 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.ProfileFragment"
-    android:background="@color/sky">
+    android:orientation="vertical">
 
-    <LinearLayout
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        app:cardElevation="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="100dp">
+            android:orientation="vertical"
+            android:padding="20dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hello, "
-                android:textSize="25sp"
+                android:text="Account Settings"
+                android:textSize="24sp"
                 android:textColor="@color/black"
                 android:textStyle="bold"/>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Dhruv"
-                android:id="@+id/profileUsername"
-                android:textSize="25sp"
-                android:textColor="@color/black" />
+                android:orientation="horizontal"
+                android:weightSum="4"
+                android:layout_marginTop="10dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/profileEditProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Edit Profile"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:drawableStart="@drawable/user_icon"
+                    android:drawablePadding="15dp"
+                    android:layout_weight="3"/>
+
+                <ImageButton
+                    android:id="@+id/profileEditProfileBtn"
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/right_arrow_icon"
+                    android:backgroundTint="@color/white"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4"
+                android:layout_marginTop="10dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/profileLocation"
+                    android:layout_width="115dp"
+                    android:layout_height="wrap_content"
+                    android:text="Saved Addresses"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:drawableStart="@drawable/location_icon"
+                    android:drawablePadding="15dp"
+                    android:layout_weight="3"/>
+
+                <ImageButton
+                    android:id="@+id/profileLocationBtn"
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/right_arrow_icon"
+                    android:backgroundTint="@color/white"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4"
+                android:layout_marginTop="10dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/profileSelectLanguage"
+                    android:layout_width="115dp"
+                    android:layout_height="wrap_content"
+                    android:text="Select Language"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:drawableStart="@drawable/language_icon"
+                    android:drawablePadding="15dp"
+                    android:layout_weight="3"/>
+
+                <ImageButton
+                    android:id="@+id/profileSelectLanguageBtn"
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/right_arrow_icon"
+                    android:backgroundTint="@color/white"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4"
+                android:layout_marginTop="10dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/profileSettings"
+                    android:layout_width="115dp"
+                    android:layout_height="wrap_content"
+                    android:text="Settings"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:drawableStart="@drawable/settings_icon"
+                    android:drawablePadding="15dp"
+                    android:layout_weight="3"/>
+
+                <ImageButton
+                    android:id="@+id/profileSettingsBtn"
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/right_arrow_icon"
+                    android:backgroundTint="@color/white"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Email:"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:layout_marginTop="20dp"/>
+    </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="10dp"
+        android:layout_marginTop="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
-            android:id="@+id/profileEmail"
-            android:textSize="20sp"
-            android:textColor="@color/black"/>
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Information"
+                android:textSize="24sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4"
+                android:layout_marginTop="10dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/profileAboutUs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="About Us"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:drawableStart="@drawable/info_icon"
+                    android:drawablePadding="15dp"
+                    android:layout_weight="3"/>
+
+                <ImageButton
+                    android:id="@+id/profileAboutUsBtn"
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/right_arrow_icon"
+                    android:backgroundTint="@color/white"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4"
+                android:layout_marginTop="10dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/profilePrivacyPolicy"
+                    android:layout_width="115dp"
+                    android:layout_height="wrap_content"
+                    android:text="Privacy Policy"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:drawableStart="@drawable/books_icon"
+                    android:drawablePadding="15dp"
+                    android:layout_weight="3"/>
+
+                <ImageButton
+                    android:id="@+id/profilePrivacyPolicyBtn"
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/right_arrow_icon"
+                    android:backgroundTint="@color/white"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/userLogout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Logout"
             android:backgroundTint="@color/black"
+            android:layout_marginHorizontal="20dp"
             android:layout_marginTop="50dp"/>
-
-    </LinearLayout>
 
 
 
