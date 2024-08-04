@@ -1,74 +1,110 @@
 package com.example.shoesapp.models;
 
 public class OrderModel {
-    String orderProductId, orderProductName, orderProductPrice, orderProductSize, currentOrderDate, orderProductImage, currentUserId;
+    String productName, productPrice, productSize, productImage, productDescription, oid, userName, email, number, address, date;
 
     public OrderModel() {
     }
 
-    public OrderModel(String orderProductId, String orderProductName, String orderProductPrice, String orderProductSize, String currentOrderDate, String orderProductImage, String currentUserId) {
-        this.orderProductId = orderProductId;
-        this.orderProductName = orderProductName;
-        this.orderProductPrice = orderProductPrice;
-        this.orderProductSize = orderProductSize;
-        this.currentOrderDate = currentOrderDate;
-        this.orderProductImage = orderProductImage;
-        this.currentUserId = currentUserId;
+    public OrderModel(String productName, String productPrice, String productSize, String productImage, String oid, String productDescription, String userName, String email, String number, String address, String date) {
+        this.productName = productName;
+        this.productPrice = productPrice;
+        this.productSize = productSize;
+        this.productImage = productImage;
+        this.oid = oid;
+        this.userName = userName;
+        this.productDescription = productDescription;
+        this.email = email;
+        this.number = number;
+        this.address = address;
+        this.date = date;
     }
 
-    public String getOrderProductId() {
-        return orderProductId;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setOrderProductId(String orderProductId) {
-        this.orderProductId = orderProductId;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    public String getOrderProductName() {
-        return orderProductName;
+    public String getProductPrice() {
+        return productPrice;
     }
 
-    public void setOrderProductName(String orderProductName) {
-        this.orderProductName = orderProductName;
+    public void setProductPrice(String productPrice) {
+        this.productPrice = productPrice;
     }
 
-    public String getOrderProductPrice() {
-        return orderProductPrice;
+    public String getProductSize() {
+        return productSize;
     }
 
-    public void setOrderProductPrice(String orderProductPrice) {
-        this.orderProductPrice = orderProductPrice;
+    public void setProductSize(String productSize) {
+        this.productSize = productSize;
     }
 
-    public String getOrderProductSize() {
-        return orderProductSize;
+    public String getProductImage() {
+        return productImage;
     }
 
-    public void setOrderProductSize(String orderProductSize) {
-        this.orderProductSize = orderProductSize;
+    public void setProductImage(String productImage) {
+        this.productImage = productImage;
     }
 
-    public String getCurrentOrderDate() {
-        return currentOrderDate;
+    public String getOid() {
+        return oid;
     }
 
-    public void setCurrentOrderDate(String currentOrderDate) {
-        this.currentOrderDate = currentOrderDate;
+    public void setOid(String oid) {
+        this.oid = oid;
     }
 
-    public String getOrderProductImage() {
-        return orderProductImage;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setOrderProductImage(String orderProductImage) {
-        this.orderProductImage = orderProductImage;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getCurrentUserId() {
-        return currentUserId;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCurrentUserId(String currentUserId) {
-        this.currentUserId = currentUserId;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getdate() {
+        return date;
+    }
+
+    public void setdate(String date) {
+        this.date = date;
+    }
+
+    public String getProductDescription() {
+        return productDescription;
+    }
+
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
     }
 }

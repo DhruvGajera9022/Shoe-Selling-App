@@ -2,6 +2,7 @@ package com.example.shoesapp.profileactivities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -26,22 +27,41 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.shoesapp.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class AddressActivity extends AppCompatActivity implements LocationListener {
     ImageButton btnLocation;
+    MaterialButton btnAddAddress;
     EditText txtLocation;
     LocationManager locationManager;
+    private FirebaseFirestore firestore;
+    private FirebaseAuth mAuth;
+    String uid;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address);
 
+        firestore = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+
+        progressDialog = new ProgressDialog(this);
+
         btnLocation = findViewById(R.id.locationBtn);
         txtLocation = findViewById(R.id.currentAddressTxt);
+        btnAddAddress = findViewById(R.id.addAddressBtn);
 
         if (ContextCompat.checkSelfPermission(AddressActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
         != PackageManager.PERMISSION_GRANTED){
@@ -57,6 +77,12 @@ public class AddressActivity extends AppCompatActivity implements LocationListen
             }
         });
 
+        btnAddAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addAddress();
+            }
+        });
 
     }
 
@@ -111,4 +137,40 @@ public class AddressActivity extends AppCompatActivity implements LocationListen
     public void onProviderDisabled(@NonNull String provider) {
         LocationListener.super.onProviderDisabled(provider);
     }
+
+    public void addAddress(){
+
+        progressDialog.setMessage("Updating Address...");
+        progressDialog.show();
+
+        String address = txtLocation.getText().toString();
+
+        uid = mAuth.getCurrentUser().getUid();
+
+        DocumentReference reference = firestore.collection("Users").document(uid);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("Address", address);
+
+        firestore.collection("Users")
+                .document(uid)
+                .update(map)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        progressDialog.dismiss();
+                        Toast.makeText(AddressActivity.this, "Address Added", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
+                        Toast.makeText(AddressActivity.this, "Address failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
+
 }

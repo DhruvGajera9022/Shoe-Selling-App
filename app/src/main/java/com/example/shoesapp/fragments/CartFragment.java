@@ -1,10 +1,12 @@
 package com.example.shoesapp.fragments;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -15,22 +17,37 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.shoesapp.R;
 import com.example.shoesapp.adapters.MyCartAdapter;
 import com.example.shoesapp.models.MyCartModel;
+import com.example.shoesapp.profileactivities.EditProfileActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ViewHolder;
+import com.squareup.picasso.Picasso;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
@@ -48,8 +65,11 @@ public class CartFragment extends Fragment {
     private TextView txtProductTotal, txtProductDeliveryTotal, txtProduceVoucherTotal, txtProductFinalTotal;
     private MaterialButton btnCheckout;
 
-    private String strTotalAmount;
+    private String strTotalAmount, uid, paymentMethod;
     private int totalAmount;
+
+    private RadioButton rbOptionCreditDebitAtm, rbOptionNetBanking, rbOptionWallets, rbOptionUPI, rbOptionCashOnDelivery;
+    private RadioGroup radioGroup;
 
     public CartFragment() {
         // Required empty public constructor
@@ -63,6 +83,7 @@ public class CartFragment extends Fragment {
 
         initialize(view);
         loadCartItems();
+
 
         return view;
     }
@@ -78,6 +99,12 @@ public class CartFragment extends Fragment {
 
         btnCheckout = view.findViewById(R.id.cartCheckoutButton);
 
+        rbOptionCreditDebitAtm = view.findViewById(R.id.rbOptionCreditDebitAtm);
+        rbOptionNetBanking = view.findViewById(R.id.rbOptionNetBanking);
+        rbOptionWallets = view.findViewById(R.id.rbOptionWallets);
+        rbOptionUPI = view.findViewById(R.id.rbOptionUPI);
+        rbOptionCashOnDelivery = view.findViewById(R.id.rbOptionCashOnDelivery);
+
         recyclerView = view.findViewById(R.id.cartRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -87,6 +114,14 @@ public class CartFragment extends Fragment {
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
+
+        btnCheckout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toOrder();
+            }
+        });
+
     }
 
     private void loadCartItems() {
@@ -198,5 +233,123 @@ public class CartFragment extends Fragment {
                         }
                     }
                 });
+    }
+
+    public void toOrder(){
+
+        if (list.isEmpty()){
+            Toast.makeText(getContext(), "Please, Add some products to cart", Toast.LENGTH_SHORT).show();
+        }else {
+            DialogPlus dialogPlus = DialogPlus.newDialog(getContext())
+                    .setContentHolder(new ViewHolder(R.layout.buy_details))
+                    .setExpanded(true,1710)
+                    .setCancelable(true)
+                    .create();
+
+            View dailogview = dialogPlus.getHolderView();
+
+            TextView txtEdit = dailogview.findViewById(R.id.editProfile);
+            TextView txtName = dailogview.findViewById(R.id.buyPersonName);
+            TextView txtEmail = dailogview.findViewById(R.id.buyPersonEmail);
+            TextView txtNumber = dailogview.findViewById(R.id.buyPersonNumber);
+            RadioButton rbAddress = dailogview.findViewById(R.id.buyPersonAddress);
+            MaterialButton btnSave = dailogview.findViewById(R.id.buySaveBtn);
+            MaterialButton btnCancel = dailogview.findViewById(R.id.buyCancelBtn);
+
+            uid = mAuth.getCurrentUser().getUid();
+
+            DocumentReference documentReference = firestore.collection("Users").document(uid);
+
+            documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                    if (value != null && value.exists()) {
+                        txtName.setText(value.getString("FirstName"));
+                        txtName.append(" ");
+                        txtName.append(value.getString("LastName"));
+                        txtEmail.setText(value.getString("Email"));
+                        txtNumber.setText(value.getString("Mobile"));
+                        rbAddress.setText(value.getString("Address"));
+                    }
+                }
+            });
+
+            dialogPlus.show();
+
+            txtEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getContext(), EditProfileActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+            btnSave.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    for (MyCartModel list : list){
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("productName", list.getProductName());
+                        map.put("productCompanyName", list.getProductCompany());
+                        map.put("productPrice", list.getProductPrice());
+                        map.put("productSize", list.getProductSize());
+                        map.put("productImage", list.getProductImage());
+                        map.put("oid", list.getOid());
+                        map.put("productDescription", list.getProductDescription());
+                        map.put("uid", list.getUid());
+                        map.put("userName", txtName.getText().toString());
+                        map.put("email", txtEmail.getText().toString());
+                        map.put("number", txtNumber.getText().toString());
+                        map.put("address", rbAddress.getText().toString());
+                        map.put("paymentMethod", paymentMethod);
+
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+                        LocalDateTime now = LocalDateTime.now();
+                        String date = dtf.format(now);
+                        map.put("date",date);
+
+                        firestore.collection("Orders")
+                                .document(list.getOid())
+                                .set(map);
+
+                        firestore.collection("AddToCart")
+                                .document(list.getOid())
+                                .delete()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        loadCartItems();
+                                    }
+                                });
+                        dialogPlus.dismiss();
+                    }
+                }
+            });
+
+            btnCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialogPlus.dismiss();
+                }
+            });
+
+        }
+
+    }
+
+    public void getPaymentMethod(){
+
+        if(rbOptionCreditDebitAtm.isChecked()){
+            paymentMethod = "By Card";
+        }else if (rbOptionNetBanking.isChecked()){
+            paymentMethod = "Net Banking";
+        } else if (rbOptionWallets.isChecked()) {
+            paymentMethod = "Wallets";
+        } else if (rbOptionUPI.isChecked()) {
+            paymentMethod = "UPI";
+        }else {
+            paymentMethod = "Cash on Delivery";
+        }
+
     }
 }
