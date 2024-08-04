@@ -1,7 +1,6 @@
 package com.example.shoesapp.fragments;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 
@@ -16,16 +15,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.example.shoesapp.MainActivity;
-import com.example.shoesapp.ProductDetailsActivity;
 import com.example.shoesapp.R;
 import com.example.shoesapp.adapters.MyCartAdapter;
 import com.example.shoesapp.models.MyCartModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.button.MaterialButton;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -37,16 +36,23 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 public class CartFragment extends Fragment {
 
-    FirebaseFirestore firestore;
-    FirebaseAuth mAuth;
+    private FirebaseFirestore firestore;
+    private FirebaseAuth mAuth;
 
-    RecyclerView recyclerView;
-    MyCartAdapter adapter;
-    ArrayList<MyCartModel> list;
+    private RecyclerView recyclerView;
+    private MyCartAdapter adapter;
+    private ArrayList<MyCartModel> list;
 
-    MyCartModel deletedItem = null;
+    private MyCartModel deletedItem = null;
+
+    private TextView txtProductTotal, txtProductDeliveryTotal, txtProduceVoucherTotal, txtProductFinalTotal;
+    private MaterialButton btnCheckout;
+
+    private String strTotalAmount;
+    private int totalAmount;
 
     public CartFragment() {
+        // Required empty public constructor
     }
 
     @Override
@@ -55,8 +61,22 @@ public class CartFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
+        initialize(view);
+        loadCartItems();
+
+        return view;
+    }
+
+    private void initialize(View view) {
         firestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
+
+        txtProductTotal = view.findViewById(R.id.cartProductTotal);
+        txtProductDeliveryTotal = view.findViewById(R.id.cartProductDeliveryTotal);
+        txtProduceVoucherTotal = view.findViewById(R.id.cartProductVoucherTotal);
+        txtProductFinalTotal = view.findViewById(R.id.cartProductFinalTotal);
+
+        btnCheckout = view.findViewById(R.id.cartCheckoutButton);
 
         recyclerView = view.findViewById(R.id.cartRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -65,6 +85,11 @@ public class CartFragment extends Fragment {
         adapter = new MyCartAdapter(getActivity(), list);
         recyclerView.setAdapter(adapter);
 
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    private void loadCartItems() {
         String uid = mAuth.getCurrentUser().getUid();
 
         firestore.collection("AddToCart")
@@ -75,19 +100,34 @@ public class CartFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             List<MyCartModel> cartModelList = task.getResult().toObjects(MyCartModel.class);
+                            totalAmount = 0;
+                            for (MyCartModel cartModel : cartModelList) {
+                                String priceString = cartModel.getProductPrice();
+                                if (priceString != null) {
+                                    priceString = priceString.replace("Rs. ", "");
+                                    try {
+                                        int price = Integer.parseInt(priceString);
+                                        totalAmount += price;
+                                    } catch (NumberFormatException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                            list.clear();
                             list.addAll(cartModelList);
                             adapter.notifyDataSetChanged();
+
+                            strTotalAmount = String.valueOf(totalAmount);
+                            txtProductTotal.setText("Rs. " + strTotalAmount);
+                            txtProductFinalTotal.setText("Rs. " + strTotalAmount);
+                        } else {
+                            // Handle the error
                         }
                     }
                 });
-
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
-
-        return view;
     }
 
-    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             return false;
@@ -95,55 +135,29 @@ public class CartFragment extends Fragment {
 
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
             int position = viewHolder.getAdapterPosition();
 
-            switch (direction) {
-                case ItemTouchHelper.LEFT:
-                    deletedItem = list.get(position);
-                    showDeleteDialog(position);
-                    break;
-                case ItemTouchHelper.RIGHT:
-//                    editCartItem(position);
-                    break;
+            if (direction == ItemTouchHelper.LEFT) {
+                deletedItem = list.get(position);
+                showDeleteDialog(position);
             }
         }
 
         @Override
         public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-
             new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
                     .addSwipeLeftBackgroundColor(ContextCompat.getColor(getContext(), R.color.red))
                     .addSwipeLeftActionIcon(R.drawable.delete_icon)
-                    .addSwipeRightBackgroundColor(ContextCompat.getColor(getContext(), R.color.sky))
-                    .addSwipeRightActionIcon(R.drawable.edit_icon)
                     .create()
                     .decorate();
-
 
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
     };
 
-    private void editCartItem(int position) {
-        MyCartModel cartItem = list.get(position);
-        if (cartItem != null && cartItem.getOid() != null) {
-            Intent intent = new Intent(getContext(), ProductDetailsActivity.class);
-            intent.putExtra("key", cartItem.getUid());
-            intent.putExtra("key", cartItem.getProductName()); // Pass additional item data if needed
-            intent.putExtra("key", cartItem.getProductPrice()); // Pass additional item data if needed
-            intent.putExtra("key", cartItem.getProductDescription()); // Pass additional item data if needed
-            intent.putExtra("key", cartItem.getProductSize()); // Pass additional item data if needed
-            intent.putExtra("key", cartItem.getProductImage()); // Pass additional item data if needed
-            startActivity(intent);
-        } else {
-            Snackbar.make(recyclerView, "Error: Item details are invalid", Snackbar.LENGTH_LONG).show();
-        }
-    }
-
-    private void showDeleteDialog(int position) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-        dialog.setCancelable(false)
+    private void showDeleteDialog(final int position) {
+        new AlertDialog.Builder(getContext())
+                .setCancelable(false)
                 .setTitle("Remove?")
                 .setMessage("Are you sure to remove this item?")
                 .setIcon(R.drawable.remove_icon)
@@ -153,34 +167,35 @@ public class CartFragment extends Fragment {
                         deleteCartItem(position);
                         dialog.dismiss();
                     }
-                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         adapter.notifyItemChanged(position);
                         dialog.dismiss();
                     }
-                });
-        dialog.show();
+                })
+                .show();
     }
 
-    private void deleteCartItem(int position) {
+    private void deleteCartItem(final int position) {
         firestore.collection("AddToCart")
                 .document(list.get(position).getOid())
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(Void unused) {
-                        list.remove(position);
-                        adapter.notifyItemRemoved(position);
+                    public void onSuccess(Void aVoid) {
+                        try {
+                            int itemPrice = Integer.parseInt(list.get(position).getProductPrice().replace("Rs. ", ""));
+                            totalAmount -= itemPrice;
+                            txtProductTotal.setText("Rs. " + totalAmount);
+                            txtProductFinalTotal.setText("Rs. " + totalAmount);
 
-                        Snackbar.make(recyclerView, "Item removed from cart", Snackbar.LENGTH_LONG)
-                                .setAction("Undo", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        list.add(position, deletedItem);
-                                        adapter.notifyItemInserted(position);
-                                    }
-                                }).show();
+                            list.remove(position);
+                            adapter.notifyItemRemoved(position);
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
     }

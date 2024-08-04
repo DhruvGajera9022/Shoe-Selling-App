@@ -1,28 +1,21 @@
 package com.example.shoesapp.profileactivities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.example.shoesapp.MainActivity;
 import com.example.shoesapp.R;
-import com.example.shoesapp.SignupActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -30,8 +23,15 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class EditProfileActivity extends AppCompatActivity {
@@ -39,10 +39,12 @@ public class EditProfileActivity extends AppCompatActivity {
     ImageView imgProfile;
     FirebaseAuth mAuth;
     FirebaseFirestore firestore;
+    StorageReference updateStorageReference;
     MaterialButton btnEdit;
-    String strfname, strlname, strnumber, stremail, uid;
-    Boolean flag = true;
-    Uri imguri;
+    String uid;
+    Uri imgUpdateUri;
+    ProgressDialog progressDialog;
+    boolean isImageSelected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,17 +54,14 @@ public class EditProfileActivity extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
+        progressDialog = new ProgressDialog(this);
+
         txtFName = findViewById(R.id.txtEditProfileName);
         txtLName = findViewById(R.id.txtEditProfileLastName);
         txtEmail = findViewById(R.id.txtEditProfileEmail);
         txtMobile = findViewById(R.id.txtEditProfileNumber);
         imgProfile = findViewById(R.id.editProfileImage);
         btnEdit = findViewById(R.id.editProfileBtn);
-
-        strfname = txtFName.getText().toString();
-        strlname = txtLName.getText().toString();
-        strnumber = txtMobile.getText().toString();
-        stremail = txtEmail.getText().toString();
 
         uid = mAuth.getCurrentUser().getUid();
 
@@ -71,9 +70,13 @@ public class EditProfileActivity extends AppCompatActivity {
         reference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                txtFName.setText(value.getString("FirstName"));
-                txtEmail.setText(value.getString("Email"));
-                txtLName.setText(value.getString("LastName"));
+                if (value != null && value.exists()) {
+                    txtFName.setText(value.getString("FirstName"));
+                    txtLName.setText(value.getString("LastName"));
+                    txtEmail.setText(value.getString("Email"));
+                    txtMobile.setText(value.getString("Mobile"));
+                    Picasso.get().load(value.getString("ProfileImage")).into(imgProfile);
+                }
             }
         });
 
@@ -83,46 +86,105 @@ public class EditProfileActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent,100);
+                startActivityForResult(intent, 100);
             }
         });
 
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                updateUserData();
+                updateUserData();
             }
         });
-
     }
 
-    public void updateUserData(){
+    public void updateUserData() {
+        progressDialog.setMessage("Updating Profile...");
+        progressDialog.show();
 
-            if (flag){
-                DocumentReference documentReference = firestore.collection("Users").document(uid);
+        if (isImageSelected) {
+            uploadImageAndSaveData();
+        } else {
+            saveUserData(null);
+        }
+    }
 
-                Map<String, Object> user = new HashMap<>();
-                user.put("FirstName", strfname);
-                user.put("LastName", strlname);
-                user.put("Email", stremail);
-                user.put("Mobile", strnumber);
-                user.put("UserId", uid);
-                documentReference.update(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+    private void uploadImageAndSaveData() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.UK);
+        Date now = new Date();
+        String filename = format.format(now);
+
+        updateStorageReference = FirebaseStorage.getInstance().getReference(filename);
+
+        updateStorageReference.putFile(imgUpdateUri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(EditProfileActivity.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        updateStorageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                saveUserData(uri.toString());
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                progressDialog.dismiss();
+                                Toast.makeText(EditProfileActivity.this, "Failed to get image URL", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
+                        Toast.makeText(EditProfileActivity.this, "Image upload failed", Toast.LENGTH_SHORT).show();
                     }
                 });
-            }
+    }
+
+    private void saveUserData(@Nullable String imageUrl) {
+        String mfname = txtFName.getText().toString();
+        String mlname = txtLName.getText().toString();
+        String memail = txtEmail.getText().toString();
+        String mnumber = txtMobile.getText().toString();
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("FirstName", mfname);
+        map.put("LastName", mlname);
+        map.put("Email", memail);
+        map.put("Mobile", mnumber);
+        if (imageUrl != null) {
+            map.put("ProfileImage", imageUrl);
+        }
+
+        firestore.collection("Users")
+                .document(uid)
+                .update(map)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        progressDialog.dismiss();
+                        Toast.makeText(EditProfileActivity.this, "Profile updated", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
+                        Toast.makeText(EditProfileActivity.this, "Profile update failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100 && data != null && data.getData() != null) {
-            imguri = data.getData();
-            imgProfile.setImageURI(imguri);
+        if (requestCode == 100 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            imgUpdateUri = data.getData();
+            imgProfile.setImageURI(imgUpdateUri);
+            isImageSelected = true;
         }
     }
-
 }

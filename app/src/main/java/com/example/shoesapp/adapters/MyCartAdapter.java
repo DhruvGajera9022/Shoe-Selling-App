@@ -1,4 +1,5 @@
 package com.example.shoesapp.adapters;
+;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -52,8 +53,6 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.ViewHolder
         holder.name.setText(cartModelList.get(position).getProductName());
         holder.price.setText(cartModelList.get(position).getProductPrice());
         holder.size.append(cartModelList.get(position).getProductSize());
-
-
     }
 
     @Override
@@ -62,9 +61,9 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView name, price, size, totalPrice;
+        TextView name, price, size, totalPrice, totalQuantity;
         ImageView productImage;
-        ImageButton btnDelete, btnEdit;
+        ImageButton btnPlus, btnMinus;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

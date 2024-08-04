@@ -3,16 +3,23 @@ package com.example.shoesapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.shoesapp.databinding.ActivitySignupBinding;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,6 +39,9 @@ public class SignupActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseFirestore firestore;
     String name, lname, email, userId;
+    GoogleSignInOptions gso;
+    GoogleSignInClient gsc;
+    RelativeLayout googleButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +51,11 @@ public class SignupActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
+
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        gsc = GoogleSignIn.getClient(this, gso);
+
+        googleButton = findViewById(R.id.googleButton);
 
         binding.signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +69,13 @@ public class SignupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(SignupActivity.this, LoginActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
+        googleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                googleSignin();
             }
         });
 
@@ -79,6 +101,7 @@ public class SignupActivity extends AppCompatActivity {
             binding.signupConfirmPasswordEdt.setError("Confirm Password is required");
         }
         else {
+            progress();
             mAuth.createUserWithEmailAndPassword(binding.signupEmailEdt.getText().toString(), binding.signupPasswordEdt.getText().toString())
                     .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
@@ -113,11 +136,44 @@ public class SignupActivity extends AppCompatActivity {
                         }
                     });
 
-
-
-
-
-
         }
     }
+
+    public void progress(){
+        if (binding.signupButton.isPressed()){
+            binding.signupButton.setVisibility(View.GONE);
+            binding.progressbar.setVisibility(View.VISIBLE);
+        }else {
+            binding.signupButton.setVisibility(View.VISIBLE);
+            binding.progressbar.setVisibility(View.GONE);
+        }
+    }
+
+    public void googleSignin(){
+        Intent signInIntent = gsc.getSignInIntent();
+        startActivityForResult(signInIntent, 1000);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1000){
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+
+            try {
+                task.getResult(ApiException.class);
+                navigateToSecondActivity();
+            }catch (ApiException e){
+                Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    void navigateToSecondActivity(){
+        finish();
+        Intent intent = new Intent(SignupActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
+
 }

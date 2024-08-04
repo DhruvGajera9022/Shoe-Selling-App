@@ -1,9 +1,7 @@
 package com.example.shoesapp;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -13,7 +11,6 @@ import com.example.shoesapp.databinding.ActivityMainBinding;
 import com.example.shoesapp.fragments.CartFragment;
 import com.example.shoesapp.fragments.CategoryFragment;
 import com.example.shoesapp.fragments.HomeFragment;
-import com.example.shoesapp.fragments.OrderFragment;
 import com.example.shoesapp.fragments.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
                 replaceFragment(new CategoryFragment());
             } else if (itemId == R.id.cart) {
                 replaceFragment(new CartFragment());
-            } else if (itemId == R.id.order) {
-                replaceFragment(new OrderFragment());
             } else if (itemId == R.id.profile){
                 replaceFragment(new ProfileFragment());
             }

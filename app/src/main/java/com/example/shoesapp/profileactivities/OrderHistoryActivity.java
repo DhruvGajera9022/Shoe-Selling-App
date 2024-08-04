@@ -1,57 +1,48 @@
-package com.example.shoesapp.fragments;
+package com.example.shoesapp.profileactivities;
 
 import android.os.Bundle;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.example.shoesapp.R;
 import com.example.shoesapp.adapters.OrderListAdapter;
-import com.example.shoesapp.models.MyCartModel;
 import com.example.shoesapp.models.OrderModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderFragment extends Fragment {
+public class OrderHistoryActivity extends AppCompatActivity {
     FirebaseFirestore firestore;
     FirebaseAuth mAuth;
 
     RecyclerView recyclerView;
     OrderListAdapter adapter;
     List<OrderModel> list;
-
-
-    public OrderFragment() {
-        // Required empty public constructor
-    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_order, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_order_history);
 
         firestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        recyclerView = view.findViewById(R.id.orderRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView = findViewById(R.id.orderRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         list = new ArrayList<>();
-        adapter = new OrderListAdapter(getActivity(), list);
+        adapter = new OrderListAdapter(this, list);
         recyclerView.setAdapter(adapter);
 
         String uid = mAuth.getCurrentUser().getUid();
@@ -72,7 +63,5 @@ public class OrderFragment extends Fragment {
                     }
                 });
 
-
-        return view;
     }
 }

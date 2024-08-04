@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:textSize="21sp"
-                    android:textColor="#ea1414"
+                    android:textColor="@color/black"
                     android:textStyle="bold"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="20dp"/>
@@ -166,27 +166,35 @@
                 android:visibility="gone"
                 android:textSize="12sp"/>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/productAddToCartButton"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="Add to Cart"
-                android:textSize="17sp"
-                android:textAllCaps="false"
-                app:cornerRadius="10dp"
-                android:backgroundTint="#0F85E2"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="130dp"/>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/productBuyNowButton"
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="Buy Now"
-                android:textSize="17sp"
-                android:textAllCaps="false"
-                app:cornerRadius="10dp"
-                android:layout_marginHorizontal="20dp"/>
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginTop="180dp">
+
+                <ImageButton
+                    android:id="@+id/productAddToCartButton"
+                    android:layout_width="50dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/cart_icon"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_weight="1"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/productBuyNowButton"
+                    android:layout_width="280dp"
+                    android:layout_height="60dp"
+                    android:text="Buy Now"
+                    android:textSize="17sp"
+                    android:textAllCaps="false"
+                    app:cornerRadius="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="2"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 

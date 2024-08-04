@@ -41,7 +41,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
                 .into(holder.img);
         holder.name.setText(list.get(position).getOrderProductName());
         holder.price.setText(list.get(position).getOrderProductPrice());
-        holder.size.setText(list.get(position).getOrderProductSize());
+        holder.size.setText("Size. "+list.get(position).getOrderProductSize());
         holder.date.setText(list.get(position).getCurrentOrderDate());
 
     }

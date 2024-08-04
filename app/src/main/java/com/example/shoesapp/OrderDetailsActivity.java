@@ -3,6 +3,7 @@ package com.example.shoesapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,8 +29,8 @@ import java.util.HashMap;
 
 public class OrderDetailsActivity extends AppCompatActivity {
     AppCompatButton btnBuy, btnCancel;
-    TextView pName, pPrice, pSize, pFor;
-    String strName, strPrice, strSize, imgUrl, currentUser;
+    TextView pName, pPrice, pSize, pGender, pFor;
+    String strName, strPrice, strSize, strGender, imgUrl, currentUser;
     FirebaseFirestore db;
     FirebaseAuth mAuth;
     ImageView img, imgi;
@@ -43,6 +44,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
         btnCancel = findViewById(R.id.orderProductCancelButton);
         pName = findViewById(R.id.orderedProductName);
         pPrice = findViewById(R.id.orderedProductPrice);
+        pGender = findViewById(R.id.orderedProductGender);
         pSize = findViewById(R.id.orderedProductSize);
         img = findViewById(R.id.orderProductImage);
 
@@ -54,12 +56,14 @@ public class OrderDetailsActivity extends AppCompatActivity {
         strName = getIntent().getStringExtra("pname");
         strPrice = getIntent().getStringExtra("pprice");
         strSize = getIntent().getStringExtra("psize");
+        strGender = getIntent().getStringExtra("gender");
         imgUrl = getIntent().getStringExtra("imgUrl");
 
         Picasso.get().load(imgUrl).into(imgi);
         pName.setText(strName);
         pPrice.setText(strPrice);
         pSize.setText(strSize);
+        pGender.setText(strGender);
 
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override

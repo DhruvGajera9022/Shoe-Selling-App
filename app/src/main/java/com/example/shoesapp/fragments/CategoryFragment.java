@@ -3,25 +3,21 @@ package com.example.shoesapp.fragments;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.ImageButton;
-import android.widget.TextView;
 
 import com.example.shoesapp.R;
 import com.example.shoesapp.adapters.AdminProductCategoryAdapter;
 import com.example.shoesapp.models.ProductModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -29,140 +25,125 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryFragment extends Fragment {
-    RecyclerView category_rv;
-    SwipeRefreshLayout refreshLayout;
-    FirebaseFirestore db;
-    boolean flag = false;
-    ArrayList<ProductModel> dataList = new ArrayList<>();
+
+    RecyclerView rv;
+    CardView cardnike,cardadidas,cardpuma,cardrebook,cardcrocs,cardbata,cardredtape;
+    ArrayList<ProductModel> datalistcate = new ArrayList<>();
+    FirebaseFirestore dbcate;
     AdminProductCategoryAdapter adapter;
-    ImageButton imageButtonFilter;
-    BottomSheetDialog dialog;
+    String data = "";
 
     public CategoryFragment() {
-    }
-
-    public void onStart() {
-        super.onStart();
-        if (!flag)
-        {
-            getdata();
-        }
+        // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_category, container, false);
 
-        category_rv = view.findViewById(R.id.categoryRecyclerView);
-        refreshLayout = view.findViewById(R.id.refreshCategory);
-        db = FirebaseFirestore.getInstance();
-        imageButtonFilter = view.findViewById(R.id.filterImageButton);
+        cardnike = view.findViewById(R.id.nike);
+        cardadidas = view.findViewById(R.id.adidas);
+        cardpuma = view.findViewById(R.id.puma);
+        cardrebook = view.findViewById(R.id.rebook);
+        cardcrocs = view.findViewById(R.id.crocs);
+        cardbata = view.findViewById(R.id.bata);
+        cardredtape = view.findViewById(R.id.redtape);
 
-        category_rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv = view.findViewById(R.id.cate_rv);
+        rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getdata();
-                refreshLayout.setRefreshing(false);
-            }
-        });
+        dbcate = FirebaseFirestore.getInstance();
 
-        dialog = new BottomSheetDialog(getContext());
-        createDialog();
+        getcatedata(data);
 
-        imageButtonFilter.setOnClickListener(new View.OnClickListener() {
+        cardnike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.show();
+                getcatedata("Nike");
             }
         });
-
-        dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        cardadidas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getcatedata("Adidas");
+            }
+        });
+        cardpuma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getcatedata("Puma");
+            }
+        });
+        cardrebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getcatedata("Rebook");
+            }
+        });
+        cardcrocs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getcatedata("Crocs");
+            }
+        });
+        cardbata.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getcatedata("Bata");
+            }
+        });
+        cardredtape.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getcatedata("Red Tape");
+            }
+        });
 
         return view;
     }
+    private void getcatedata(String data) {
 
-    private void getdata() {
-        dataList.clear();
-        db.collection("Products")
+        if (data.isEmpty())
+        {
+            datalistcate.clear();
+            dbcate.collection("Products")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful())
+                            {
+                                List<ProductModel> catedata = task.getResult().toObjects(ProductModel.class);
+                                datalistcate.addAll(catedata);
+                            }
+                            adapter = new AdminProductCategoryAdapter(getContext(),datalistcate);
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+                            rv.setLayoutManager(gridLayoutManager);
+                            rv.setAdapter(adapter);
+                        }
+                    });
+            return;
+        }
+
+        datalistcate.clear();
+        dbcate.collection("Products")
+                .whereEqualTo("categoryCompany",data)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful())
                         {
-                            List<ProductModel> data = task.getResult().toObjects(ProductModel.class);
-                            dataList.addAll(data);
-
-                            GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
-                            category_rv.setLayoutManager(layoutManager);
-                            adapter = new AdminProductCategoryAdapter(getContext(),dataList);
-                            category_rv.setHasFixedSize(true);
-                            category_rv.setAdapter(adapter);
-
+                            List<ProductModel> catedata = task.getResult().toObjects(ProductModel.class);
+                            datalistcate.addAll(catedata);
                         }
+                        adapter = new AdminProductCategoryAdapter(getContext(),datalistcate);
+                        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+                        rv.setLayoutManager(gridLayoutManager);
+                        rv.setAdapter(adapter);
                     }
                 });
     }
-
-    private void getDataCategoryGender(String category) {
-        dataList.clear();
-        db.collection("Products")
-                .whereEqualTo("categoryGender", category)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful())
-                        {
-                            List<ProductModel> data = task.getResult().toObjects(ProductModel.class);
-                            dataList.addAll(data);
-
-                            GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
-                            category_rv.setLayoutManager(layoutManager);
-                            adapter = new AdminProductCategoryAdapter(getContext(),dataList);
-
-                            category_rv.setHasFixedSize(true);
-                            category_rv.setAdapter(adapter);
-
-                            dialog.dismiss();
-
-                        }
-                    }
-                });
-    }
-
-    public void createDialog(){
-        View view = getLayoutInflater().inflate(R.layout.category_filter_list, null, false);
-
-        TextView maleCategoryFilter = view.findViewById(R.id.maleCategoryFilter);
-        TextView femaleCategoryFilter = view.findViewById(R.id.femaleCategoryFilter);
-        TextView kidsCategoryFilter = view.findViewById(R.id.kidsCategoryFilter);
-
-        maleCategoryFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getDataCategoryGender("Male");
-            }
-        });
-
-        femaleCategoryFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getDataCategoryGender("Female");
-            }
-        });
-
-        kidsCategoryFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getDataCategoryGender("Kids");
-            }
-        });
-
-        dialog.setContentView(view);
-    }
-
 }

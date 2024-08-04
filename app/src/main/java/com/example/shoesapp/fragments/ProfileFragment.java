@@ -12,11 +12,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.shoesapp.LoginActivity;
 import com.example.shoesapp.R;
+import com.example.shoesapp.profileactivities.AddressActivity;
 import com.example.shoesapp.profileactivities.EditProfileActivity;
+import com.example.shoesapp.profileactivities.OrderHistoryActivity;
+import com.example.shoesapp.profileactivities.SettingsActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -26,13 +31,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class ProfileFragment extends Fragment {
-    TextView txtEditProfile, txtLocation, txtLanguage, txtSettings, txtAboutUs, txtPrivacyPolicy;
-    ImageButton btnEditProfile, btnLocation, btnLanguage, btnSettings, btnAboutUs, btnPrivacyPolicy;
+    TextView txtLocation, txtLanguage, txtOrderHistory, txtSettings, txtAboutUs, txtPrivacyPolicy;
+    ImageButton btnEditProfile, btnLocation, btnLanguage, btnOrderHistory, btnSettings, btnAboutUs, btnPrivacyPolicy;
     MaterialButton btnLogout;
     FirebaseAuth mAuth;
     FirebaseFirestore firestore;
     String userId;
     FragmentManager manager;
+    LinearLayout llSettings, llEditProfile, llOrderHistory, llAddLocation;
+    ProgressBar progressBar;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -44,16 +51,21 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        txtEditProfile = view.findViewById(R.id.profileEditProfile);
         txtLocation = view.findViewById(R.id.profileLocation);
         txtLanguage = view.findViewById(R.id.profileSelectLanguage);
         txtSettings = view.findViewById(R.id.profileSettings);
         txtAboutUs = view.findViewById(R.id.profileAboutUs);
         txtPrivacyPolicy = view.findViewById(R.id.profilePrivacyPolicy);
 
+        llSettings = view.findViewById(R.id.llSettings);
+        llEditProfile = view.findViewById(R.id.llEditProfile);
+        llOrderHistory = view.findViewById(R.id.llOrderHistory);
+        llAddLocation = view.findViewById(R.id.llSavedLocation);
+
         btnEditProfile = view.findViewById(R.id.profileEditProfileBtn);
         btnLocation = view.findViewById(R.id.profileLocationBtn);
         btnLanguage = view.findViewById(R.id.profileSelectLanguageBtn);
+        btnOrderHistory = view.findViewById(R.id.profileOrderHistoryBtn);
         btnSettings = view.findViewById(R.id.profileSettingsBtn);
         btnAboutUs = view.findViewById(R.id.profileAboutUsBtn);
         btnPrivacyPolicy = view.findViewById(R.id.profilePrivacyPolicyBtn);
@@ -74,18 +86,10 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        txtEditProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toEditProfile();
-            }
-        });
-        btnEditProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toEditProfile();
-            }
-        });
+        ToEditProfile();
+        ToSettings();
+        ToOrderHistory();
+        ToAddLocation();
 
         return view;
     }
@@ -97,8 +101,75 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-    public void toEditProfile(){
-        Intent intent = new Intent(getContext(), EditProfileActivity.class);
-        startActivity(intent);
+    public void ToEditProfile() {
+        llEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), EditProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), EditProfileActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
+    public void ToSettings() {
+        llSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public void ToOrderHistory(){
+        llOrderHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), OrderHistoryActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnOrderHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), OrderHistoryActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public void ToAddLocation(){
+
+        llAddLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), AddressActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), AddressActivity.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+
 }

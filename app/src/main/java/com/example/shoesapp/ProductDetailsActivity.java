@@ -1,19 +1,17 @@
 package com.example.shoesapp;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.shoesapp.models.ProductModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,7 +20,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
@@ -34,14 +31,15 @@ import java.util.HashMap;
 
 public class ProductDetailsActivity extends AppCompatActivity {
     ImageView imgi, img;
-    String key, productDetailsKey,cur_image, txtSize, txtName, txtPrice, currentUser;
+    String key, productDetailsKey,cur_image, txtSize, txtName, txtPrice, txtGender, currentUser;
     FirebaseFirestore db;
     FirebaseAuth mAuth;
-    MaterialButton addToCartBtn, buyNowBtn;
+    MaterialButton buyNowBtn;
     TextView name, price, desc, gender;
     EditText edtSize;
     TabLayout tabSize;
     ArrayList<ProductModel> datalist;
+    ImageButton addToCartBtn;
 
 
     @Override
@@ -178,13 +176,23 @@ public class ProductDetailsActivity extends AppCompatActivity {
         txtName = name.getText().toString();
         txtPrice = price.getText().toString();
         txtSize = edtSize.getText().toString();
+        txtGender = gender.getText().toString();
         Intent intent = new Intent(ProductDetailsActivity.this, OrderDetailsActivity.class);
         intent.putExtra("pname", txtName);
         intent.putExtra("pprice", txtPrice);
         intent.putExtra("psize", txtSize);
+        intent.putExtra("gender", txtGender);
         intent.putExtra("imgUrl", cur_image);
         startActivity(intent);
         finish();
     }
+
+//    private void getamount(int q) {
+//        int pr = Integer.parseInt(price.getText().toString());
+//        int am = q * pr;
+//        String sam = String.valueOf(am);
+//        cartamount.setText(sam);
+//        map.put("amount",sam);
+//    }
 
 }

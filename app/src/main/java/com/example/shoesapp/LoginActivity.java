@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -23,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
     FirebaseAuth mAuth;
     boolean passwordShowing = false;
+    AppCompatButton btnLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,11 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         mAuth = FirebaseAuth.getInstance();
+
+        if (mAuth.getCurrentUser() != null){
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
+        }
 
         // For login user
         binding.loginButton.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
             binding.loginPasswordEdt.setError("Password is required");
         }
         else {
+            progress();
             mAuth.signInWithEmailAndPassword(binding.loginEmailEdt.getText().toString(), binding.loginPasswordEdt.getText().toString())
                     .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
@@ -100,6 +108,14 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    
+    public void progress(){
+        if (binding.loginButton.isPressed()){
+            binding.loginButton.setVisibility(View.GONE);
+            binding.progressbar.setVisibility(View.VISIBLE);
+        }else {
+            binding.loginButton.setVisibility(View.VISIBLE);
+            binding.progressbar.setVisibility(View.GONE);
+        }
+    }
 
 }
