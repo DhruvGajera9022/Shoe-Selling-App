@@ -1,9 +1,11 @@
 package com.example.shoesapp.fragments;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
@@ -16,16 +18,25 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.shoesapp.R;
 import com.example.shoesapp.adapters.userProductAdapter;
 import com.example.shoesapp.models.ProductModel;
+import com.example.shoesapp.profileactivities.EditProfileActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +44,14 @@ import java.util.List;
 public class HomeFragment extends Fragment {
     RecyclerView userHome_rv;
     FirebaseFirestore db;
+    FirebaseAuth mAuth;
     boolean flag = false;
     ArrayList<ProductModel> datalist = new ArrayList<>();
     userProductAdapter adapter;
     SearchView searchView;
+    TextView txtTopUsername;
+    ImageView imageViewTop;
+    String uid;
 
 
     public HomeFragment() {
@@ -65,10 +80,18 @@ public class HomeFragment extends Fragment {
 
         userHome_rv = view.findViewById(R.id.userHomeRecyclerView);
         searchView = view.findViewById(R.id.searchViewUserHome);
+
         db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+
+        txtTopUsername = view.findViewById(R.id.txtTopUsername);
+        imageViewTop = view.findViewById(R.id.imageTop);
+
+        uid = mAuth.getCurrentUser().getUid();
 
         userHome_rv.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        getTopData();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -81,6 +104,13 @@ public class HomeFragment extends Fragment {
             public boolean onQueryTextChange(String newText) {
                 search_product(newText);
                 return false;
+            }
+        });
+
+        imageViewTop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), EditProfileActivity.class));
             }
         });
 
@@ -146,6 +176,22 @@ public class HomeFragment extends Fragment {
                     });
             datalist.clear();
         }
+    }
+
+    public void getTopData(){
+
+        DocumentReference reference = db.collection("Users").document(uid);
+
+        reference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (value != null && value.exists()){
+                    txtTopUsername.setText("Hey, "+value.getString("FirstName"));
+                    Picasso.get().load(value.getString("ProfileImage")).into(imageViewTop);
+                }
+            }
+        });
+
     }
 
 }

@@ -3,14 +3,14 @@ package com.example.shoesapp.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -18,27 +18,25 @@ import android.widget.TextView;
 
 import com.example.shoesapp.LoginActivity;
 import com.example.shoesapp.R;
-import com.example.shoesapp.profileactivities.AddressActivity;
+import com.example.shoesapp.profileactivities.AboutUsActivity;
 import com.example.shoesapp.profileactivities.EditProfileActivity;
 import com.example.shoesapp.profileactivities.OrderHistoryActivity;
+import com.example.shoesapp.profileactivities.OrdersActivity;
+import com.example.shoesapp.profileactivities.PrivacyPolicyActivity;
 import com.example.shoesapp.profileactivities.SettingsActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class ProfileFragment extends Fragment {
-    TextView txtLocation, txtLanguage, txtOrderHistory, txtSettings, txtAboutUs, txtPrivacyPolicy;
-    ImageButton btnEditProfile, btnLocation, btnLanguage, btnOrderHistory, btnSettings, btnAboutUs, btnPrivacyPolicy;
+    TextView txtLocation, txtLanguage, txtSettings, txtAboutUs, txtPrivacyPolicy;
+    ImageButton btnEditProfile, btnOrders, btnLanguage, btnOrderHistory, btnSettings, btnAboutUs, btnPrivacyPolicy;
     MaterialButton btnLogout;
     FirebaseAuth mAuth;
     FirebaseFirestore firestore;
     String userId;
     FragmentManager manager;
-    LinearLayout llSettings, llEditProfile, llOrderHistory, llAddLocation;
+    LinearLayout llSettings, llEditProfile, llOrderHistory, llOrders, llAboutUs, llPrivacyPolicy;
     ProgressBar progressBar;
 
     public ProfileFragment() {
@@ -51,7 +49,7 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        txtLocation = view.findViewById(R.id.profileLocation);
+        txtLocation = view.findViewById(R.id.profileOrders);
         txtLanguage = view.findViewById(R.id.profileSelectLanguage);
         txtSettings = view.findViewById(R.id.profileSettings);
         txtAboutUs = view.findViewById(R.id.profileAboutUs);
@@ -60,10 +58,12 @@ public class ProfileFragment extends Fragment {
         llSettings = view.findViewById(R.id.llSettings);
         llEditProfile = view.findViewById(R.id.llEditProfile);
         llOrderHistory = view.findViewById(R.id.llOrderHistory);
-        llAddLocation = view.findViewById(R.id.llSavedLocation);
+        llOrders = view.findViewById(R.id.llSavedLocation);
+        llAboutUs = view.findViewById(R.id.llAboutUs);
+        llPrivacyPolicy = view.findViewById(R.id.llPrivacyPolicy);
 
         btnEditProfile = view.findViewById(R.id.profileEditProfileBtn);
-        btnLocation = view.findViewById(R.id.profileLocationBtn);
+        btnOrders = view.findViewById(R.id.profileOrdersBtn);
         btnLanguage = view.findViewById(R.id.profileSelectLanguageBtn);
         btnOrderHistory = view.findViewById(R.id.profileOrderHistoryBtn);
         btnSettings = view.findViewById(R.id.profileSettingsBtn);
@@ -89,7 +89,9 @@ public class ProfileFragment extends Fragment {
         ToEditProfile();
         ToSettings();
         ToOrderHistory();
-        ToAddLocation();
+        ToOrders();
+        ToAboutUs();
+        ToPrivacyPolicy();
 
         return view;
     }
@@ -152,24 +154,54 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    public void ToAddLocation(){
+    public void ToOrders(){
 
-        llAddLocation.setOnClickListener(new View.OnClickListener() {
+        llOrders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), AddressActivity.class);
+                Intent intent = new Intent(getContext(), OrdersActivity.class);
                 startActivity(intent);
             }
         });
 
-        btnLocation.setOnClickListener(new View.OnClickListener() {
+        btnOrders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), AddressActivity.class);
+                Intent intent = new Intent(getContext(), OrdersActivity.class);
                 startActivity(intent);
             }
         });
 
+    }
+
+    public void ToAboutUs(){
+        llAboutUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), AboutUsActivity.class));
+            }
+        });
+        btnAboutUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), AboutUsActivity.class));
+            }
+        });
+    }
+
+    public void ToPrivacyPolicy(){
+        llPrivacyPolicy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), PrivacyPolicyActivity.class));
+            }
+        });
+        btnPrivacyPolicy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), PrivacyPolicyActivity.class));
+            }
+        });
     }
 
 }

@@ -17,6 +17,15 @@
         android:theme="@style/Theme.ShoesApp"
         tools:targetApi="31">
         <activity
+            android:name=".profileactivities.OrdersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".profileactivities.PrivacyPolicyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".profileactivities.AboutUsActivity"
+            android:exported="false" />
+        <activity
             android:name=".OrderProductDetailActivity"
             android:exported="false" />
         <activity
@@ -33,9 +42,6 @@
             android:exported="false" />
         <activity
             android:name=".OrderConfirmActivity"
-            android:exported="false" />
-        <activity
-            android:name=".OrderDetailsActivity"
             android:exported="false" />
         <activity
             android:name=".ForgotPasswordActivity"

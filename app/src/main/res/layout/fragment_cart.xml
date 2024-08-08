@@ -18,7 +18,8 @@
             android:textSize="25sp"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:layout_margin="15dp"/>
+            android:layout_margin="15dp"
+            android:fontFamily="@font/poppinsbold"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/cartRecyclerView"
@@ -58,7 +59,8 @@
                             android:text="Subtotal for products"
                             android:textSize="20sp"
                             android:textColor="@color/white"
-                            android:layout_weight="2"/>
+                            android:layout_weight="2"
+                            android:fontFamily="@font/poppinsregular"/>
 
                         <TextView
                             android:id="@+id/cartProductTotal"
@@ -69,7 +71,8 @@
                             android:textColor="@color/white"
                             android:layout_gravity="end"
                             android:layout_weight="1"
-                            android:gravity="end"/>
+                            android:gravity="end"
+                            android:fontFamily="@font/poppinsregular"/>
 
                     </LinearLayout>
 
@@ -86,7 +89,8 @@
                             android:text="Delivery subtotal"
                             android:textSize="20sp"
                             android:textColor="@color/white"
-                            android:layout_weight="2"/>
+                            android:layout_weight="2"
+                            android:fontFamily="@font/poppinsregular"/>
 
                         <TextView
                             android:id="@+id/cartProductDeliveryTotal"
@@ -97,7 +101,8 @@
                             android:textColor="@color/white"
                             android:layout_gravity="end"
                             android:layout_weight="1"
-                            android:gravity="end"/>
+                            android:gravity="end"
+                            android:fontFamily="@font/poppinsregular"/>
 
                     </LinearLayout>
 
@@ -114,7 +119,8 @@
                             android:text="Discount voucher"
                             android:textSize="20sp"
                             android:textColor="@color/white"
-                            android:layout_weight="2"/>
+                            android:layout_weight="2"
+                            android:fontFamily="@font/poppinsregular"/>
 
                         <TextView
                             android:id="@+id/cartProductVoucherTotal"
@@ -125,7 +131,8 @@
                             android:textColor="@color/white"
                             android:layout_gravity="end"
                             android:layout_weight="1"
-                            android:gravity="end"/>
+                            android:gravity="end"
+                            android:fontFamily="@font/poppinsregular"/>
 
                     </LinearLayout>
 
@@ -150,19 +157,21 @@
                             android:textSize="23sp"
                             android:textColor="@color/white"
                             android:layout_weight="2"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold"
+                            android:fontFamily="@font/poppinssemibold"/>
 
                         <TextView
                             android:id="@+id/cartProductFinalTotal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Rs. 20000"
+                            android:text=""
                             android:textSize="23sp"
                             android:textColor="@color/white"
                             android:layout_gravity="end"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold"
+                            android:fontFamily="@font/poppinssemibold"/>
 
                     </LinearLayout>
 
@@ -178,7 +187,8 @@
                         android:textSize="20sp"
                         android:textColor="@color/black"
                         android:textAllCaps="false"
-                        android:layout_marginBottom="20dp"/>
+                        android:layout_marginBottom="20dp"
+                        fontFamily="@font/poppinssemibold"/>
 
                 </LinearLayout>
 

@@ -11,7 +11,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="10dp">
+        app:cardElevation="10dp"
+        android:backgroundTint="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,7 +26,8 @@
                 android:text="Account Settings"
                 android:textSize="24sp"
                 android:textColor="@color/black"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:fontFamily="@font/poppinsbold"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -45,7 +47,8 @@
                     android:textColor="@color/black"
                     android:drawableStart="@drawable/user_icon"
                     android:drawablePadding="15dp"
-                    android:layout_weight="3"/>
+                    android:layout_weight="3"
+                    android:fontFamily="@font/poppinsregular"/>
 
                 <ImageButton
                     android:id="@+id/profileEditProfileBtn"
@@ -67,18 +70,19 @@
                 android:id="@+id/llSavedLocation">
 
                 <TextView
-                    android:id="@+id/profileLocation"
+                    android:id="@+id/profileOrders"
                     android:layout_width="115dp"
                     android:layout_height="wrap_content"
-                    android:text="Saved Addresses"
+                    android:text="Orders"
                     android:textSize="18sp"
                     android:textColor="@color/black"
-                    android:drawableStart="@drawable/location_icon"
+                    android:drawableStart="@drawable/checkout"
                     android:drawablePadding="15dp"
-                    android:layout_weight="3"/>
+                    android:layout_weight="3"
+                    android:fontFamily="@font/poppinsregular"/>
 
                 <ImageButton
-                    android:id="@+id/profileLocationBtn"
+                    android:id="@+id/profileOrdersBtn"
                     android:layout_width="10dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/right_arrow_icon"
@@ -105,7 +109,8 @@
                     android:textColor="@color/black"
                     android:drawableStart="@drawable/order"
                     android:drawablePadding="15dp"
-                    android:layout_weight="3"/>
+                    android:layout_weight="3"
+                    android:fontFamily="@font/poppinsregular"/>
 
                 <ImageButton
                     android:id="@+id/profileOrderHistoryBtn"
@@ -135,7 +140,8 @@
                     android:textColor="@color/black"
                     android:drawableStart="@drawable/language_icon"
                     android:drawablePadding="15dp"
-                    android:layout_weight="3"/>
+                    android:layout_weight="3"
+                    android:fontFamily="@font/poppinsregular"/>
 
                 <ImageButton
                     android:id="@+id/profileSelectLanguageBtn"
@@ -165,7 +171,8 @@
                     android:textColor="@color/black"
                     android:drawableStart="@drawable/settings_icon"
                     android:drawablePadding="15dp"
-                    android:layout_weight="3"/>
+                    android:layout_weight="3"
+                    android:fontFamily="@font/poppinsregular"/>
 
                 <ImageButton
                     android:id="@+id/profileSettingsBtn"
@@ -185,7 +192,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="10dp"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -199,9 +207,11 @@
                 android:text="Information"
                 android:textSize="24sp"
                 android:textColor="@color/black"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:fontFamily="@font/poppinsbold"/>
 
             <LinearLayout
+                android:id="@+id/llAboutUs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -218,7 +228,8 @@
                     android:textColor="@color/black"
                     android:drawableStart="@drawable/info_icon"
                     android:drawablePadding="15dp"
-                    android:layout_weight="3"/>
+                    android:layout_weight="3"
+                    android:fontFamily="@font/poppinsregular"/>
 
                 <ImageButton
                     android:id="@+id/profileAboutUsBtn"
@@ -231,6 +242,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llPrivacyPolicy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -247,7 +259,8 @@
                     android:textColor="@color/black"
                     android:drawableStart="@drawable/books_icon"
                     android:drawablePadding="15dp"
-                    android:layout_weight="3"/>
+                    android:layout_weight="3"
+                    android:fontFamily="@font/poppinsregular"/>
 
                 <ImageButton
                     android:id="@+id/profilePrivacyPolicyBtn"
@@ -264,15 +277,18 @@
     </androidx.cardview.widget.CardView>
 
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/userLogout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Logout"
-            android:backgroundTint="@color/black"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="50dp"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/userLogout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Logout"
+        android:textSize="17sp"
+        android:textAllCaps="false"
+        app:cornerRadius="10dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:layout_marginHorizontal="20dp"
+        android:fontFamily="@font/poppinssemibold"/>
 
     <ProgressBar
         android:id="@+id/progressbar"

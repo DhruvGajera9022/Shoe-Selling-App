@@ -4,21 +4,25 @@
     <item
         android:id="@+id/admin_home"
         android:title="@string/home"
-        android:icon="@drawable/home_icon"/>
+        android:icon="@drawable/home_icon"
+        android:fontFamily="@font/poppinsregular"/>
 
     <item
         android:id="@+id/admin_category"
         android:title="@string/my_category"
-        android:icon="@drawable/category_icon"/>
+        android:icon="@drawable/category_icon"
+        android:fontFamily="@font/poppinsregular"/>
 
     <item
         android:id="@+id/admin_orders"
         android:title="@string/my_order"
-        android:icon="@drawable/cart_icon"/>
+        android:icon="@drawable/cart_icon"
+        android:fontFamily="@font/poppinsregular"/>
 
     <item
         android:id="@+id/admin_profile"
         android:title="@string/profile"
-        android:icon="@drawable/person_icon"/>
+        android:icon="@drawable/person_icon"
+        android:fontFamily="@font/poppinsregular"/>
 
 </menu>

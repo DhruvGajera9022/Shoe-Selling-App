@@ -6,32 +6,27 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.shoesapp.models.OrderModel;
-import com.example.shoesapp.models.ProductModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class OrderProductDetailActivity extends AppCompatActivity {
     ImageView img, imgi;
-    String key, cur_image;
+    String key, cur_image, strDate;
     FirebaseFirestore db;
     FirebaseAuth mAuth;
-    TextView pname, pprice, psize, pgender, pdesc, email, number, address, date;
-    ArrayList<OrderModel> datalist;
+    TextView pname, pprice, psize, pgender, pdesc, email, number, address, date, arrivingDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +44,7 @@ public class OrderProductDetailActivity extends AppCompatActivity {
         number = findViewById(R.id.productOrderNumber);
         address = findViewById(R.id.productOrderAddress);
         date = findViewById(R.id.productOrderDate);
+        arrivingDate = findViewById(R.id.productArrivingDate);
 
         img = findViewById(R.id.productImage);  // Initialize the ImageView
         imgi = img;
@@ -69,22 +65,35 @@ public class OrderProductDetailActivity extends AppCompatActivity {
                                 pname.setText(singledata.getProductName());
                                 pprice.setText(singledata.getProductPrice());
                                 pdesc.setText(singledata.getProductDescription());
-                                psize.setText("Size. "+singledata.getProductSize());
+                                psize.setText("Size. " + singledata.getProductSize());
                                 email.setText(singledata.getEmail());
                                 number.setText(singledata.getNumber());
                                 address.setText(singledata.getAddress());
                                 date.setText(singledata.getdate());
+
+                                // Parse the date and add 6 days
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                                try {
+                                    Date parsedDate = dateFormat.parse(date.getText().toString());
+                                    if (parsedDate != null) {
+                                        Calendar calendar = Calendar.getInstance();
+                                        calendar.setTime(parsedDate);
+                                        calendar.add(Calendar.DAY_OF_MONTH, 6);
+                                        String newDate = dateFormat.format(calendar.getTime());
+                                        arrivingDate.setText(newDate);
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
                         } else {
                             // Handle the case where the document does not exist
-                            // e.g., show a toast or a default message
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(Exception e) {
-                        // Handle any errors
-                        // e.g., show a toast or log the error
+                        // Handle the error
                     }
                 });
     }

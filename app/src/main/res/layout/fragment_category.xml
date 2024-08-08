@@ -11,14 +11,32 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Categories"
-                android:textSize="25sp"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:layout_margin="15dp"/>
+                android:orientation="horizontal"
+                android:weightSum="5">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Categories"
+                    android:textSize="25sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_margin="15dp"
+                    android:fontFamily="@font/poppinsbold"
+                    android:layout_weight="4"/>
+
+                <ImageView
+                    android:id="@+id/btnFilter"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/filter_icon"
+                    android:layout_margin="15dp"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
 
             <HorizontalScrollView
                 android:layout_width="wrap_content"
@@ -40,7 +58,8 @@
                         android:clickable="true"
                         android:elevation="30dp"
                         app:cardUseCompatPadding="true"
-                        app:cardCornerRadius="20dp">
+                        app:cardCornerRadius="20dp"
+                        android:backgroundTint="@color/white">
 
                         <ImageView
                             android:layout_width="100dp"
@@ -60,7 +79,8 @@
                         android:clickable="true"
                         android:elevation="30dp"
                         app:cardUseCompatPadding="true"
-                        app:cardCornerRadius="20dp">
+                        app:cardCornerRadius="20dp"
+                        android:backgroundTint="@color/white">
 
                         <ImageView
                             android:layout_width="match_parent"
@@ -80,7 +100,8 @@
                         android:clickable="true"
                         android:elevation="30dp"
                         app:cardUseCompatPadding="true"
-                        app:cardCornerRadius="20dp">
+                        app:cardCornerRadius="20dp"
+                        android:backgroundTint="@color/white">
 
                         <ImageView
                             android:layout_width="match_parent"
@@ -100,7 +121,8 @@
                         android:clickable="true"
                         android:elevation="30dp"
                         app:cardUseCompatPadding="true"
-                        app:cardCornerRadius="20dp">
+                        app:cardCornerRadius="20dp"
+                        android:backgroundTint="@color/white">
 
                         <ImageView
                             android:layout_width="match_parent"
@@ -120,7 +142,8 @@
                         android:clickable="true"
                         android:elevation="30dp"
                         app:cardUseCompatPadding="true"
-                        app:cardCornerRadius="20dp">
+                        app:cardCornerRadius="20dp"
+                        android:backgroundTint="@color/white">
 
                         <ImageView
                             android:layout_width="match_parent"
@@ -140,7 +163,8 @@
                         android:clickable="true"
                         android:elevation="30dp"
                         app:cardUseCompatPadding="true"
-                        app:cardCornerRadius="20dp">
+                        app:cardCornerRadius="20dp"
+                        android:backgroundTint="@color/white">
 
                         <ImageView
                             android:layout_width="match_parent"
@@ -160,7 +184,8 @@
                         android:clickable="true"
                         android:elevation="30dp"
                         app:cardUseCompatPadding="true"
-                        app:cardCornerRadius="20dp">
+                        app:cardCornerRadius="20dp"
+                        android:backgroundTint="@color/white">
 
                         <ImageView
                             android:layout_width="match_parent"

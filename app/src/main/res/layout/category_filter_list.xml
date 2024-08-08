@@ -23,37 +23,236 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Sort By"
+                android:text="Categories"
                 android:textColor="@color/black"
-                android:textSize="25sp"
+                android:textSize="17sp"
+                android:fontFamily="@font/poppinssemibold"
                 android:padding="4dp"/>
 
-            <TextView
-                android:id="@+id/maleCategoryFilter"
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Male"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:padding="7dp"/>
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chipGroupCompany"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:singleSelection="true">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipNike"
+                            android:layout_width="80dp"
+                            android:layout_height="50dp"
+                            android:text="Nike"
+                            android:textAlignment="center"
+                            android:layout_marginStart="10dp"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"/>
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipAdidas"
+                            android:layout_width="80dp"
+                            android:layout_height="50dp"
+                            android:text="Adidas"
+                            android:textAlignment="center"
+                            android:layout_marginStart="10dp"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"/>
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipPuma"
+                            android:layout_width="80dp"
+                            android:layout_height="50dp"
+                            android:text="Puma"
+                            android:textAlignment="center"
+                            android:layout_marginStart="10dp"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"/>
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipRebook"
+                            android:layout_width="80dp"
+                            android:layout_height="50dp"
+                            android:text="Rebook"
+                            android:textAlignment="center"
+                            android:layout_marginStart="10dp"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"/>
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipCrocs"
+                            android:layout_width="80dp"
+                            android:layout_height="50dp"
+                            android:text="Crocs"
+                            android:textAlignment="center"
+                            android:layout_marginStart="10dp"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"/>
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipBata"
+                            android:layout_width="80dp"
+                            android:layout_height="50dp"
+                            android:text="Bata"
+                            android:textAlignment="center"
+                            android:layout_marginStart="10dp"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"/>
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipRedTape"
+                            android:layout_width="80dp"
+                            android:layout_height="50dp"
+                            android:text="Red Tape"
+                            android:textAlignment="center"
+                            android:layout_marginStart="10dp"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"/>
+
+                    </com.google.android.material.chip.ChipGroup>
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
 
             <TextView
-                android:id="@+id/femaleCategoryFilter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Female"
+                android:text="Gender"
                 android:textColor="@color/black"
-                android:textSize="18sp"
-                android:padding="7dp"/>
+                android:textSize="17sp"
+                android:fontFamily="@font/poppinssemibold"
+                android:padding="4dp"
+                android:layout_marginTop="10dp"/>
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipMale"
+                    android:layout_width="80dp"
+                    android:layout_height="50dp"
+                    android:text="Male"
+                    android:textAlignment="center"
+                    android:layout_marginStart="10dp"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipFemale"
+                    android:layout_width="80dp"
+                    android:layout_height="50dp"
+                    android:text="Female"
+                    android:textAlignment="center"
+                    android:layout_marginStart="10dp"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipKids"
+                    android:layout_width="80dp"
+                    android:layout_height="50dp"
+                    android:text="Kids"
+                    android:textAlignment="center"
+                    android:layout_marginStart="10dp"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"/>
+
+            </com.google.android.material.chip.ChipGroup>
 
             <TextView
-                android:id="@+id/kidsCategoryFilter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Kids"
+                android:text="Price"
                 android:textColor="@color/black"
-                android:textSize="18sp"
-                android:padding="7dp"/>
+                android:textSize="17sp"
+                android:fontFamily="@font/poppinssemibold"
+                android:padding="4dp"
+                android:layout_marginTop="10dp"/>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chipGroupPrice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:singleSelection="true">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipLess1000"
+                            android:layout_width="120dp"
+                            android:layout_height="50dp"
+                            android:text="Less 1000"
+                            android:textAlignment="center"
+                            android:layout_marginStart="10dp"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"/>
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip1000To1500"
+                            android:layout_width="120dp"
+                            android:layout_height="50dp"
+                            android:text="1000-1500"
+                            android:textAlignment="center"
+                            android:layout_marginStart="10dp"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"/>
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip1500To3000"
+                            android:layout_width="120dp"
+                            android:layout_height="50dp"
+                            android:text="1500-3000"
+                            android:textAlignment="center"
+                            android:layout_marginStart="10dp"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"/>
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip3000To5000"
+                            android:layout_width="120dp"
+                            android:layout_height="50dp"
+                            android:text="3000-5000"
+                            android:textAlignment="center"
+                            android:layout_marginStart="10dp"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"/>
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip5000To7000"
+                            android:layout_width="120dp"
+                            android:layout_height="50dp"
+                            android:text="5000-7000"
+                            android:textAlignment="center"
+                            android:layout_marginStart="10dp"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"/>
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipAbove7000"
+                            android:layout_width="120dp"
+                            android:layout_height="50dp"
+                            android:text="Above 7000"
+                            android:textAlignment="center"
+                            android:layout_marginStart="10dp"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"/>
+
+
+                    </com.google.android.material.chip.ChipGroup>
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/applyBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Apply"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"/>
 
         </LinearLayout>
 

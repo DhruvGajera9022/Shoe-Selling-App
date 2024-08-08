@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-tools:context=".profileactivities.OrderHistoryActivity"
-android:orientation="vertical"
-android:layout_marginBottom="50dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".profileactivities.OrdersActivity"
+    android:orientation="vertical"
+    android:layout_marginBottom="50dp"
     android:background="@color/white">
 
     <TextView
@@ -20,10 +20,10 @@ android:layout_marginBottom="50dp"
         android:fontFamily="@font/poppinsbold"/>
 
 
-<androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/orderRecyclerView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ordersRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 
 

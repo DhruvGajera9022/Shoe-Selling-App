@@ -7,7 +7,8 @@
     app:cardCornerRadius="7dp"
     android:layout_marginTop="10dp"
     android:layout_marginHorizontal="15dp"
-    app:cardElevation="5dp">
+    app:cardElevation="5dp"
+    android:backgroundTint="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,7 +35,8 @@
                 android:text="Product Name"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppinsbold"/>
 
             <TextView
                 android:id="@+id/cartProductSize"
@@ -42,7 +44,8 @@
                 android:layout_height="wrap_content"
                 android:text="Size. "
                 android:textSize="16sp"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/poppinsregular"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -57,7 +60,8 @@
                     android:text="Product Price"
                     android:textStyle="bold"
                     android:textSize="16sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppinssemibold"/>
 
             </LinearLayout>
 

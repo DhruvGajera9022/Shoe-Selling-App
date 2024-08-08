@@ -22,6 +22,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.shoesapp.OrderConfirmActivity;
 import com.example.shoesapp.R;
 import com.example.shoesapp.adapters.MyCartAdapter;
 import com.example.shoesapp.models.MyCartModel;
@@ -242,7 +243,7 @@ public class CartFragment extends Fragment {
         }else {
             DialogPlus dialogPlus = DialogPlus.newDialog(getContext())
                     .setContentHolder(new ViewHolder(R.layout.buy_details))
-                    .setExpanded(true,1710)
+                    .setExpanded(true,2020)
                     .setCancelable(true)
                     .create();
 
@@ -321,6 +322,8 @@ public class CartFragment extends Fragment {
                                         loadCartItems();
                                     }
                                 });
+                        Intent intent = new Intent(getContext(), OrderConfirmActivity.class);
+                        startActivity(intent);
                         dialogPlus.dismiss();
                     }
                 }

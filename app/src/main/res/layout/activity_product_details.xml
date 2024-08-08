@@ -6,11 +6,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ProductDetailsActivity"
     android:orientation="vertical"
+    android:background="@color/white"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <LinearLayout
+        android:id="@+id/imageLayout"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:orientation="vertical"
+        android:background="@drawable/background_image_details">
+
+        <ImageView
+            android:id="@+id/productImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"/>
+
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="360dp"
         android:scrollbars="none">
 
         <LinearLayout
@@ -19,180 +35,146 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/imageLayout"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:orientation="vertical"
-                android:background="@drawable/background_image_details">
-
-                <ImageView
-                    android:id="@+id/productImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/productName"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="10dp"
-                android:textSize="23sp"
-                android:textColor="@color/black"
-                android:text="Nike"
-                android:textStyle="bold"/>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/productFor"
+                    android:id="@+id/productName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="25dp"
                     android:layout_marginTop="10dp"
-                    android:textSize="18sp"
-                    android:textColor="#6a7272"
+                    android:textSize="23sp"
+                    android:textColor="@color/black"
                     android:text="Nike"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppinsbold"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/productFor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="25dp"
+                        android:layout_marginTop="10dp"
+                        android:textSize="18sp"
+                        android:textColor="#6a7272"
+                        android:text="Nike"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/poppinssemibold"/>
+
+                </RelativeLayout>
 
                 <TextView
-                    android:id="@+id/productPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="21sp"
+                    android:text="Select Size"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="20dp"
+                    android:textSize="17sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="20dp"/>
+                    android:fontFamily="@font/poppinssemibold"/>
 
-            </RelativeLayout>
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="25dp"
+                    app:tabIndicatorColor="@color/black"
+                    app:tabRippleColor="#e5e5e5"
+                    app:tabSelectedTextColor="#4a7262"
+                    app:tabTextColor="#989698"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/white"
+                    android:fontFamily="@font/poppinsregular">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Select Size"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="20dp"
-                android:textSize="17sp"
-                android:textColor="@color/black"
-                android:textStyle="bold"/>
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/background_tab"
+                        android:text="6"
+                        android:fontFamily="@font/poppinsregular"/>
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="25dp"
-                app:tabIndicatorColor="@color/black"
-                app:tabRippleColor="#e5e5e5"
-                app:tabSelectedTextColor="#4a7262"
-                app:tabTextColor="#989698"
-                android:layout_marginTop="5dp">
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/background_tab"
+                        android:text="7"
+                        android:fontFamily="@font/poppinsregular"/>
 
-                <com.google.android.material.tabs.TabItem
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/background_tab"
+                        android:text="8"
+                        android:fontFamily="@font/poppinsregular"/>
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/background_tab"
+                        android:text="9"
+                        android:fontFamily="@font/poppinsregular"/>
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/background_tab"
+                        android:text="10"
+                        android:fontFamily="@font/poppinsregular"/>
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/background_tab"
+                        android:text="11"
+                        android:fontFamily="@font/poppinsregular"/>
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/background_tab"
+                        android:text="12"
+                        android:fontFamily="@font/poppinsregular"/>
+
+                </com.google.android.material.tabs.TabLayout>
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/background_tab"
-                    android:text="6"/>
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/background_tab"
-                    android:text="7"/>
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/background_tab"
-                    android:text="8"/>
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/background_tab"
-                    android:text="9"/>
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/background_tab"
-                    android:text="10"/>
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/background_tab"
-                    android:text="11"/>
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/background_tab"
-                    android:text="12"/>
-
-            </com.google.android.material.tabs.TabLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Description"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="20dp"
-                android:textSize="17sp"
-                android:textColor="@color/black"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/productDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="25dp"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/black"
-                android:textSize="14sp"/>
-
-            <EditText
-                android:id="@+id/textSize"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="15dp"
-                android:textColor="#Bc7474"
-                android:text="6"
-                android:visibility="gone"
-                android:textSize="12sp"/>
-
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="3"
-                android:layout_marginTop="180dp">
-
-                <ImageButton
-                    android:id="@+id/productAddToCartButton"
-                    android:layout_width="50dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/cart_icon"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_weight="1"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/productBuyNowButton"
-                    android:layout_width="280dp"
-                    android:layout_height="60dp"
-                    android:text="Buy Now"
+                    android:text="Description"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="20dp"
                     android:textSize="17sp"
-                    android:textAllCaps="false"
-                    app:cornerRadius="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_weight="2"/>
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppinssemibold"/>
+
+                <TextView
+                    android:id="@+id/productDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/poppinsregular"/>
+
+                <EditText
+                    android:id="@+id/textSize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="15dp"
+                    android:textColor="#Bc7474"
+                    android:text="6"
+                    android:visibility="gone"
+                    android:textSize="12sp"/>
 
             </LinearLayout>
 
@@ -200,6 +182,37 @@
 
     </ScrollView>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:layout_marginHorizontal="20dp"
+        android:layout_gravity="center">
 
+        <TextView
+            android:id="@+id/productPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:textSize="21sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginEnd="10dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:fontFamily="@font/poppinssemibold"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/productAddToCartButton"
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:text="Add to Cart"
+            android:textSize="17sp"
+            android:textAllCaps="false"
+            app:cornerRadius="10dp"
+            android:fontFamily="@font/poppinssemibold"/>
+
+    </LinearLayout>
 
 </LinearLayout>

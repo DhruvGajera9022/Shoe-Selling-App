@@ -25,7 +25,8 @@
                 android:text="Product Details"
                 android:textColor="@color/black"
                 android:textSize="40sp"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:fontFamily="@font/poppinsregular"/>
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/ProductDImage"

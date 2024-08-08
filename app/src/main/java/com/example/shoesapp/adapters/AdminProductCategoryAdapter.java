@@ -76,8 +76,8 @@ public class AdminProductCategoryAdapter extends RecyclerView.Adapter<ProductAda
             name = itemView.findViewById(R.id.txtname);
             price = itemView.findViewById(R.id.txtprice);
             img = itemView.findViewById(R.id.img);
-            gender = itemView.findViewById(R.id.txtgender);
-            rating = itemView.findViewById(R.id.txtrating);
+//            gender = itemView.findViewById(R.id.txtgender);
+//            rating = itemView.findViewById(R.id.txtrating);
 
         }
     }

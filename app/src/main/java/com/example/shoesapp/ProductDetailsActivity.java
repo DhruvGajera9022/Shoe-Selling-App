@@ -31,15 +31,13 @@ import java.util.HashMap;
 
 public class ProductDetailsActivity extends AppCompatActivity {
     ImageView imgi, img;
-    String key, productDetailsKey,cur_image, txtSize, txtName, txtPrice, txtGender, currentUser;
+    String key, cur_image, txtSize, txtName, txtPrice, txtGender, currentUser;
     FirebaseFirestore db;
     FirebaseAuth mAuth;
-    MaterialButton buyNowBtn;
+    MaterialButton addToCartBtn;
     TextView name, price, desc, gender;
     EditText edtSize;
     TabLayout tabSize;
-    ArrayList<ProductModel> datalist;
-    ImageButton addToCartBtn;
 
 
     @Override
@@ -57,7 +55,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
         edtSize = findViewById(R.id.textSize);
         tabSize = findViewById(R.id.tabLayout);
         addToCartBtn = findViewById(R.id.productAddToCartButton);
-        buyNowBtn = findViewById(R.id.productBuyNowButton);
 
         imgi = img;
 
@@ -123,13 +120,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 addToCart();
             }
         });
-        
-        buyNowBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                buyNow();
-            }
-        });
     }
 
     public void addToCart(){
@@ -171,28 +161,5 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
 
     }
-
-    public void buyNow(){
-        txtName = name.getText().toString();
-        txtPrice = price.getText().toString();
-        txtSize = edtSize.getText().toString();
-        txtGender = gender.getText().toString();
-        Intent intent = new Intent(ProductDetailsActivity.this, OrderDetailsActivity.class);
-        intent.putExtra("pname", txtName);
-        intent.putExtra("pprice", txtPrice);
-        intent.putExtra("psize", txtSize);
-        intent.putExtra("gender", txtGender);
-        intent.putExtra("imgUrl", cur_image);
-        startActivity(intent);
-        finish();
-    }
-
-//    private void getamount(int q) {
-//        int pr = Integer.parseInt(price.getText().toString());
-//        int am = q * pr;
-//        String sam = String.valueOf(am);
-//        cartamount.setText(sam);
-//        map.put("amount",sam);
-//    }
 
 }

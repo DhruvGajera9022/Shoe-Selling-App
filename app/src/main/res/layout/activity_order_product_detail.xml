@@ -41,7 +41,8 @@
                 android:textSize="23sp"
                 android:textColor="@color/black"
                 android:text="Product Name: "
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:fontFamily="@font/poppinsbold"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -56,7 +57,8 @@
                     android:textSize="18sp"
                     android:textColor="#6a7272"
                     android:text="Nike"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppinssemibold"/>
 
                 <TextView
                     android:id="@+id/productPrice"
@@ -80,7 +82,8 @@
                 android:layout_marginTop="20dp"
                 android:textSize="17sp"
                 android:textColor="@color/black"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:fontFamily="@font/poppinssemibold"/>
 
             <TextView
                 android:id="@+id/productOrderDescription"
@@ -90,7 +93,26 @@
                 android:layout_marginTop="10dp"
                 android:textColor="@color/black"
                 android:textSize="14sp"
-                android:text="Description"/>
+                android:text="Description"
+                android:fontFamily="@font/poppinsregular"/>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:background="@color/black"
+                android:layout_marginVertical="30dp"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contact Details: "
+                android:layout_marginStart="25dp"
+                android:textSize="23sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppinsbold"/>
 
             <TextView
                 android:id="@+id/productOrderEmail"
@@ -100,7 +122,8 @@
                 android:layout_marginTop="10dp"
                 android:textColor="@color/black"
                 android:textSize="14sp"
-                android:text="Email"/>
+                android:text="Email"
+                android:fontFamily="@font/poppinsregular"/>
 
             <TextView
                 android:id="@+id/productOrderNumber"
@@ -113,6 +136,17 @@
                 android:text="9021323243423"/>
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deliver To: "
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="25dp"
+                android:textSize="23sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppinsbold"/>
+
+            <TextView
                 android:id="@+id/productOrderAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -120,7 +154,19 @@
                 android:layout_marginTop="10dp"
                 android:textColor="@color/black"
                 android:textSize="14sp"
-                android:text="Address"/>
+                android:text="Address"
+                android:fontFamily="@font/poppinsregular"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Order Date: "
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="25dp"
+                android:textSize="23sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppinsbold"/>
 
             <TextView
                 android:id="@+id/productOrderDate"
@@ -130,7 +176,30 @@
                 android:layout_marginTop="10dp"
                 android:textColor="@color/black"
                 android:textSize="14sp"
-                android:text="22.3.3333"/>
+                android:text="22/3/3333"
+                android:fontFamily="@font/poppinsregular"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Arriving Date: "
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="25dp"
+                android:textSize="23sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppinsbold"/>
+
+            <TextView
+                android:id="@+id/productArrivingDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:text=""
+                android:fontFamily="@font/poppinsregular"/>
 
         </LinearLayout>
 

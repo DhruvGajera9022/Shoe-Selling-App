@@ -18,25 +18,11 @@ import com.example.shoesapp.R;
 import java.util.zip.GZIPOutputStream;
 
 public class SettingsActivity extends AppCompatActivity {
-    Switch themeMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-
-        themeMode = findViewById(R.id.themeMode);
-
-        themeMode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (themeMode.isChecked()){
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                }else{
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                }
-            }
-        });
 
     }
 

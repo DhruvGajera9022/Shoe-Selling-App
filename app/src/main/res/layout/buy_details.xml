@@ -33,7 +33,8 @@
                     android:textColor="@color/black"
                     android:textSize="21sp"
                     android:textStyle="bold"
-                    android:layout_weight="4"/>
+                    android:layout_weight="4"
+                    android:fontFamily="@font/poppinssemibold"/>
 
                 <TextView
                     android:id="@+id/editProfile"
@@ -44,7 +45,8 @@
                     android:textSize="17sp"
                     android:layout_weight="1"
                     android:layout_gravity="center"
-                    android:gravity="end"/>
+                    android:gravity="end"
+                    android:fontFamily="@font/poppinsregular"/>
 
             </LinearLayout>
 
@@ -55,7 +57,8 @@
                 android:text="Name"
                 android:textSize="17sp"
                 android:textColor="@color/black"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppinsregular"/>
 
             <TextView
                 android:id="@+id/buyPersonEmail"
@@ -64,7 +67,8 @@
                 android:text="Email"
                 android:textSize="17sp"
                 android:textColor="@color/black"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppinsregular"/>
 
             <TextView
                 android:id="@+id/buyPersonNumber"
@@ -73,7 +77,8 @@
                 android:text="Number"
                 android:textSize="17sp"
                 android:textColor="@color/black"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppinsregular"/>
 
             <RadioButton
                 android:id="@+id/buyPersonAddress"
@@ -81,7 +86,8 @@
                 android:layout_height="wrap_content"
                 android:text="Address"
                 android:textSize="17sp"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppinsregular"/>
 
         </LinearLayout>
 
@@ -107,7 +113,8 @@
                 android:text="Payment Method"
                 android:textColor="@color/black"
                 android:textSize="21sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:fontFamily="@font/poppinssemibold"/>
 
             <RadioGroup
                 android:id="@+id/radioGroup"
@@ -120,31 +127,36 @@
                     android:id="@+id/rbOptionCreditDebitAtm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Credit / Debit / ATM Card"/>
+                    android:text="Credit / Debit / ATM Card"
+                    android:fontFamily="@font/poppinsregular"/>
 
                 <RadioButton
                     android:id="@+id/rbOptionNetBanking"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Net Banking"/>
+                    android:text="Net Banking"
+                    android:fontFamily="@font/poppinsregular"/>
 
                 <RadioButton
                     android:id="@+id/rbOptionWallets"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Wallets"/>
+                    android:text="Wallets"
+                    android:fontFamily="@font/poppinsregular"/>
 
                 <RadioButton
                     android:id="@+id/rbOptionUPI"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="UPI"/>
+                    android:text="UPI"
+                    android:fontFamily="@font/poppinsregular"/>
 
                 <RadioButton
                     android:id="@+id/rbOptionCashOnDelivery"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Cash on Delivery"/>
+                    android:text="Cash on Delivery"
+                    android:fontFamily="@font/poppinsregular"/>
 
             </RadioGroup>
 
@@ -162,20 +174,22 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buyCancelBtn"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:text="Cancel"
             android:layout_marginEnd="5dp"
             android:layout_weight="2"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false"
+            android:fontFamily="@font/poppinssemibold"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buySaveBtn"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:text="Save"
             android:layout_weight="2"
             android:layout_marginStart="5dp"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false"
+            android:fontFamily="@font/poppinssemibold"/>
 
     </LinearLayout>
 

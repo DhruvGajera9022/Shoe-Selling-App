@@ -2,6 +2,7 @@ package com.example.shoesapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -42,6 +43,7 @@ public class SignupActivity extends AppCompatActivity {
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     RelativeLayout googleButton;
+    boolean passwordShowing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +78,23 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 googleSignin();
+            }
+        });
+
+        binding.passwordToggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (passwordShowing){
+                    passwordShowing = false;
+
+                    binding.signupPasswordEdt.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    binding.passwordToggle.setImageResource(R.drawable.show_password);
+                }else{
+                    passwordShowing = true;
+
+                    binding.signupPasswordEdt.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    binding.passwordToggle.setImageResource(R.drawable.hide_password);
+                }
             }
         });
 
@@ -122,7 +141,7 @@ public class SignupActivity extends AppCompatActivity {
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
-                                    startActivity(new Intent(SignupActivity.this, MainActivity.class));
+                                    startActivity(new Intent(SignupActivity.this, LoginActivity.class));
                                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                 }
                             });

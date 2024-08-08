@@ -22,4 +22,11 @@
     <string name="login_email_hint">Email</string>
     <string name="login_password_hint">Password</string>
 
+    <string name="aboutUs">Welcome to ShoeStore! Our mission is to provide high-quality shoes at affordable prices. With a wide range of styles and brands, we cater to all tastes and preferences.</string>
+    <string name="ourStory">Founded in 2024, ShoeStore started with a small team passionate about footwear. Over the years, we have grown into a trusted brand with customers all over the world. We are committed to providing exceptional service and the latest trends in footwear.</string>
+
+    <string name="privacyPolicy">Welcome to ShoeStore! This privacy policy explains how to collect, use, disclose, and safeguard your information when you visit our application. Please read this privacy policy carefully.</string>
+    <string name="privacyPolicyWe">We may collect information about you in a variety of ways, The information we may collect via the application depends on the content and materials you use, and includes personal data, demographic data, and other information.</string>
+    <string name="privacyPolicyYou">Having accurate information about you permits us to provide you with a smooth, efficient, and customized experience. Specifically, we may use information collected about you via tha application to create and manage your account, deliver targeted advertising and other purposes.</string>
+
 </resources>

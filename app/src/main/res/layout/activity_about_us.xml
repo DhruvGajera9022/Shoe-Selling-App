@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".profileactivities.AboutUsActivity"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/logo"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="About Us"
+                android:textSize="35sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:fontFamily="@font/poppinsbold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/aboutUs"
+                android:textSize="20sp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/poppinsregular"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Our Story"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/poppinsbold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ourStory"
+                android:textSize="20sp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/poppinsregular"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Contact Us"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/poppinsbold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Email: dhruvgajera05@gmail.com \nPhone: +91 90237 55654"
+                android:textSize="20sp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/poppinsregular"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Email: akbariprince648@gmail.com \nPhone: +91 63535 50989"
+                android:textSize="20sp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/poppinsregular"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Email: ashishpatil05050@gmail.com \nPhone: +91 87339 01882"
+                android:textSize="20sp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/poppinsregular"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

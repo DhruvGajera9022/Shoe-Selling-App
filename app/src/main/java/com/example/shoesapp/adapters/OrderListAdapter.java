@@ -45,7 +45,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
                 .into(holder.img);
         holder.name.setText(list.get(position).getProductName());
         holder.price.setText(list.get(position).getProductPrice());
-        holder.size.setText("Size. "+list.get(position).getProductSize());
         holder.date.setText(list.get(position).getdate());
 
         holder.orderCard.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +64,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView name, price, size, date;
+        TextView name, price, date;
         ImageView img;
         CardView orderCard;
 
@@ -74,7 +73,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
 
             name = itemView.findViewById(R.id.orderProductItemName);
             price = itemView.findViewById(R.id.orderProductItemPrice);
-            size = itemView.findViewById(R.id.orderProductItemSize);
             date = itemView.findViewById(R.id.orderProductItemDate);
             img = itemView.findViewById(R.id.orderProductItemImage);
             orderCard = itemView.findViewById(R.id.orderCard);

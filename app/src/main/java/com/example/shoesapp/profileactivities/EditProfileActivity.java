@@ -2,6 +2,7 @@ package com.example.shoesapp.profileactivities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.icu.text.MessageFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +18,8 @@ import com.example.shoesapp.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -35,13 +38,13 @@ import java.util.Locale;
 import java.util.Map;
 
 public class EditProfileActivity extends AppCompatActivity {
-    EditText txtFName, txtLName, txtEmail, txtMobile;
+    EditText txtFName, txtLName, txtEmail, txtMobile, txtDOB, txtAddress;
     ImageView imgProfile;
     FirebaseAuth mAuth;
     FirebaseFirestore firestore;
     StorageReference updateStorageReference;
     MaterialButton btnEdit;
-    String uid;
+    String uid, date;
     Uri imgUpdateUri;
     ProgressDialog progressDialog;
     boolean isImageSelected = false;
@@ -60,6 +63,8 @@ public class EditProfileActivity extends AppCompatActivity {
         txtLName = findViewById(R.id.txtEditProfileLastName);
         txtEmail = findViewById(R.id.txtEditProfileEmail);
         txtMobile = findViewById(R.id.txtEditProfileNumber);
+        txtDOB = findViewById(R.id.txtEditProfileDOB);
+        txtAddress = findViewById(R.id.txtEditProfileAddress);
         imgProfile = findViewById(R.id.editProfileImage);
         btnEdit = findViewById(R.id.editProfileBtn);
 
@@ -75,6 +80,8 @@ public class EditProfileActivity extends AppCompatActivity {
                     txtLName.setText(value.getString("LastName"));
                     txtEmail.setText(value.getString("Email"));
                     txtMobile.setText(value.getString("Mobile"));
+                    txtDOB.setText(value.getString("DOB"));
+                    txtAddress.setText(value.getString("Address"));
                     Picasso.get().load(value.getString("ProfileImage")).into(imgProfile);
                 }
             }
@@ -96,6 +103,31 @@ public class EditProfileActivity extends AppCompatActivity {
                 updateUserData();
             }
         });
+
+        txtDOB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create a MaterialDatePicker instance
+                MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
+                        .setTitleText("Select Date of Birth")
+                        .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                        .build();
+
+                // Set a listener for the positive button click event
+                datePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
+                    @Override
+                    public void onPositiveButtonClick(Long selection) {
+                        // Format the selected date and set it in the TextView
+                        date = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault()).format(new Date(selection));
+                        txtDOB.setText(MessageFormat.format("{0}", date));
+                    }
+                });
+
+                // Show the date picker
+                datePicker.show(getSupportFragmentManager(), "tag");
+            }
+        });
+
     }
 
     public void updateUserData() {
@@ -148,12 +180,16 @@ public class EditProfileActivity extends AppCompatActivity {
         String mlname = txtLName.getText().toString();
         String memail = txtEmail.getText().toString();
         String mnumber = txtMobile.getText().toString();
+        String mdob = txtDOB.getText().toString();
+        String maddress = txtAddress.getText().toString();
 
         Map<String, Object> map = new HashMap<>();
         map.put("FirstName", mfname);
         map.put("LastName", mlname);
         map.put("Email", memail);
         map.put("Mobile", mnumber);
+        map.put("DOB", mdob);
+        map.put("Address", maddress);
         if (imageUrl != null) {
             map.put("ProfileImage", imageUrl);
         }
