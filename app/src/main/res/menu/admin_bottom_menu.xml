@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/admin_home"
+        android:title="@string/home"
+        android:icon="@drawable/home_icon"
+        android:fontFamily="@font/poppinsregular"/>
+
+    <item
+        android:id="@+id/admin_category"
+        android:title="@string/my_category"
+        android:icon="@drawable/category_icon"
+        android:fontFamily="@font/poppinsregular"/>
+
+    <item
+        android:id="@+id/admin_orders"
+        android:title="@string/my_order"
+        android:icon="@drawable/checkout"
+        android:fontFamily="@font/poppinsregular"/>
+
+    <item
+        android:id="@+id/admin_profile"
+        android:title="@string/profile"
+        android:icon="@drawable/person_icon"
+        android:fontFamily="@font/poppinsregular"/>
+
+</menu>

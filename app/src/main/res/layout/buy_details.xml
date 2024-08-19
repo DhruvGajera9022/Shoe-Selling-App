@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        android:elevation="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#EDEAEA"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="5"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/details"
+                    android:textColor="@color/black"
+                    android:textSize="21sp"
+                    android:textStyle="bold"
+                    android:layout_weight="4"
+                    android:fontFamily="@font/poppinssemibold"/>
+
+                <TextView
+                    android:id="@+id/editProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edit"
+                    android:textColor="#2196F3"
+                    android:textSize="17sp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="end"
+                    android:fontFamily="@font/poppinsregular"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/buyPersonName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/name"
+                android:textSize="17sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppinsregular"/>
+
+            <TextView
+                android:id="@+id/buyPersonEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/email"
+                android:textSize="17sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppinsregular"/>
+
+            <TextView
+                android:id="@+id/buyPersonNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/number"
+                android:textSize="17sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppinsregular"/>
+
+            <RadioButton
+                android:id="@+id/buyPersonAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/address"
+                android:textSize="17sp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppinsregular"/>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        android:layout_marginTop="10dp"
+        android:elevation="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#EDEAEA"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/payment_method"
+                android:textColor="@color/black"
+                android:textSize="21sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppinssemibold"/>
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp">
+
+                <RadioButton
+                    android:id="@+id/rbOptionCreditDebitAtm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/credit_debit_atm_card"
+                    android:fontFamily="@font/poppinsregular"/>
+
+                <RadioButton
+                    android:id="@+id/rbOptionNetBanking"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/net_banking"
+                    android:fontFamily="@font/poppinsregular"/>
+
+                <RadioButton
+                    android:id="@+id/rbOptionWallets"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wallets"
+                    android:fontFamily="@font/poppinsregular"/>
+
+                <RadioButton
+                    android:id="@+id/rbOptionUPI"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/upi"
+                    android:fontFamily="@font/poppinsregular"/>
+
+                <RadioButton
+                    android:id="@+id/rbOptionCashOnDelivery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cash_on_delivery"
+                    android:fontFamily="@font/poppinsregular"/>
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:weightSum="4">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buyCancelBtn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="@string/cancel"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="2"
+            android:textAllCaps="false"
+            android:fontFamily="@font/poppinssemibold"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buySaveBtn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="@string/save"
+            android:layout_weight="2"
+            android:layout_marginStart="5dp"
+            android:textAllCaps="false"
+            android:fontFamily="@font/poppinssemibold"/>
+
+    </LinearLayout>
+
+</LinearLayout>
