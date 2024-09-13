@@ -20,6 +20,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.constants.ScaleTypes;
+import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.shoesapp.CartActivity;
 import com.example.shoesapp.R;
 import com.example.shoesapp.adapters.userProductAdapter;
@@ -54,7 +57,6 @@ public class HomeFragment extends Fragment {
     ImageView imageViewTop;
     String uid;
     ImageView cart;
-//    TextView cartItemCount;
     ProgressBar progressBar;  // Declare ProgressBar
 
     public HomeFragment() {
@@ -127,6 +129,15 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        ArrayList<SlideModel> imageList = new ArrayList<>();
+
+        imageList.add(new SlideModel(R.drawable.pp4, ScaleTypes.CENTER_CROP));
+        imageList.add(new SlideModel(R.drawable.pp5, ScaleTypes.CENTER_CROP));
+        imageList.add(new SlideModel(R.drawable.pp7, ScaleTypes.CENTER_CROP));
+        imageList.add(new SlideModel(R.drawable.pp3, ScaleTypes.CENTER_CROP));
+
+        ImageSlider imageSlider = view.findViewById(R.id.image_slider);
+        imageSlider.setImageList(imageList);
 
         return view;
     }

@@ -59,18 +59,8 @@
                     android:layout_alignParentTop="true"
                     android:src="@drawable/cart_icon"/>
 
-                <!--                <TextView-->
-                <!--                    android:id="@+id/cartItemCount"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_alignEnd="@id/cart"-->
-                <!--                    android:layout_alignTop="@id/cart"-->
-                <!--                    android:background="@drawable/circle_background"-->
-                <!--                    android:padding="4dp"-->
-                <!--                    android:textColor="@android:color/white"-->
-                <!--                    android:textSize="12sp"-->
-                <!--                    android:visibility="gone"/>-->
             </RelativeLayout>
+
         </LinearLayout>
 
     </LinearLayout>
@@ -127,11 +117,37 @@
                             android:inputType="textCapWords"
                             android:fontFamily="@font/poppinsregular"/>
 
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                app:cardBackgroundColor="@color/white"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginBottom="10dp"
+                                app:cardCornerRadius="30dp"
+                                android:padding="10dp">
+
+                                <com.denzcoskun.imageslider.ImageSlider
+                                    android:id="@+id/image_slider"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="200dp"
+                                    app:iss_auto_cycle="true"
+                                    app:iss_period="2000"
+                                    app:iss_delay="2000"
+                                    app:iss_no_dots="true"
+                                    app:iss_text_align="CENTER" />
+
+                            </androidx.cardview.widget.CardView>
+
+                        </RelativeLayout>
+
                     </LinearLayout>
 
                 </LinearLayout>
-
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -142,7 +158,7 @@
                         android:id="@+id/userHomeRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"/>
+                        android:layout_marginBottom="60dp"/>
 
                 </LinearLayout>
 
