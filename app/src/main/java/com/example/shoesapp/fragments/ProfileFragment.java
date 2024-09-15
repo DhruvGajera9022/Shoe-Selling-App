@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -30,14 +31,17 @@ import com.example.shoesapp.profileactivities.EditProfileActivity;
 import com.example.shoesapp.profileactivities.OrderHistoryActivity;
 import com.example.shoesapp.profileactivities.OrdersActivity;
 import com.example.shoesapp.profileactivities.PrivacyPolicyActivity;
+import com.example.shoesapp.profileactivities.RateUsActivity;
 import com.example.shoesapp.profileactivities.SettingsActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ProfileFragment extends Fragment {
     TextView  txtLanguage, txtSettings, txtAboutUs, txtPrivacyPolicy;
-    ImageButton btnEditProfile, btnOrders, btnLanguage, btnOrderHistory, btnSettings, btnAboutUs, btnPrivacyPolicy, btnDeleteUser;
+    ImageButton btnEditProfile, btnOrders, btnLanguage, btnOrderHistory, btnSettings, btnAboutUs, btnPrivacyPolicy, btnDeleteUser, profileRateUsBtn;
     AppCompatButton btnLogout;
     FirebaseAuth mAuth;
     FirebaseFirestore firestore;
@@ -45,7 +49,7 @@ public class ProfileFragment extends Fragment {
     ImageView cart4;
     FragmentManager manager;
     Context context;
-    LinearLayout llSettings, llEditProfile, llOrderHistory, llOrders, llAboutUs, llPrivacyPolicy,llLanguage, llDeleteUser;
+    LinearLayout llSettings, llEditProfile, llOrderHistory, llOrders, llAboutUs, llPrivacyPolicy,llLanguage, llDeleteUser, llRateUs;
 
     ProgressBar progressBar;
 
@@ -71,6 +75,7 @@ public class ProfileFragment extends Fragment {
         llPrivacyPolicy = view.findViewById(R.id.llPrivacyPolicy);
         llLanguage = view.findViewById(R.id.llLanguage);
         llDeleteUser = view.findViewById(R.id.llDeleteUser);
+        llRateUs = view.findViewById(R.id.llRateUs);
 
         btnEditProfile = view.findViewById(R.id.profileEditProfileBtn);
         btnLanguage = view.findViewById(R.id.profileSelectLanguageBtn);
@@ -79,6 +84,7 @@ public class ProfileFragment extends Fragment {
         btnAboutUs = view.findViewById(R.id.profileAboutUsBtn);
         btnPrivacyPolicy = view.findViewById(R.id.profilePrivacyPolicyBtn);
         btnDeleteUser = view.findViewById(R.id.profileDeleteUserBtn);
+        profileRateUsBtn = view.findViewById(R.id.profileRateUsBtn);
 
         manager = getActivity().getSupportFragmentManager();
 
@@ -96,14 +102,13 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-
         ToEditProfile();
         ToSettings();
         ToOrderHistory();
         ToAboutUs();
         ToPrivacyPolicy();
         ToDeleteAccount();
-
+        ToRateUs();
 
         cart4.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +117,6 @@ public class ProfileFragment extends Fragment {
                 startActivity(i);
             }
         });
-
 
         return view;
     }
@@ -173,18 +177,6 @@ public class ProfileFragment extends Fragment {
                 startActivity(intent);
             }
         });
-    }
-
-    public void ToOrders(){
-
-
-        btnOrders.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), OrdersActivity.class);
-            }
-        });
-
     }
 
     public void ToAboutUs(){
@@ -270,6 +262,47 @@ public class ProfileFragment extends Fragment {
                         }
                     }
                 });
+    }
+
+    public void ToRateUs() {
+        // Initialize the context
+        context = getActivity();
+
+        // Set up click listeners, but check if user has already submitted a rating
+        llRateUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkIfRatingSubmitted();
+            }
+        });
+
+        profileRateUsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkIfRatingSubmitted();
+            }
+        });
+    }
+
+    private void checkIfRatingSubmitted() {
+        DocumentReference reference = firestore.collection("Rating").document(userId);
+
+        reference.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    // Rating already submitted
+                    Toast.makeText(context, "You have already submitted a rating!", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Allow the user to rate if no rating has been submitted
+                    Intent intent = new Intent(getContext(), RateUsActivity.class);
+                    startActivity(intent);
+                }
+            } else {
+                // Handle the error if necessary
+                Toast.makeText(context, "Failed to check rating submission. Try again.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 }

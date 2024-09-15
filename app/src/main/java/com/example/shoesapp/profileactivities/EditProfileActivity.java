@@ -48,6 +48,7 @@ public class EditProfileActivity extends AppCompatActivity {
     Uri imgUpdateUri;
     ProgressDialog progressDialog;
     boolean isImageSelected = false;
+    ImageView toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +129,11 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
+        toolbar=findViewById(R.id.toolbar);
+        toolbar.setOnClickListener(v -> {
+            onBackPressed();
+        });
+
     }
 
     public void updateUserData() {
@@ -183,36 +189,54 @@ public class EditProfileActivity extends AppCompatActivity {
         String mdob = txtDOB.getText().toString();
         String maddress = txtAddress.getText().toString();
 
-        Map<String, Object> map = new HashMap<>();
-        map.put("FirstName", mfname);
-        map.put("LastName", mlname);
-        map.put("Email", memail);
-        map.put("Mobile", mnumber);
-        map.put("DOB", mdob);
-        map.put("Address", maddress);
-        if (imageUrl != null) {
-            map.put("ProfileImage", imageUrl);
-        }
+        // Regular expression for phone number validation (10 digits)
+        String phonePattern = "^[0-9]{10}$";
 
-        firestore.collection("Users")
-                .document(uid)
-                .update(map)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        progressDialog.dismiss();
-                        Toast.makeText(EditProfileActivity.this, "Profile updated", Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        progressDialog.dismiss();
-                        Toast.makeText(EditProfileActivity.this, "Profile update failed", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        // Regular expression for email validation
+        String emailPattern = "^[a-zA-Z0-9._-]+@[a-z]+\\.[a-z]+$";
+
+        if (!mnumber.matches(phonePattern)) {
+            txtMobile.setError("Invalid Phone Number. It should be 10 digits.");
+            progressDialog.dismiss();
+        }
+        else if (!memail.matches(emailPattern)) {
+            txtEmail.setError("Invalid Email Address");
+            progressDialog.dismiss();
+        }else {
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("FirstName", mfname);
+            map.put("LastName", mlname);
+            map.put("Email", memail);
+            map.put("Mobile", mnumber);
+            map.put("DOB", mdob);
+            map.put("Address", maddress);
+
+            if (imageUrl != null) {
+                map.put("ProfileImage", imageUrl);
+            }
+
+            firestore.collection("Users")
+                    .document(uid)
+                    .update(map)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            progressDialog.dismiss();
+                            Toast.makeText(EditProfileActivity.this, "Profile updated", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(EditProfileActivity.this, "Profile update failed", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -222,5 +246,10 @@ public class EditProfileActivity extends AppCompatActivity {
             imgProfile.setImageURI(imgUpdateUri);
             isImageSelected = true;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

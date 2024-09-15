@@ -9,7 +9,7 @@ public class MyCartModel {
     String productSize;
     String totalQty;
     String totalAmount;
-    String productCompany;
+    String categoryCompany;
     String uid;
     String oid;
     int totalPrice;
@@ -17,14 +17,14 @@ public class MyCartModel {
     public MyCartModel() {
     }
 
-    public MyCartModel(String productImage, String productName, String productPrice, String productDescription, int totalPrice, String productCompany, String productSize, String totalQty, String totalAmount, String uid, String oid) {
+    public MyCartModel(String productImage, String productName, String productPrice, String productDescription, int totalPrice, String categoryCompany, String productSize, String totalQty, String totalAmount, String uid, String oid) {
         this.productImage = productImage;
         this.productName = productName;
         this.productPrice = productPrice;
         this.productDescription = productDescription;
         this.totalPrice = totalPrice;
         this.productSize = productSize;
-        this.productCompany = productCompany;
+        this.categoryCompany = categoryCompany;
         this.totalQty = totalQty;
         this.totalAmount = totalAmount;
         this.uid = uid;
@@ -111,11 +111,11 @@ public class MyCartModel {
         this.totalAmount = totalAmount;
     }
 
-    public String getProductCompany() {
-        return productCompany;
+    public String getCategoryCompany() {
+        return categoryCompany;
     }
 
-    public void setProductCompany(String productCompany) {
-        this.productCompany = productCompany;
+    public void setCategoryCompany(String categoryCompany) {
+        this.categoryCompany = categoryCompany;
     }
 }

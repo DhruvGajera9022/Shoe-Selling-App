@@ -57,14 +57,12 @@ public class CartActivity extends AppCompatActivity {
 
     private MyCartModel deletedItem = null;
 
-    private TextView txtProductTotal, txtProductDeliveryTotal, txtProduceVoucherTotal, txtProductFinalTotal,cartProductFinalTotal1;
+    private TextView txtProductTotal, txtProductDeliveryTotal, txtProduceVoucherTotal, txtProductFinalTotal,cartProductFinalTotal1, txtCartViewProductDetails;
     private Button conntinue;
 
     private String strTotalAmount, uid, paymentMethod;
     private int totalAmount;
 
-    private RadioButton rbOptionCreditDebitAtm, rbOptionNetBanking, rbOptionWallets, rbOptionUPI, rbOptionCashOnDelivery;
-    private RadioGroup radioGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,14 +82,9 @@ public class CartActivity extends AppCompatActivity {
         cartProductFinalTotal1 = findViewById(R.id.cartProductFinalTotal1);
         txtProduceVoucherTotal = findViewById(R.id.cartProductVoucherTotal);
         txtProductFinalTotal = findViewById(R.id.cartProductFinalTotal);
+        txtCartViewProductDetails = findViewById(R.id.cartViewProductDetails);
 
         conntinue = findViewById(R.id.conntinue);
-
-        rbOptionCreditDebitAtm = findViewById(R.id.rbOptionCreditDebitAtm);
-        rbOptionNetBanking = findViewById(R.id.rbOptionNetBanking);
-        rbOptionWallets = findViewById(R.id.rbOptionWallets);
-        rbOptionUPI = findViewById(R.id.rbOptionUPI);
-        rbOptionCashOnDelivery = findViewById(R.id.rbOptionCashOnDelivery);
 
         recyclerView = findViewById(R.id.cartRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -109,8 +102,6 @@ public class CartActivity extends AppCompatActivity {
                 toOrder();
             }
         });
-
-
     }
 
     private void loadCartItems() {
@@ -246,6 +237,13 @@ public class CartActivity extends AppCompatActivity {
             MaterialButton btnSave = dailogview.findViewById(R.id.buySaveBtn);
             MaterialButton btnCancel = dailogview.findViewById(R.id.buyCancelBtn);
 
+            RadioButton rbOptionCreditDebitAtm = dailogview.findViewById(R.id.rbOptionCreditDebitAtm);
+            RadioButton rbOptionGPay = dailogview.findViewById(R.id.rbOptionGPay);
+            RadioButton rbOptionPhonePay = dailogview.findViewById(R.id.rbOptionPhonePay);
+            RadioButton rbOptionNetBanking = dailogview.findViewById(R.id.rbOptionNetBanking);
+            RadioButton rbOptionWallets = dailogview.findViewById(R.id.rbOptionWallets);
+            RadioButton rbOptionCashOnDelivery = dailogview.findViewById(R.id.rbOptionCashOnDelivery);
+
             uid = mAuth.getCurrentUser().getUid();
 
             DocumentReference documentReference = firestore.collection("Users").document(uid);
@@ -277,10 +275,27 @@ public class CartActivity extends AppCompatActivity {
             btnSave.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    String strPaymentMethod;
+
+                    if(rbOptionCreditDebitAtm.isChecked()){
+                        strPaymentMethod = rbOptionCreditDebitAtm.getText().toString();
+                    }else if(rbOptionGPay.isChecked()){
+                        strPaymentMethod = rbOptionGPay.getText().toString();
+                    }else if(rbOptionPhonePay.isChecked()){
+                        strPaymentMethod = rbOptionPhonePay.getText().toString();
+                    }else if(rbOptionNetBanking.isChecked()){
+                        strPaymentMethod = rbOptionNetBanking.getText().toString();
+                    }else if(rbOptionWallets.isChecked()){
+                        strPaymentMethod = rbOptionWallets.getText().toString();
+                    }else{
+                        strPaymentMethod = rbOptionCashOnDelivery.getText().toString();
+                    }
+
                     for (MyCartModel list : list) {
                         Map<String, Object> map = new HashMap<>();
                         map.put("productName", list.getProductName());
-                        map.put("productCompanyName", list.getProductCompany());
+                        map.put("productCompanyName", list.getCategoryCompany());
                         map.put("productPrice", list.getProductPrice());
                         map.put("productSize", list.getProductSize());
                         map.put("productImage", list.getProductImage());
@@ -291,30 +306,33 @@ public class CartActivity extends AppCompatActivity {
                         map.put("email", txtEmail.getText().toString());
                         map.put("number", txtNumber.getText().toString());
                         map.put("address", rbAddress.getText().toString());
-                        map.put("paymentMethod", paymentMethod);
+                        map.put("paymentMethod", strPaymentMethod);
 
+                        // Set the current date
                         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
                         LocalDateTime now = LocalDateTime.now();
                         String date = dtf.format(now);
                         map.put("date", date);
 
+                        // Add the order to Firestore
                         firestore.collection("Orders")
                                 .document(list.getOid())
                                 .set(map);
 
+                        // Remove the item from the cart
                         firestore.collection("AddToCart")
                                 .document(list.getOid())
                                 .delete()
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
-                                        loadCartItems();
+                                        loadCartItems();  // Refresh the cart after deletion
                                     }
                                 });
-                        Intent intent = new Intent(CartActivity.this, OrderConfirmActivity.class);
-                        startActivity(intent);
-                        dialogPlus.dismiss();
                     }
+                    Intent intent = new Intent(CartActivity.this, OrderConfirmActivity.class);
+                    startActivity(intent);
+                    dialogPlus.dismiss();
                 }
             });
 
@@ -324,20 +342,6 @@ public class CartActivity extends AppCompatActivity {
                     dialogPlus.dismiss();
                 }
             });
-        }
-    }
-
-    public void getPaymentMethod() {
-        if (rbOptionCreditDebitAtm.isChecked()) {
-            paymentMethod = "By Card";
-        } else if (rbOptionNetBanking.isChecked()) {
-            paymentMethod = "Net Banking";
-        } else if (rbOptionWallets.isChecked()) {
-            paymentMethod = "Wallets";
-        } else if (rbOptionUPI.isChecked()) {
-            paymentMethod = "UPI";
-        } else {
-            paymentMethod = "Cash on Delivery";
         }
     }
 }

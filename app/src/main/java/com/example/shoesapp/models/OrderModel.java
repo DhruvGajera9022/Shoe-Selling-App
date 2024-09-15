@@ -1,12 +1,12 @@
 package com.example.shoesapp.models;
 
 public class OrderModel {
-    String productName, productPrice, productSize, productImage, productDescription, oid, userName, email, number, address, date;
+    String productName, productPrice, productSize, productImage, productDescription, oid, userName, email, number, address, date, deliveryDate;
 
     public OrderModel() {
     }
 
-    public OrderModel(String productName, String productPrice, String productSize, String productImage, String oid, String productDescription, String userName, String email, String number, String address, String date) {
+    public OrderModel(String productName, String productPrice, String productSize, String productImage, String oid, String productDescription, String userName, String email, String number, String address, String date, String deliveryDate) {
         this.productName = productName;
         this.productPrice = productPrice;
         this.productSize = productSize;
@@ -18,6 +18,7 @@ public class OrderModel {
         this.number = number;
         this.address = address;
         this.date = date;
+        this.deliveryDate = deliveryDate;
     }
 
     public String getProductName() {
@@ -106,5 +107,13 @@ public class OrderModel {
 
     public void setProductDescription(String productDescription) {
         this.productDescription = productDescription;
+    }
+
+    public String getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(String deliveryDate) {
+        this.deliveryDate = deliveryDate;
     }
 }

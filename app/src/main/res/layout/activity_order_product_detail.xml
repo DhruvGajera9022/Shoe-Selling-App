@@ -191,6 +191,16 @@
                 android:fontFamily="@font/poppinsbold"/>
 
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="10dp"
+                android:textColor="#FF0000"
+                android:textSize="14sp"
+                android:text="Deliver with in 7 days."
+                android:fontFamily="@font/poppinsregular"/>
+
+            <TextView
                 android:id="@+id/productArrivingDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -200,6 +210,8 @@
                 android:textSize="14sp"
                 android:text=""
                 android:fontFamily="@font/poppinsregular"/>
+
+
 
         </LinearLayout>
 

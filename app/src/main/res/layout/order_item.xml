@@ -60,6 +60,17 @@
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/poppinsregular"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Deliver with in 7 days."
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="#FD0000"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/poppinsregular"/>
+
         </LinearLayout>
 
     </LinearLayout>

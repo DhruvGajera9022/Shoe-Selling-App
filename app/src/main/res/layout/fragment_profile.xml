@@ -118,7 +118,7 @@
                     android:layout_width="20sp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:src="@drawable/order" />
+                    android:src="@drawable/orderhistory" />
 
                 <TextView
                     android:id="@+id/profileOrderHistory"
@@ -199,7 +199,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20sp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10sp"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:weightSum="4">
@@ -244,7 +243,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20sp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10sp"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:weightSum="4">
@@ -357,7 +355,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20sp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10sp"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:weightSum="4">
@@ -381,6 +378,50 @@
 
                 <ImageButton
                     android:id="@+id/profilePrivacyPolicyBtn"
+                    android:layout_width="2sp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:src="@drawable/right_arrow_icon" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginHorizontal="10sp"
+                android:background="#F1EEEE" />
+
+            <LinearLayout
+                android:id="@+id/llRateUs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20sp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <ImageView
+                    android:layout_width="20sp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/star" />
+
+                <TextView
+                    android:id="@+id/profileRateUs"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25sp"
+                    android:layout_weight="3"
+                    android:fontFamily="@font/poppinsregular"
+                    android:text="@string/rate_us"
+                    android:textColor="@color/black"
+                    android:textSize="13sp" />
+
+                <ImageButton
+                    android:id="@+id/profileRateUsBtn"
                     android:layout_width="2sp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"

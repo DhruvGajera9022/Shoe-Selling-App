@@ -16,13 +16,22 @@
         android:theme="@style/Theme.ShoesApp"
         tools:targetApi="31">
         <activity
+            android:name=".profileactivities.RateUsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ConfirmOrderDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OrderHistoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".OrderPaymentScreenActivity"
             android:exported="false"
-            android:parentActivityName=".OrderConfirmAddressActivity"/>
+            android:parentActivityName=".OrderConfirmAddressActivity" />
         <activity
             android:name=".OrderConfirmAddressActivity"
             android:exported="false"
-            android:parentActivityName=".ProductDetailsActivity"/>
+            android:parentActivityName=".ProductDetailsActivity" />
         <activity
             android:name=".CartActivity"
             android:exported="false" />
@@ -77,7 +86,7 @@
         <activity
             android:name=".ProductDetailsActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>

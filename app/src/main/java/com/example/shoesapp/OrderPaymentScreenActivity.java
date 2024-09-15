@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,21 +28,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OrderPaymentScreenActivity extends AppCompatActivity {
-    TextView txtPrice, productData;
+    TextView txtPrice, productData, txtSubTotal;
     Button btnOrder;
     FirebaseFirestore db;
     FirebaseAuth mAuth;
     DocumentReference reference;
     String uid, key, size;
     ArrayList<MyCartModel> list = new ArrayList<>();
-    String fname, lname, email, mobile, dob, address, pname, pprice, psize, pimage, pdescription, pcompany, pgender;
+    String fname, lname, email, mobile, dob, address, pname, pprice, psize, pimage, pdescription, pcompany, pgender, strPaymentMethod;
+    RadioButton rbDebitCreditCard, rbGPay, rbPhonePay, rbNetBanking, rbWallets, rbCashOnDelivery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_payment_screen);
 
-        txtPrice = findViewById(R.id.OrderProductTotal);
+        txtSubTotal = findViewById(R.id.txtSubTotal);
         btnOrder = findViewById(R.id.OrderButton);
 
         db = FirebaseFirestore.getInstance();
@@ -51,21 +53,17 @@ public class OrderPaymentScreenActivity extends AppCompatActivity {
         reference = db.collection("Users").document(uid);
 
         key = getIntent().getStringExtra("keyOrder");
-        size = getIntent().getStringExtra("size");
+        psize = getIntent().getStringExtra("size");
 
-        // Fetch user and product data
+        rbDebitCreditCard = findViewById(R.id.rbDebitCreditCard);
+        rbGPay = findViewById(R.id.rbGPay);
+        rbPhonePay = findViewById(R.id.rbPhonePay);
+        rbNetBanking = findViewById(R.id.rbNetBanking);
+        rbWallets = findViewById(R.id.rbWallets);
+        rbCashOnDelivery = findViewById(R.id.rbCashOnDelivery);
+
+        // First fetch user and product data before setting the button click
         fetchDataAndPlaceOrder();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(OrderPaymentScreenActivity.this, OrderConfirmAddressActivity.class);
-        intent.putExtra("keyProduct", key);
-        intent.putExtra("productSize", size);
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-        finish();
     }
 
     private void fetchDataAndPlaceOrder() {
@@ -75,56 +73,18 @@ public class OrderPaymentScreenActivity extends AppCompatActivity {
                 getProductData(new DataCallback() {
                     @Override
                     public void onDataFetched() {
+                        // After both user and product data are fetched, set the button click listener
                         btnOrder.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                placeOrder();
+                                getPaymentMethod();  // Get payment method selected
+                                placeOrder();  // Place order
                             }
                         });
                     }
                 });
             }
         });
-    }
-
-    public void placeOrder() {
-        String orderId = db.collection("Orders").document().getId(); // Generate order ID using Orders collection
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("productName", pname != null ? pname : "Unknown");
-        map.put("productCompanyName", pcompany != null ? pcompany : "Unknown");
-        map.put("productPrice", pprice != null ? pprice : "Unknown");
-        map.put("productSize", size != null ? size : "Unknown");
-        map.put("productImage", pimage != null ? pimage : "Unknown");
-        map.put("productDescription", pdescription != null ? pdescription : "Unknown");
-        map.put("oid", orderId);
-        map.put("uid", uid);
-        map.put("userName", fname != null ? fname : "Unknown");
-        map.put("email", email != null ? email : "Unknown");
-        map.put("number", mobile != null ? mobile : "Unknown");
-        map.put("address", address != null ? address : "Unknown");
-
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        LocalDateTime now = LocalDateTime.now();
-        String date = dtf.format(now);
-        map.put("date", date);
-
-        db.collection("Orders")
-                .add(map)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Intent intent = new Intent(OrderPaymentScreenActivity.this, OrderConfirmActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(OrderPaymentScreenActivity.this, "Order placement failed", Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 
     public void getUserData(final DataCallback callback) {
@@ -141,7 +101,7 @@ public class OrderPaymentScreenActivity extends AppCompatActivity {
                         dob = value.getString("DOB");
                         address = value.getString("Address");
                     }
-                    callback.onDataFetched();
+                    callback.onDataFetched();  // Notify when data is fetched
                 }
             }
         });
@@ -159,18 +119,94 @@ public class OrderPaymentScreenActivity extends AppCompatActivity {
                         pname = value.getString("name");
                         pprice = value.getString("price");
                         pdescription = value.getString("description");
-                        psize = value.getString("size");
                         pcompany = value.getString("categoryCompany");
                         pgender = value.getString("categoryGender");
                         pimage = value.getString("imgurl");
+
+                        txtSubTotal.append(" Rs." + pprice);  // Update UI with price
                     }
-                    callback.onDataFetched();
+                    callback.onDataFetched();  // Notify when data is fetched
                 }
             }
         });
     }
 
+    public void getPaymentMethod() {
+        if (rbDebitCreditCard.isChecked()) {
+            strPaymentMethod = rbDebitCreditCard.getText().toString();
+        } else if (rbGPay.isChecked()) {
+            strPaymentMethod = rbGPay.getText().toString();
+        } else if (rbPhonePay.isChecked()) {
+            strPaymentMethod = rbPhonePay.getText().toString();
+        } else if (rbNetBanking.isChecked()) {
+            strPaymentMethod = rbNetBanking.getText().toString();
+        } else if (rbWallets.isChecked()) {
+            strPaymentMethod = rbWallets.getText().toString();
+        } else {
+            strPaymentMethod = rbCashOnDelivery.getText().toString();
+        }
+    }
+
+    public void placeOrder() {
+        if (fname == null || pname == null || pprice == null) {
+            Toast.makeText(OrderPaymentScreenActivity.this, "Data not loaded", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String oid = db.collection("Orders").document().getId();
+        Map<String, Object> mapOrder = new HashMap<>();
+
+        mapOrder.put("productName", pname);
+        mapOrder.put("productCompanyName", pcompany);
+        mapOrder.put("productPrice", pprice);
+        mapOrder.put("productSize", psize);
+        mapOrder.put("productImage", pimage);
+        mapOrder.put("oid", oid);
+        mapOrder.put("productDescription", pdescription);
+        mapOrder.put("uid", uid);
+        mapOrder.put("userName", fname);
+        mapOrder.put("email", email);
+        mapOrder.put("number", mobile);
+        mapOrder.put("address", address);
+        mapOrder.put("paymentMethod", strPaymentMethod);
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        LocalDateTime now = LocalDateTime.now();
+        String date = dtf.format(now);
+        mapOrder.put("date", date);
+
+        db.collection("Orders")
+                .document(oid)  // Using 'oid' as the document ID
+                .set(mapOrder)   // Use set() when you have a specific ID for the document
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Intent intent = new Intent(OrderPaymentScreenActivity.this, OrderConfirmActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(OrderPaymentScreenActivity.this, "Order placement failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
+
     interface DataCallback {
         void onDataFetched();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(OrderPaymentScreenActivity.this, OrderConfirmAddressActivity.class);
+        intent.putExtra("keyProduct", key);
+        intent.putExtra("productSize", size);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        finish();
     }
 }

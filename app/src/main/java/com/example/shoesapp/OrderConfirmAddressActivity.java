@@ -71,8 +71,8 @@ public class OrderConfirmAddressActivity extends AppCompatActivity {
                 Intent intent = new Intent(OrderConfirmAddressActivity.this, OrderPaymentScreenActivity.class);
                 intent.putExtra("keyOrder", key);
                 intent.putExtra("size", size);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
             }
         });

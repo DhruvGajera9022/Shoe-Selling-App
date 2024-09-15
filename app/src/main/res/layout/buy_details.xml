@@ -107,58 +107,71 @@
             android:background="#EDEAEA"
             android:padding="10dp">
 
+            <!-- Select Payment Method Title -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/payment_method"
+                android:layout_marginTop="10dp"
+                android:text="@string/select_payment_method"
                 android:textColor="@color/black"
-                android:textSize="21sp"
-                android:textStyle="bold"
+                android:textSize="20sp"
                 android:fontFamily="@font/poppinssemibold"/>
 
             <RadioGroup
-                android:id="@+id/radioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="10dp">
+                android:orientation="vertical">
 
                 <RadioButton
                     android:id="@+id/rbOptionCreditDebitAtm"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/credit_debit_atm_card"
+                    android:text="Debit/Credit Card"
+                    android:textSize="14sp"
                     android:fontFamily="@font/poppinsregular"/>
 
                 <RadioButton
-                    android:id="@+id/rbOptionNetBanking"
-                    android:layout_width="match_parent"
+                    android:id="@+id/rbOptionGPay"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/net_banking"
+                    android:text="GPay"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/poppinsregular"/>
+
+                <RadioButton
+                    android:id="@+id/rbOptionPhonePay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinsregular"
+                    android:text="PhonePay"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/rbOptionNetBanking"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Net Banking"
+                    android:textSize="14sp"
                     android:fontFamily="@font/poppinsregular"/>
 
                 <RadioButton
                     android:id="@+id/rbOptionWallets"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/wallets"
-                    android:fontFamily="@font/poppinsregular"/>
-
-                <RadioButton
-                    android:id="@+id/rbOptionUPI"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/upi"
+                    android:text="Wallets"
+                    android:textSize="14sp"
                     android:fontFamily="@font/poppinsregular"/>
 
                 <RadioButton
                     android:id="@+id/rbOptionCashOnDelivery"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/cash_on_delivery"
+                    android:text="Cash On Delivery"
+                    android:textSize="14sp"
                     android:fontFamily="@font/poppinsregular"/>
 
             </RadioGroup>
+
 
         </LinearLayout>
 

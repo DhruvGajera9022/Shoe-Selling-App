@@ -113,7 +113,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         Picasso.get().load(product.getImgurl()).into(productImage);
         currentImageUrl = product.getImgurl();
         productName.setText(product.getName());
-        productPrice.setText("Rs. " + product.getPrice());
+        productPrice.setText(product.getPrice());
         productDescription.setText(product.getDescription());
     }
 
@@ -152,8 +152,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
         Intent intent = new Intent(ProductDetailsActivity.this, OrderConfirmAddressActivity.class);
         intent.putExtra("keyProduct", productId);
         intent.putExtra("productSize", productSizeInput.getText().toString());
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         finish();
     }
 
