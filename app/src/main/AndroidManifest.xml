@@ -22,9 +22,6 @@
             android:name=".ConfirmOrderDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".OrderHistoryActivity"
-            android:exported="false" />
-        <activity
             android:name=".OrderPaymentScreenActivity"
             android:exported="false"
             android:parentActivityName=".OrderConfirmAddressActivity" />
@@ -82,6 +79,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="true" />
         <activity
             android:name=".ProductDetailsActivity"

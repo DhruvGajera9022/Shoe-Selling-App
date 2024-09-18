@@ -138,8 +138,8 @@ public class OrderFragment extends Fragment {
     private void showDeleteDialog(final int position) {
         new AlertDialog.Builder(getContext())
                 .setCancelable(false)
-                .setTitle("Delete?")
-                .setMessage("Are you sure to delete this item?")
+                .setTitle("Cancel Order?")
+                .setMessage("Are you sure you want to cancel this order?")
                 .setIcon(R.drawable.delete_icon)
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
