@@ -22,4 +22,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Shoes App"
-include(":app")
+include (":app")
+

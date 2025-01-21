@@ -223,7 +223,7 @@ public class CartActivity extends AppCompatActivity {
         } else {
             DialogPlus dialogPlus = DialogPlus.newDialog(this)
                     .setContentHolder(new ViewHolder(R.layout.buy_details))
-                    .setExpanded(true, 2020)
+                    .setExpanded(true, 2080)
                     .setCancelable(true)
                     .create();
 
